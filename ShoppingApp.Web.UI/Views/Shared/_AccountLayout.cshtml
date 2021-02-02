@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="../../">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderSection("metaTags", required: false)
+
+    <title>@ViewData["Title"] - ShoppingApp</title>
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Page Vendors Styles(used by this page)-->
+    @RenderSection("Styles", required: false)
+    <!--end::Page Vendors Styles-->
+
+    <partial name="~/Views/Shared/_StylesPartial.cshtml" />
+
+</head>
+<body id="kt_body" class="header-fixed header-mobile-fixed header-bottom-enabled subheader-enabled page-loading">
+
+    <!--begin::Main-->
+    <div class="d-flex flex-column flex-root">
+        @RenderBody();
+    </div>
+    <!--end::Main-->
+
+    <partial name="~/Views/Shared/_ScriptsPartial.cshtml" />
+
+    <!--begin::Page Vendors(used by this page)-->
+    @RenderSection("VendorScripts", required: false)
+    <!--end::Page Vendors(used by this page)-->
+    <!--begin::Page Scripts(used by this page)-->
+    @RenderSection("Scripts", required: false)
+
+    <!--end::Page Scripts-->
+</body>
+</html>

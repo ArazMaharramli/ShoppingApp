@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="Models\Base\" />
+    <Folder Include="Models\Domain\" />
+    <Folder Include="Models\Domain\StoreModels\" />
+    <Folder Include="Models\Domain\ProductModels\" />
+    <Folder Include="Models\Domain\AddressModels\" />
+    <Folder Include="Models\Domain\AdvertisementModels\" />
+    <Folder Include="Models\Domain\OrderModels\" />
+    <Folder Include="Models\Domain\DeliveryModels\" />
+    <Folder Include="Models\Domain\MappingModels\" />
+    <Folder Include="Models\Domain\PaymentModels\" />
+    <Folder Include="Models\Domain\MediaModels\" />
+    <Folder Include="Models\Domain\UserModels\" />
+    <Folder Include="Models\Domain\ShoppingCartModels\" />
+    <Folder Include="Configurations\AddressModelsConfiguration\" />
+    <Folder Include="Configurations\AdvertisementModelsConfiguration\" />
+    <Folder Include="Configurations\DeliveryModelsConfiguration\" />
+    <Folder Include="Configurations\MappingModelsConfiguration\" />
+    <Folder Include="Configurations\MediaModelsConfiguration\" />
+    <Folder Include="Configurations\OrderModelsConfiguration\" />
+    <Folder Include="Configurations\PaymentModelsConfiguration\" />
+    <Folder Include="Configurations\ProductModelsConfiguration\" />
+    <Folder Include="Configurations\ShoppingCartModelsConfiguration\" />
+    <Folder Include="Configurations\StoreModelsConfiguration\" />
+    <Folder Include="Configurations\UserModelConfiguration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingApp.Utils\ShoppingApp.Utils.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Persistence\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj" />
+    <ProjectReference Include="..\ShoppingApp.Repository.Implementation\ShoppingApp.Repository.Implementation.csproj" />
+  </ItemGroup>
+</Project>

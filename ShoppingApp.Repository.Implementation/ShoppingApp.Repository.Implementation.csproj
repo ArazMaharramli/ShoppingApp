@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Persistences\" />
+    <Folder Include="Repositories\AddressRepositories\" />
+    <Folder Include="Repositories\AdvertisementRepositories\" />
+    <Folder Include="Repositories\DeliveryRepositories\" />
+    <Folder Include="Repositories\MediaRepositories\" />
+    <Folder Include="Repositories\OrderRepositories\" />
+    <Folder Include="Repositories\PaymentRepositories\" />
+    <Folder Include="Repositories\ProductRepositories\" />
+    <Folder Include="Repositories\ShoppingCartRepositories\" />
+    <Folder Include="Repositories\StoreRepositories\" />
+    <Folder Include="Repositories\UserRepositories\" />
+    <Folder Include="Persistences\AddressPersistences\" />
+    <Folder Include="Persistences\AdvertisementPersistences\" />
+    <Folder Include="Persistences\DeliveryPersistences\" />
+    <Folder Include="Persistences\MediaPersistences\" />
+    <Folder Include="Persistences\OrderPersistences\" />
+    <Folder Include="Persistences\PaymentPersistences\" />
+    <Folder Include="Persistences\ProductPersistences\" />
+    <Folder Include="Persistences\ShoppingCartPersistences\" />
+    <Folder Include="Persistences\StorePersistences\" />
+    <Folder Include="Persistences\UserPersistences\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingApp.Repository\ShoppingApp.Repository.csproj" />
+    <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj" />
+  </ItemGroup>
+</Project>
