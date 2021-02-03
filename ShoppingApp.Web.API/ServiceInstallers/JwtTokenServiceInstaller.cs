@@ -10,10 +10,6 @@ namespace ShoppingApp.Web.API.ServiceInstallers
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            //var _jwtOptions = new JwtOptions();
-
-            //configuration.Bind("JwtDefaults", _jwtOptions);
-
             services.Configure<JwtOptions>(configuration.GetSection("JwtDefaults"));
 
             services.AddSingleton<IJwtTokenService, JwtTokenService>();
