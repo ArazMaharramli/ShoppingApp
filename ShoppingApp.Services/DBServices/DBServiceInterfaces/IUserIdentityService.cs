@@ -14,6 +14,8 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 
         public Task<IList<Claim>> GetClaimsAsync(User user);
         public Task<IList<string>> GetRolesAsync(User user);
+        public Task<string> GeneratePasswordResetTokenAsync(User user);
+        public Task<bool> IsEmailConfirmedAsync(User user);
 
         public Task<IdentityResult> AddLoginAsync(User user, UserLoginInfo loginInfo);
         public Task<IdentityResult> CreateAsync(User user, string password = null);

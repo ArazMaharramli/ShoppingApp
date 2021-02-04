@@ -93,7 +93,7 @@ namespace ShoppingApp.CQRS.Handlers
                             var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
-                                await _emailSender.SendEmailAsync(userInDb.Email, "Welcome", $"Hello,{user.FirstName}. We are glad to see you here.");
+                                await _emailSender.SendWelcomeEmailAsync(userInDb.Email, "Welcome", user.FirstName, "no-link");
                                 return ReturnSuccess(user);
                             }
                             else

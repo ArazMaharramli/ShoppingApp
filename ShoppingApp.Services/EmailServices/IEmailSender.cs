@@ -4,6 +4,7 @@ namespace ShoppingApp.Services.EmailServices
 {
     public interface IEmailSender
     {
-        Task SendEmailAsync(string email, string subject, string message);
+        Task SendWelcomeEmailAsync(string email, string subject, string userName, string confirmEmailUrl);
+        Task SendResetPasswordEmailAsync(string email, string subject, string userName, string resetPasswordUrl);
     }
 }

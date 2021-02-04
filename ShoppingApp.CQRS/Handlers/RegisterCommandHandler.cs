@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.CQRS.Models.CommandModels;
 using ShoppingApp.CQRS.Models.ResponseModels;
@@ -85,7 +87,7 @@ namespace ShoppingApp.CQRS.Handlers
                     };
                 }
 
-                await _emailSender.SendEmailAsync(userInDb.Email, "Welcome", $"Hello,{user.FirstName}. We are glad to see you here.");
+                await _emailSender.SendWelcomeEmailAsync(user.Email, "Welcome", user.FirstName, "no-link");
                 return new LoginAndRegisterCommandsResponseModel
                 {
                     User = user,
@@ -105,6 +107,38 @@ namespace ShoppingApp.CQRS.Handlers
                     }
                 };
             }
+        }
+    }
+
+    public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, ForgotAndResetPasswordResponseModel>
+    {
+        private readonly IUserIdentityService _userIdentityService;
+        private readonly IEmailSender _emailSender;
+
+        public ForgotPasswordCommandHandler(IUserIdentityService userIdentityService, IEmailSender emailSender)
+        {
+            _userIdentityService = userIdentityService;
+            _emailSender = emailSender;
+        }
+        public async Task<ForgotAndResetPasswordResponseModel> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
+        {
+            var user = await _userIdentityService.FindByEmailAsync(request.Email);
+            if (!(user == null || !(await _userIdentityService.IsEmailConfirmedAsync(user))))
+            {
+                var code = await _userIdentityService.GeneratePasswordResetTokenAsync(user);
+                var callBackUrl = $"https://localhost:5003/Account/ResetPassword?userId={user.Id}&code={code}";
+                await _emailSender.SendResetPasswordEmailAsync(request.Email, "Forgot Password", user.FirstName, callBackUrl);
+
+
+                return new ForgotAndResetPasswordResponseModel
+                {
+                    Message = "Go to your email can click the link"
+                };
+            }
+            return new ForgotAndResetPasswordResponseModel { HasError = true };
+            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
+            // Send an email with this link
+
         }
     }
 }

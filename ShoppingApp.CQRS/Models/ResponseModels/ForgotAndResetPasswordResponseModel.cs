@@ -3,6 +3,6 @@ namespace ShoppingApp.CQRS.Models.ResponseModels
 {
     public class ForgotAndResetPasswordResponseModel : BaseResponseModel
     {
-        public string Code { get; set; }
+        public string Message { get; set; }
     }
 }

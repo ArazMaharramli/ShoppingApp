@@ -17,9 +17,20 @@ namespace ShoppingApp.Services.EmailServices
             _options = options;
         }
 
+        public async Task SendResetPasswordEmailAsync(string email, string subject, string userName, string resetPasswordUrl)
+        {
+            var message = string.Format((new EmailTemplates()).ForgotPassword, userName, resetPasswordUrl);
+            await SendEmailAsync(email, subject, message);
+        }
 
+        public async Task SendWelcomeEmailAsync(string email, string subject, string userName, string confirmEmailUrl)
+        {
+            var message = string.Format((new EmailTemplates()).Welcome, userName, confirmEmailUrl);
+            await SendEmailAsync(email, subject, message);
+        }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        #region privates
+        private async Task SendEmailAsync(string email, string subject, string message)
         {
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress("ShoppingApp", _options.Value.EmailAddress));
@@ -39,5 +50,6 @@ namespace ShoppingApp.Services.EmailServices
                 await client.DisconnectAsync(true);
             }
         }
+        #endregion
     }
 }

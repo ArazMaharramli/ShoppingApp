@@ -195,5 +195,15 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
         {
             return _userManager.CheckPasswordAsync(user, password);
         }
+
+        public Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public Task<bool> IsEmailConfirmedAsync(User user)
+        {
+            return _userManager.IsEmailConfirmedAsync(user);
+        }
     }
 }
