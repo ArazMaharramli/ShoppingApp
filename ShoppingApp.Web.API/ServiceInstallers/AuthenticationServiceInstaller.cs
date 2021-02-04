@@ -1,31 +1,16 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using ShoppingApp.Domain.Data;
-using ShoppingApp.Domain.Models.Domain;
-using ShoppingApp.Domain.Models.Domain.UserModels;
+using ShoppingApp.Services.ServiceInstallers;
 
 namespace ShoppingApp.Web.API.ServiceInstallers
 {
-    public class IdentityAndAuthenticationServicesInstaller : IInstaller
+    public class AuthenticationServiceInstaller : IInstaller
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddIdentity<User, Role>(config =>
-            {
-                config.Password.RequireDigit = configuration.GetValue<bool>("PasswordSettings:RequireDigit");
-                config.Password.RequireLowercase = configuration.GetValue<bool>("PasswordSettings:RequireLowercase");
-                config.Password.RequireNonAlphanumeric = configuration.GetValue<bool>("PasswordSettings:RequireNonAlphanumeric");
-                config.Password.RequireUppercase = configuration.GetValue<bool>("PasswordSettings:RequireUppercase");
-                config.Password.RequiredLength = configuration.GetValue<int>("PasswordSettings:RequiredLength");
-                config.SignIn.RequireConfirmedEmail = configuration.GetValue<bool>("PasswordSettings:RequireConfirmedEmail");
-            })
-                .AddEntityFrameworkStores<ShoppingAppDbContext>()
-                .AddDefaultTokenProviders();
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,8 +34,7 @@ namespace ShoppingApp.Web.API.ServiceInstallers
 
                 };
             });
-
-
         }
     }
+
 }

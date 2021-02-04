@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoppingApp.Domain.Data;
+using ShoppingApp.Services.ServiceInstallers;
 using ShoppingApp.Web.API.ServiceInstallers;
 
 namespace ShoppingApp.Web.API
@@ -23,17 +24,16 @@ namespace ShoppingApp.Web.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var installers = typeof(Startup).Assembly.ExportedTypes
+            var installers = typeof(UnitOfWorkInstaller).Assembly.ExportedTypes
                 .Where(x => typeof(IInstaller).IsAssignableFrom(x) && !x.IsAbstract && !x.IsInterface)
                 .Select(Activator.CreateInstance).Cast<IInstaller>().ToList();
 
+            installers.AddRange(typeof(Startup).Assembly.ExportedTypes
+                .Where(x => typeof(IInstaller).IsAssignableFrom(x) && !x.IsAbstract && !x.IsInterface)
+                .Select(Activator.CreateInstance).Cast<IInstaller>().ToList());
+
             installers.ForEach(installer => installer.InstallServices(Configuration, services));
 
-            services.AddDbContext<ShoppingAppDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,14 +48,14 @@ namespace ShoppingApp.Web.API
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Shopping app Web API"));
 
             app.UseHttpsRedirection();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();
-            
+
             app.UseAuthorization();
 
-           
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

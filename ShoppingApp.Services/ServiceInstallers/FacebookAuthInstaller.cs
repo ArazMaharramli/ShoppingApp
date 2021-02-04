@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ShoppingApp.Services.AuthServices.FacebookAuthService;
 using ShoppingApp.Services.AuthServices.FacebookAuthService.Options;
 
-namespace ShoppingApp.Web.API.ServiceInstallers
+namespace ShoppingApp.Services.ServiceInstallers
 {
     public class FacebookAuthInstaller : IInstaller
     {
@@ -15,8 +15,6 @@ namespace ShoppingApp.Web.API.ServiceInstallers
             services.Configure<FacebookAuthOptions>(configuration.GetSection("ExternalAuthSettings:Facebook"));
 
             services.AddSingleton<IFacebookAuthService, FacebookAuthService>();
-
-
         }
     }
 }

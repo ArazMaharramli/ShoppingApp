@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ShoppingApp.Services.AuthServices.GoogleAuthService;
 using ShoppingApp.Services.AuthServices.GoogleAuthService.Options;
 
-namespace ShoppingApp.Web.API.ServiceInstallers
+namespace ShoppingApp.Services.ServiceInstallers
 {
     public class GoogleAuthInstaller : IInstaller
     {

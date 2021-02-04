@@ -60,12 +60,26 @@ namespace ShoppingApp.CQRS.Handlers
                         });
                     }
 
-                    //db-da check edib varsa userin datasini almaq ve login etmek sonra jwt yaratmaq
-                    var user = await _userManager.FindByLoginAsync("Google", userInfoFromGoogle.Id);
-                    if (user == null)
+                    var userInDb = await _userManager.FindByEmailAsync(userInfoFromGoogle.Email);
+
+                    var loginInfo = new UserLoginInfo("Google", userInfoFromGoogle.Id, null);
+                    if (userInDb != null)
+                    {
+                        var loginresult = await _userManager.AddLoginAsync(userInDb, loginInfo);
+                        if (loginresult.Succeeded)
+                        {
+
+                            return ReturnSuccess(userInDb);
+                        }
+                        else
+                        {
+                            return ReturnError(loginresult);
+                        }
+                    }
+                    else
                     {
 
-                        user = new User
+                        var user = new User
                         {
                             Email = userInfoFromGoogle.Email,
                             FirstName = userInfoFromGoogle.FirstName,
@@ -76,7 +90,6 @@ namespace ShoppingApp.CQRS.Handlers
                         };
 
                         var result = await _userManager.CreateAsync(user);
-                        var loginInfo = new UserLoginInfo("Google", userInfoFromGoogle.Id, null);
 
                         if (result.Succeeded)
                         {
@@ -95,7 +108,6 @@ namespace ShoppingApp.CQRS.Handlers
                         return ReturnError(result: result);
 
                     }
-                    return ReturnSuccess(user);
                 }
                 return ReturnError(error: new InternalErrorModel
                 {

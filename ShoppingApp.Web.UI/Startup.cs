@@ -17,6 +17,9 @@ using ShoppingApp.Services.AuthServices.FacebookAuthService;
 using ShoppingApp.Services.AuthServices.FacebookAuthService.Options;
 using ShoppingApp.Services.AuthServices.GoogleAuthService.Options;
 using ShoppingApp.Services.AuthServices.GoogleAuthService;
+using System;
+using ShoppingApp.Services.ServiceInstallers;
+using System.Linq;
 
 namespace ShoppingApp.Web.UI
 {
@@ -32,9 +35,11 @@ namespace ShoppingApp.Web.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ShoppingAppDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            var installers = typeof(UnitOfWorkInstaller).Assembly.ExportedTypes
+                .Where(x => typeof(IInstaller).IsAssignableFrom(x) && !x.IsAbstract && !x.IsInterface)
+                .Select(Activator.CreateInstance).Cast<IInstaller>().ToList();
+
+            installers.ForEach(installer => installer.InstallServices(Configuration, services));
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -44,38 +49,7 @@ namespace ShoppingApp.Web.UI
                     config.Cookie.Name = "ShoppingApp";
                 });
 
-            services.AddIdentity<User, Role>(config =>
-            {
-                config.Password.RequireDigit = Configuration.GetValue<bool>("PasswordSettings:RequireDigit");
-                config.Password.RequireLowercase = Configuration.GetValue<bool>("PasswordSettings:RequireLowercase");
-                config.Password.RequireNonAlphanumeric = Configuration.GetValue<bool>("PasswordSettings:RequireNonAlphanumeric");
-                config.Password.RequireUppercase = Configuration.GetValue<bool>("PasswordSettings:RequireUppercase");
-                config.Password.RequiredLength = Configuration.GetValue<int>("PasswordSettings:RequiredLength");
-                config.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("PasswordSettings:RequireConfirmedEmail");
-            })
-                    .AddEntityFrameworkStores<ShoppingAppDbContext>()
-                    .AddRoles<Role>()
-                    .AddDefaultTokenProviders();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-
             services.AddMediatR(typeof(LoginWithFacebookCommandHandler));
-            services.AddTransient<IUserIdentityService, UserIdentityService>();
-
-            // bunlari cqrs islesin deye yazdim cqrs modifikasiya olunmalidi mence
-            //burdan
-            services.AddHttpClient();
-            var facebookOptions = new FacebookAuthOptions();
-            Configuration.Bind("ExternalAuthSettings:Facebook", facebookOptions);
-            services.AddSingleton(facebookOptions);
-            services.AddSingleton<IFacebookAuthService, FacebookAuthService>();
-
-            var googleOptions = new GoogleAuthOptions();
-            Configuration.Bind("ExternalAuthSettings:Google", facebookOptions);
-            services.AddSingleton(googleOptions);
-            services.AddSingleton<IGoogleAuthService, GoogleAuthService>();
-            // bura qeder
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

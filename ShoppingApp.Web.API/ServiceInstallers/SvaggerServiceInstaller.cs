@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ShoppingApp.Services.ServiceInstallers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ShoppingApp.Web.API.ServiceInstallers
@@ -29,7 +30,7 @@ namespace ShoppingApp.Web.API.ServiceInstallers
 
                 //c.AddSecurityRequirement();
 
-               c.OperationFilter<AddRequiredHeaders>();
+                c.OperationFilter<AddRequiredHeaders>();
             });
         }
     }
@@ -44,7 +45,7 @@ namespace ShoppingApp.Web.API.ServiceInstallers
             }
             operation.Parameters.Add(new OpenApiParameter
             {
-                In= ParameterLocation.Header,
+                In = ParameterLocation.Header,
                 Name = "ApiKey",
                 Required = true,
             });

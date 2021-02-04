@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Repository", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Repository.Implementation", "ShoppingApp.Repository.Implementation\ShoppingApp.Repository.Implementation.csproj", "{83BA7651-358C-45A5-B278-539C2CE92102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.UnitOFWork", "ShoppingApp.UnitOfWork\ShoppingApp.UnitOfWork.csproj", "{1E5B9B67-9237-4F01-8A70-C25E5BF18DEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.UnitOfWork", "ShoppingApp.UnitOfWork\ShoppingApp.UnitOfWork.csproj", "{1E5B9B67-9237-4F01-8A70-C25E5BF18DEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Utils", "ShoppingApp.Utils\ShoppingApp.Utils.csproj", "{421E2ADE-6E8D-4595-99E5-E340C7729435}"
 EndProject
@@ -15,11 +15,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Web.API", "Shop
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Web.UI", "ShoppingApp.Web.UI\ShoppingApp.Web.UI.csproj", "{AE02E810-304F-4F62-976B-900090501B8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Services", "ShoppingApp.Services\ShoppingApp.Services.csproj", "{430CFFEC-CA75-47BC-B4E5-AADB156A7DA6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Web.API.Contracts", "ShoppingApp.Web.API.Contracts\ShoppingApp.Web.API.Contracts.csproj", "{A0DFB50C-3868-489F-8D4C-4BA5E2B44E90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.CQRS", "ShoppingApp.CQRS\ShoppingApp.CQRS.csproj", "{D4D79F83-566D-41C8-AE45-B28DB12538C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82C4462A-C27E-4E49-B10C-2ABBF7F94EDD}"
+	ProjectSection(SolutionItems) = preProject
+		SharedSettings.json = SharedSettings.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.Services", "ShoppingApp.Services\ShoppingApp.Services.csproj", "{2C174A5F-BEA5-4FA7-93F2-E52BA5531F8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +60,6 @@ Global
 		{AE02E810-304F-4F62-976B-900090501B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE02E810-304F-4F62-976B-900090501B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE02E810-304F-4F62-976B-900090501B8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{430CFFEC-CA75-47BC-B4E5-AADB156A7DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{430CFFEC-CA75-47BC-B4E5-AADB156A7DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{430CFFEC-CA75-47BC-B4E5-AADB156A7DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{430CFFEC-CA75-47BC-B4E5-AADB156A7DA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0DFB50C-3868-489F-8D4C-4BA5E2B44E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0DFB50C-3868-489F-8D4C-4BA5E2B44E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0DFB50C-3868-489F-8D4C-4BA5E2B44E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,5 +68,9 @@ Global
 		{D4D79F83-566D-41C8-AE45-B28DB12538C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4D79F83-566D-41C8-AE45-B28DB12538C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4D79F83-566D-41C8-AE45-B28DB12538C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C174A5F-BEA5-4FA7-93F2-E52BA5531F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C174A5F-BEA5-4FA7-93F2-E52BA5531F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C174A5F-BEA5-4FA7-93F2-E52BA5531F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C174A5F-BEA5-4FA7-93F2-E52BA5531F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShoppingApp.Services.AuthServices.JwtTokenServices;
 using ShoppingApp.Services.AuthServices.JwtTokenServices.Options;
+using ShoppingApp.Services.ServiceInstallers;
 
 namespace ShoppingApp.Web.API.ServiceInstallers
 {

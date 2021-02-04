@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ShoppingApp.Web.API.ServiceInstallers
+namespace ShoppingApp.Services.ServiceInstallers
 {
     public interface IInstaller
     {

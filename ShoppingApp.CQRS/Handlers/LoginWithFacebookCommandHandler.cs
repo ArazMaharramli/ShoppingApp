@@ -52,20 +52,7 @@ namespace ShoppingApp.CQRS.Handlers
                         return ReturnError(error: userInfoFromFacebook.Error);
                     }
 
-                    var userType = await _unitOfWork.UserTypes.GetAsync(x => x.UniqueName == "Customer");
-
-                    if (userType == null)
-                    {
-                        return ReturnError(error: new InternalErrorModel
-                        {
-                            Type = Utils.Enums.ErrorType.Server,
-                            Message = "User Type is null"
-                        });
-                    }
                     var userInDb = await _userManager.FindByEmailAsync(userInfoFromFacebook.Email);
-                    //db-da check edib varsa userin datasini almaq ve login etmek sonra jwt yaratmaq
-                    var user = await _userManager.FindByLoginAsync("Facebook", userInfoFromFacebook.Id);
-
 
                     var loginInfo = new UserLoginInfo("Facebook", userInfoFromFacebook.Id, null);
                     if (userInDb != null)
@@ -74,18 +61,27 @@ namespace ShoppingApp.CQRS.Handlers
                         if (loginresult.Succeeded)
                         {
 
-                            return ReturnSuccess(user);
+                            return ReturnSuccess(userInDb);
                         }
                         else
                         {
                             return ReturnError(loginresult);
                         }
                     }
-
-                    if (user == null)
+                    else
                     {
+                        var userType = await _unitOfWork.UserTypes.GetAsync(x => x.UniqueName == "Customer");
 
-                        user = new User
+                        if (userType == null)
+                        {
+                            return ReturnError(error: new InternalErrorModel
+                            {
+                                Type = Utils.Enums.ErrorType.Server,
+                                Message = "User Type is null"
+                            });
+                        }
+
+                        var user = new User
                         {
                             Email = userInfoFromFacebook.Email,
                             FirstName = userInfoFromFacebook.FirstName,
@@ -116,11 +112,6 @@ namespace ShoppingApp.CQRS.Handlers
                             return ReturnError(result);
                         }
                     }
-                    //
-
-                    //token model
-
-                    return ReturnSuccess(user);
                 }
                 return ReturnError(error: new InternalErrorModel
                 {
