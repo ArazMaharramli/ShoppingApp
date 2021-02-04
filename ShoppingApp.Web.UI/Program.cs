@@ -29,7 +29,7 @@ namespace ShoppingApp.Web.UI
                 //var sharedFolder = Path.Combine(env.ContentRootPath, "..", "Shared");
 
                 config
-                    .AddJsonFile(Path.Combine(env.ContentRootPath, "..", "SharedSettings.json"), optional: true) // When running using dotnet run
+                    .AddJsonFile(Path.Combine(env.ContentRootPath, "..", "sharedappsettings.json"), optional: true) // When running using dotnet run
                     .AddJsonFile("SharedSettings.json", optional: true) // When app is published
                     .AddJsonFile("appsettings.json", optional: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
