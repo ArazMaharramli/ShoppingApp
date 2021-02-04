@@ -1,0 +1,33 @@
+﻿{
+    "ConnectionStrings": {
+        "DefaultConnection": "<Your_Connection_String>"
+    },
+    "PasswordSettings": {
+        "RequireDigit": false,
+        "RequireLowercase": false,
+        "RequireNonAlphanumeric": false,
+        "RequireUppercase": false,
+        "RequiredLength": 6,
+        "RequireConfirmedEmail": false
+
+    },
+    "ExternalAuthSettings": {
+        "Facebook": {
+            "AppId": "<Your_App_Id>",
+            "AppSecret": "<Your_App_Secret>",
+            "APIVersion": "<Your_Version>",
+            "UserInfoFields": "id,first_name,last_name,email,picture"
+        },
+
+        "Google": {
+            "ClientId": "<Your_Client_Id>",
+            "ClientSecret": "<Your_Secret>"
+        }
+    },
+    "EmailSettings": {
+        "SmtpPassword": "<Your_Password>",
+        "EmailAddress": "<Your_Gmail_address>",
+        "SmtpHost": "smtp.gmail.com",
+        "SmtpPort": "465"
+    }
+}
