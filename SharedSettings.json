@@ -1,6 +1,6 @@
 ﻿{
     "ConnectionStrings": {
-        "DefaultConnection": "<Your_Connection_String>"
+        "DefaultConnection": "Data Source=localhost;Initial Catalog=ShoppingAppDB;User Id=sa;Password=<YourStrong@Passw0rd>;"
     },
     "PasswordSettings": {
         "RequireDigit": false,
@@ -13,20 +13,20 @@
     },
     "ExternalAuthSettings": {
         "Facebook": {
-            "AppId": "<Your_App_Id>",
-            "AppSecret": "<Your_App_Secret>",
-            "APIVersion": "<Your_Version>",
+            "AppId": "2625361571075081",
+            "AppSecret": "23de13c9f1306c11514c2f247cc3b5cd",
+            "APIVersion": "v6.0",
             "UserInfoFields": "id,first_name,last_name,email,picture"
         },
 
         "Google": {
-            "ClientId": "<Your_Client_Id>",
-            "ClientSecret": "<Your_Secret>"
+            "ClientId": "434059284812-urbt049fp40bl19nmb7k1s9266frb7pv.apps.googleusercontent.com",
+            "ClientSecret": "5FpWhRBDCWe2ykWOEff2VCu1"
         }
     },
     "EmailSettings": {
-        "SmtpPassword": "<Your_Password>",
-        "EmailAddress": "<Your_Gmail_address>",
+        "SmtpPassword": "KOMUTAN998",
+        "EmailAddress": "arduino.programlama@gmail.com",
         "SmtpHost": "smtp.gmail.com",
         "SmtpPort": "465"
     }
