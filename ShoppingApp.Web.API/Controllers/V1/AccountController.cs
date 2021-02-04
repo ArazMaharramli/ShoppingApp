@@ -25,9 +25,7 @@ namespace ShoppingApp.Web.API.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IFacebookAuthService _facebookAuthService;
         private readonly IJwtTokenService _jwtTokenService;
-        private readonly IGoogleAuthService _googleAuthService;
         private readonly IMediator _mediatr;
         private readonly IMapper _mapper;
         private readonly IUserIdentityService _userIdentityService;
@@ -39,9 +37,7 @@ namespace ShoppingApp.Web.API.Controllers
                                  IMediator mediator,
                                  IMapper mapper, IUserIdentityService userIdentityService)
         {
-            //_facebookAuthService = facebookAuthService;
             _jwtTokenService = jwtTokenService;
-            //_googleAuthService = googleAuthService;
             _mediatr = mediator;
             _mapper = mapper;
             _userIdentityService = userIdentityService;
@@ -257,7 +253,7 @@ namespace ShoppingApp.Web.API.Controllers
 
                 var userId = _jwtTokenService.GetUserId(model.JwtToken);
 
-                var user = await _userIdentityService.GetUserInfoAsync(userId);
+                var user = await _userIdentityService.FindByIdAsync(userId);
 
                 if (user.LockoutEnabled)
                 {

@@ -20,7 +20,6 @@ namespace ShoppingApp.CQRS.Handlers
     public class LoginWithGoogleCommandHandler : IRequestHandler<LoginWithGoogleCommand, ExternalLoginCommandsResponseModel>
     {
         private readonly IGoogleAuthService _googleAuthService;
-        private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
 
@@ -31,7 +30,6 @@ namespace ShoppingApp.CQRS.Handlers
             IUserIdentityService userIdentityService)
         {
             _googleAuthService = googleAuthService;
-            _userManager = userManager;
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
         }
@@ -60,12 +58,12 @@ namespace ShoppingApp.CQRS.Handlers
                         });
                     }
 
-                    var userInDb = await _userManager.FindByEmailAsync(userInfoFromGoogle.Email);
+                    var userInDb = await _userIdentityService.FindByEmailAsync(userInfoFromGoogle.Email);
 
                     var loginInfo = new UserLoginInfo("Google", userInfoFromGoogle.Id, null);
                     if (userInDb != null)
                     {
-                        var loginresult = await _userManager.AddLoginAsync(userInDb, loginInfo);
+                        var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
                         if (loginresult.Succeeded)
                         {
 
@@ -89,11 +87,11 @@ namespace ShoppingApp.CQRS.Handlers
                             ProfilePhoto = userInfoFromGoogle.PictureUrl,
                         };
 
-                        var result = await _userManager.CreateAsync(user);
+                        var result = await _userIdentityService.CreateAsync(user);
 
                         if (result.Succeeded)
                         {
-                            var addLoginResult = await _userManager.AddLoginAsync(user, loginInfo);
+                            var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
 

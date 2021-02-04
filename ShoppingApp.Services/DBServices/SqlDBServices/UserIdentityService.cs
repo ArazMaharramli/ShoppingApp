@@ -18,10 +18,6 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
 
-        // login with facebook
-        // login with google elave olunsun
-
-        //database dependency injection + unitofwork
         public UserIdentityService(DbContextOptions<ShoppingAppDbContext> contextOptions, UserManager<User> userManager)
         {
 
@@ -29,9 +25,9 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
             _userManager = userManager;
         }
 
-        public Task<User> GetUserInfoAsync(string userId)
+        public Task<User> FindByIdAsync(string userId)
         {
-            return _unitOfWork.Users.GetAsync(x => x.Id == userId);
+            return _userManager.FindByIdAsync(userId);
         }
 
         public async Task<RefreshTokenResponseModel> CreateRefreshTokenAsync(string userId, string jwtId)
@@ -173,6 +169,31 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
         public Task<IList<string>> GetRolesAsync(User user)
         {
             return _userManager.GetRolesAsync(user);
+        }
+
+        public Task<User> FindByEmailAsync(string email)
+        {
+            return _userManager.FindByEmailAsync(email);
+        }
+
+        public Task<IdentityResult> AddLoginAsync(User user, UserLoginInfo loginInfo)
+        {
+            return _userManager.AddLoginAsync(user, loginInfo);
+        }
+
+        public Task<IdentityResult> CreateAsync(User user, string password = null)
+        {
+            return _userManager.CreateAsync(user, password);
+        }
+
+        public Task<User> FindByLoginAsync(string providerName, string key)
+        {
+            return _userManager.FindByLoginAsync(providerName, key);
+        }
+
+        public Task<bool> CheckPasswordAsync(User user, string password)
+        {
+            return _userManager.CheckPasswordAsync(user, password);
         }
     }
 }

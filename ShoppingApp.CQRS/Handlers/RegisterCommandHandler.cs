@@ -22,7 +22,6 @@ namespace ShoppingApp.CQRS.Handlers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
-        private readonly UserManager<User> _userManager;
 
         public RegisterCommandHandler(
             DbContextOptions<ShoppingAppDbContext> contextOptions,
@@ -31,14 +30,13 @@ namespace ShoppingApp.CQRS.Handlers
         {
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
-            _userManager = userManager;
         }
 
         public async Task<LoginAndRegisterCommandsResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var userInDb = await _userManager.FindByEmailAsync(request.Email);
+                var userInDb = await _userIdentityService.FindByEmailAsync(request.Email);
                 if (userInDb != null)
                 {
                     return new LoginAndRegisterCommandsResponseModel
@@ -88,7 +86,7 @@ namespace ShoppingApp.CQRS.Handlers
 
                 user.UserContacts.Add(userContact);
 
-                var createUserResult = await _userManager.CreateAsync(user, request.Password);
+                var createUserResult = await _userIdentityService.CreateAsync(user, request.Password);
                 if (!createUserResult.Succeeded)
                 {
                     return new LoginAndRegisterCommandsResponseModel

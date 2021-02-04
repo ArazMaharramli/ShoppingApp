@@ -19,7 +19,6 @@ namespace ShoppingApp.CQRS.Handlers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
-        private readonly UserManager<User> _userManager;
 
         public LoginCommandHandler(
             DbContextOptions<ShoppingAppDbContext> contextOptions,
@@ -28,12 +27,11 @@ namespace ShoppingApp.CQRS.Handlers
         {
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
-            _userManager = userManager;
         }
 
         public async Task<LoginAndRegisterCommandsResponseModel> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _userIdentityService.FindByEmailAsync(request.Email);
             if (user == null)
             {
                 return new LoginAndRegisterCommandsResponseModel
@@ -50,7 +48,7 @@ namespace ShoppingApp.CQRS.Handlers
 
             if (!user.LockoutEnabled)
             {
-                var passwordVerified = await _userManager.CheckPasswordAsync(user, request.Password);
+                var passwordVerified = await _userIdentityService.CheckPasswordAsync(user, request.Password);
 
                 if (passwordVerified)
                 {
@@ -59,6 +57,15 @@ namespace ShoppingApp.CQRS.Handlers
                         User = user
                     };
                 }
+                return new LoginAndRegisterCommandsResponseModel
+                {
+                    HasError = true,
+                    Errors = new List<InternalErrorModel>() {
+                        new InternalErrorModel {
+                        Type = Utils.Enums.ErrorType.Model,
+                        Message = "Verify your password for login"
+                    } },
+                };
             }
 
 

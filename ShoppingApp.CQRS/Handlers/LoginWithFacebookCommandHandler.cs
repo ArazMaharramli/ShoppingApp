@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,7 +10,6 @@ using ShoppingApp.CQRS.Models.ResponseModels;
 using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.AuthServices.FacebookAuthService;
-using ShoppingApp.Services.AuthServices.JwtTokenServices;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.UnitOFWork.Persistence;
 using ShoppingApp.UnitOFWork.Repositories;
@@ -22,7 +20,6 @@ namespace ShoppingApp.CQRS.Handlers
     public class LoginWithFacebookCommandHandler : IRequestHandler<LoginWithFacebookCommand, ExternalLoginCommandsResponseModel>
     {
         private readonly IFacebookAuthService _facebookAuthService;
-        private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
 
@@ -33,7 +30,6 @@ namespace ShoppingApp.CQRS.Handlers
             IUserIdentityService userIdentityService)
         {
             _facebookAuthService = facebookAuthService;
-            _userManager = userManager;
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
         }
@@ -52,12 +48,12 @@ namespace ShoppingApp.CQRS.Handlers
                         return ReturnError(error: userInfoFromFacebook.Error);
                     }
 
-                    var userInDb = await _userManager.FindByEmailAsync(userInfoFromFacebook.Email);
+                    var userInDb = await _userIdentityService.FindByEmailAsync(userInfoFromFacebook.Email);
 
                     var loginInfo = new UserLoginInfo("Facebook", userInfoFromFacebook.Id, null);
                     if (userInDb != null)
                     {
-                        var loginresult = await _userManager.AddLoginAsync(userInDb, loginInfo);
+                        var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
                         if (loginresult.Succeeded)
                         {
 
@@ -91,12 +87,12 @@ namespace ShoppingApp.CQRS.Handlers
                             ProfilePhoto = userInfoFromFacebook.PictureUrl,
                         };
 
-                        var result = await _userManager.CreateAsync(user);
+                        var result = await _userIdentityService.CreateAsync(user);
 
 
                         if (result.Succeeded)
                         {
-                            var addLoginResult = await _userManager.AddLoginAsync(user, loginInfo);
+                            var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
 

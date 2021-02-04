@@ -8,7 +8,7 @@ namespace ShoppingApp.Services.ServiceInstallers
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            var options = services.Configure<SmtpOptions>(configuration.GetSection("EmailSettings"));
+            services.Configure<SmtpOptions>(configuration.GetSection("EmailSettings"));
 
             services.AddTransient<IEmailSender, EmailSender>();
         }
