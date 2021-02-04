@@ -21,6 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingApp.CQRS", "Shoppin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82C4462A-C27E-4E49-B10C-2ABBF7F94EDD}"
 	ProjectSection(SolutionItems) = preProject
+		sharedappsettings_forgit.json = sharedappsettings_forgit.json
 		sharedappsettings.json = sharedappsettings.json
 	EndProjectSection
 EndProject

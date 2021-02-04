@@ -351,3 +351,4 @@ MigrationBackup/
 ShoppingApp.Web.UI/appsettings.json
 ShoppingApp.Web.API/appsettings.json
 SharedSettings.json
+sharedappsettings.json
