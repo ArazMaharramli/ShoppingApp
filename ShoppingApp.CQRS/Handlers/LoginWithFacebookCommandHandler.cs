@@ -11,6 +11,7 @@ using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.AuthServices.FacebookAuthService;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
+using ShoppingApp.Services.EmailServices;
 using ShoppingApp.UnitOFWork.Persistence;
 using ShoppingApp.UnitOFWork.Repositories;
 using ShoppingApp.Utils.InternalModels;
@@ -22,16 +23,18 @@ namespace ShoppingApp.CQRS.Handlers
         private readonly IFacebookAuthService _facebookAuthService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
+        private readonly IEmailSender _emailSender;
 
         public LoginWithFacebookCommandHandler(
             IFacebookAuthService facebookAuthService,
             UserManager<User> userManager,
             DbContextOptions<ShoppingAppDbContext> contextOptions,
-            IUserIdentityService userIdentityService)
+            IUserIdentityService userIdentityService, IEmailSender emailSender)
         {
             _facebookAuthService = facebookAuthService;
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
+            _emailSender = emailSender;
         }
 
         public async Task<ExternalLoginCommandsResponseModel> Handle(LoginWithFacebookCommand request, CancellationToken cancellationToken)
@@ -56,7 +59,6 @@ namespace ShoppingApp.CQRS.Handlers
                         var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
                         if (loginresult.Succeeded)
                         {
-
                             return ReturnSuccess(userInDb);
                         }
                         else
@@ -66,36 +68,32 @@ namespace ShoppingApp.CQRS.Handlers
                     }
                     else
                     {
-                        var userType = await _unitOfWork.UserTypes.GetAsync(x => x.UniqueName == "Customer");
-
-                        if (userType == null)
-                        {
-                            return ReturnError(error: new InternalErrorModel
-                            {
-                                Type = Utils.Enums.ErrorType.Server,
-                                Message = "User Type is null"
-                            });
-                        }
-
                         var user = new User
                         {
                             Email = userInfoFromFacebook.Email,
                             FirstName = userInfoFromFacebook.FirstName,
                             LastName = userInfoFromFacebook.LastName,
                             UserName = userInfoFromFacebook.Email,
-                            UserTypeId = userType.Id,
+                            UserType = request.UserType,
                             ProfilePhoto = userInfoFromFacebook.PictureUrl,
                         };
 
-                        var result = await _userIdentityService.CreateAsync(user);
+                        var userContact = new UserContact
+                        {
+                            ContactType = Utils.Enums.ContactType.Email,
+                            Value = userInfoFromFacebook.Email
+                        };
 
+                        user.UserContacts.Add(userContact);
+
+                        var result = await _userIdentityService.CreateAsync(user);
 
                         if (result.Succeeded)
                         {
                             var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
-
+                                await _emailSender.SendEmailAsync(userInDb.Email, "Welcome", $"Hello,{user.FirstName}. We are glad to see you here.");
                                 return ReturnSuccess(user);
                             }
                             else

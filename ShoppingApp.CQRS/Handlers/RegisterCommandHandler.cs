@@ -4,14 +4,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShoppingApp.CQRS.Models.CommandModels;
 using ShoppingApp.CQRS.Models.ResponseModels;
 using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.UserModels;
-using ShoppingApp.Services.AuthServices.JwtTokenServices;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
+using ShoppingApp.Services.EmailServices;
 using ShoppingApp.UnitOFWork.Persistence;
 using ShoppingApp.UnitOFWork.Repositories;
 using ShoppingApp.Utils.InternalModels;
@@ -22,14 +21,16 @@ namespace ShoppingApp.CQRS.Handlers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
+        private readonly IEmailSender _emailSender;
 
         public RegisterCommandHandler(
             DbContextOptions<ShoppingAppDbContext> contextOptions,
             IUserIdentityService userIdentityService,
-            UserManager<User> userManager)
+            IEmailSender emailSender)
         {
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
+            _emailSender = emailSender;
         }
 
         public async Task<LoginAndRegisterCommandsResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -52,22 +53,6 @@ namespace ShoppingApp.CQRS.Handlers
                         }
                     };
                 }
-                var userType = await _unitOfWork.UserTypes.GetAsync(x => x.UniqueName == "Customer");
-
-                if (userType == null)
-                {
-                    return new LoginAndRegisterCommandsResponseModel
-                    {
-                        HasError = true,
-                        Errors = new List<InternalErrorModel> {
-                            new InternalErrorModel
-                            {
-                                Type = Utils.Enums.ErrorType.Model,
-                                Message ="User type is null"
-                            }
-                        }
-                    };
-                }
 
                 var user = new User
                 {
@@ -75,11 +60,10 @@ namespace ShoppingApp.CQRS.Handlers
                     LastName = request.LastName,
                     Email = request.Email,
                     UserName = request.Email,
-                    UserTypeId = userType.Id,
+                    UserType = request.UserType,
                 };
                 var userContact = new UserContact
                 {
-                    UserId = user.Id,
                     ContactType = Utils.Enums.ContactType.Email,
                     Value = request.Email
                 };
@@ -101,9 +85,7 @@ namespace ShoppingApp.CQRS.Handlers
                     };
                 }
 
-                //_unitOfWork.UserContacts.Add(userContact);
-                //await _unitOfWork.SaveChangesAsync();
-
+                await _emailSender.SendEmailAsync(userInDb.Email, "Welcome", $"Hello,{user.FirstName}. We are glad to see you here.");
                 return new LoginAndRegisterCommandsResponseModel
                 {
                     User = user,

@@ -11,6 +11,7 @@ using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.AuthServices.GoogleAuthService;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
+using ShoppingApp.Services.EmailServices;
 using ShoppingApp.UnitOFWork.Persistence;
 using ShoppingApp.UnitOFWork.Repositories;
 using ShoppingApp.Utils.InternalModels;
@@ -22,16 +23,18 @@ namespace ShoppingApp.CQRS.Handlers
         private readonly IGoogleAuthService _googleAuthService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
+        private readonly IEmailSender _emailSender;
 
         public LoginWithGoogleCommandHandler(
             IGoogleAuthService googleAuthService,
             UserManager<User> userManager,
             DbContextOptions<ShoppingAppDbContext> contextOptions,
-            IUserIdentityService userIdentityService)
+            IUserIdentityService userIdentityService, IEmailSender emailSender)
         {
             _googleAuthService = googleAuthService;
             _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
+            _emailSender = emailSender;
         }
 
         public async Task<ExternalLoginCommandsResponseModel> Handle(LoginWithGoogleCommand request, CancellationToken cancellationToken)
@@ -45,17 +48,6 @@ namespace ShoppingApp.CQRS.Handlers
                     if (userInfoFromGoogle.HasError)
                     {
                         return ReturnError(error: userInfoFromGoogle.Error);
-                    }
-
-                    var userType = await _unitOfWork.UserTypes.GetAsync(x => x.UniqueName == "Customer");
-
-                    if (userType == null)
-                    {
-                        return ReturnError(error: new InternalErrorModel
-                        {
-                            Type = Utils.Enums.ErrorType.Model,
-                            Message = "User Type is null"
-                        });
                     }
 
                     var userInDb = await _userIdentityService.FindByEmailAsync(userInfoFromGoogle.Email);
@@ -83,9 +75,17 @@ namespace ShoppingApp.CQRS.Handlers
                             FirstName = userInfoFromGoogle.FirstName,
                             LastName = userInfoFromGoogle.LastName,
                             UserName = userInfoFromGoogle.Email,
-                            UserTypeId = userType.Id,
+                            UserType = request.UserType,
                             ProfilePhoto = userInfoFromGoogle.PictureUrl,
                         };
+
+                        var userContact = new UserContact
+                        {
+                            ContactType = Utils.Enums.ContactType.Email,
+                            Value = userInfoFromGoogle.Email
+                        };
+
+                        user.UserContacts.Add(userContact);
 
                         var result = await _userIdentityService.CreateAsync(user);
 
@@ -94,7 +94,7 @@ namespace ShoppingApp.CQRS.Handlers
                             var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
-
+                                await _emailSender.SendEmailAsync(userInDb.Email, "Welcome", $"Hello,{user.FirstName}. We are glad to see you here.");
                                 return ReturnSuccess(user);
                             }
                             else

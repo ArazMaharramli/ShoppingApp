@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using ShoppingApp.Domain.Models.Domain.OrderModels;
 using ShoppingApp.Domain.Models.Domain.ShoppingCartModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
+using ShoppingApp.Utils.Enums;
 
 namespace ShoppingApp.Domain.Models.Domain.UserModels
 {
@@ -27,9 +28,8 @@ namespace ShoppingApp.Domain.Models.Domain.UserModels
         public string LastName { get; set; }
 
         public string ProfilePhoto { get; set; }
-        
 
-        public long UserTypeId { get; set; }
+
         public UserType UserType { get; set; }
 
         public long? StoreId { get; set; }
@@ -40,5 +40,5 @@ namespace ShoppingApp.Domain.Models.Domain.UserModels
         public ICollection<ShoppingCart> ShoppingCarts { get; set; } = new HashSet<ShoppingCart>();
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public ICollection<UserContact> UserContacts { get; set; } = new HashSet<UserContact>();
-    }   
+    }
 }

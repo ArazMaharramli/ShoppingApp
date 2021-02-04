@@ -11,9 +11,6 @@ namespace ShoppingApp.Domain.Configurations.UserModelConfiguration
             builder.HasOne(u => u.Store)
                    .WithMany(c => c.Users);
 
-            builder.HasOne(x => x.UserType)
-                .WithMany(x => x.Users);
-
 
             builder.HasMany(e => e.Claims)
                 .WithOne()

@@ -53,7 +53,6 @@ namespace ShoppingApp.UnitOFWork.Repositories
         public IRefreshTokenRepository RefreshTokens { get; }
         public IUserContactRepository UserContacts { get; }
         public IUserNotificationTokenRepository UserNotificationTokens { get; }
-        public IUserTypeRepository UserTypes { get; }
         public IUserRepository Users { get; }
 
         Task<int> SaveChangesAsync();

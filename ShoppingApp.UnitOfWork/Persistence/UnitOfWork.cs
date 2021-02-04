@@ -80,7 +80,6 @@ namespace ShoppingApp.UnitOFWork.Persistence
             RefreshTokens = new RefreshTokenRepository(_context);
             UserNotificationTokens = new UserNotificationTokenRepository(_context);
             UserContacts = new UserContactRepository(_context);
-            UserTypes = new UserTypeRepository(_context);
             Users = new UserRepository(_context);
         }
 
@@ -122,7 +121,6 @@ namespace ShoppingApp.UnitOFWork.Persistence
         public IRefreshTokenRepository RefreshTokens { get; }
         public IUserContactRepository UserContacts { get; }
         public IUserNotificationTokenRepository UserNotificationTokens { get; }
-        public IUserTypeRepository UserTypes { get; }
         public IUserRepository Users { get; }
 
         public void Dispose()

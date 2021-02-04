@@ -1,12 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingApp.Services.AuthServices.FacebookAuthService;
 using ShoppingApp.Services.AuthServices.JwtTokenServices;
 using ShoppingApp.Web.API.Contracts.RequestModels.V1;
 using ShoppingApp.Web.API.ApiRoutes.v1;
 using ShoppingApp.Web.API.Contracts.ResponseModels.V1;
-using ShoppingApp.Services.AuthServices.GoogleAuthService;
 using ShoppingApp.Web.API.Filters;
 using MediatR;
 using ShoppingApp.CQRS.Models.CommandModels;
@@ -113,7 +111,7 @@ namespace ShoppingApp.Web.API.Controllers
         public async Task<IActionResult> LoginWithFacebook([FromBody] LoginWithExternalProviderRequestModel model)
         {
 
-            var command = new LoginWithFacebookCommand(token: model.Token);
+            var command = new LoginWithFacebookCommand(token: model.Token, userType: Utils.Enums.UserType.Customer);
             var response = await _mediatr.Send(command);
 
             if (!response.HasError)
@@ -177,7 +175,7 @@ namespace ShoppingApp.Web.API.Controllers
         // response modeller ve request modelleri uygun folderlerde yaratmaq ve burda istifade etmek lazimdi 
         public async Task<IActionResult> LoginWithGoogle([FromBody] LoginWithExternalProviderRequestModel model)
         {
-            var command = new LoginWithGoogleCommand(token: model.Token);
+            var command = new LoginWithGoogleCommand(token: model.Token, userType: Utils.Enums.UserType.Customer);
             var response = await _mediatr.Send(command);
 
             if (!response.HasError)
@@ -304,7 +302,8 @@ namespace ShoppingApp.Web.API.Controllers
                 firstName: model.FirstName,
                 lastName: model.LastName,
                 email: model.Email,
-                password: model.Password);
+                password: model.Password,
+                userType: Utils.Enums.UserType.Customer);
 
             var response = await _mediatr.Send(registerCommand);
 
