@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingApp.Utils.InternalModels;
+
 namespace ShoppingApp.CQRS.Models.ResponseModels
 {
     public class ForgotAndResetPasswordResponseModel : BaseResponseModel

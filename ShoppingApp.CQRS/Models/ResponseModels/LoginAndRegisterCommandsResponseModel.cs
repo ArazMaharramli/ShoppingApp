@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using ShoppingApp.Domain.Models.Domain.UserModels;
+using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Models.ResponseModels
 {

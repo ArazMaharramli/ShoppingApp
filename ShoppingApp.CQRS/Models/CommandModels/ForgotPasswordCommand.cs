@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 using ShoppingApp.CQRS.Models.ResponseModels;
 
 namespace ShoppingApp.CQRS.Models.CommandModels

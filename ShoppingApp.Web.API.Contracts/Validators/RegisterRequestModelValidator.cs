@@ -22,4 +22,20 @@ namespace ShoppingApp.Web.API.Contracts.Validators
                 .MinimumLength(6);
         }
     }
+    public class ResetPasswordRequestModelValidator : AbstractValidator<ResetPasswordRequestModel>
+    {
+        public ResetPasswordRequestModelValidator()
+        {
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
+
+            RuleFor(x => x.Code)
+                .NotEmpty();
+
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .MinimumLength(6);
+        }
+    }
 }

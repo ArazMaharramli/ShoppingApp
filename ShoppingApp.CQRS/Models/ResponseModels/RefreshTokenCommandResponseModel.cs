@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Models.ResponseModels
 {

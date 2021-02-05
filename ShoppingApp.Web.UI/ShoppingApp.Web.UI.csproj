@@ -16,6 +16,9 @@
     <Folder Include="wwwroot\assets\js\" />
     <Folder Include="wwwroot\assets\js\pages\" />
     <Folder Include="wwwroot\assets\media\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\Account\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

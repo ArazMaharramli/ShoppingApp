@@ -2,7 +2,7 @@
 
 namespace ShoppingApp.Services.AuthServices.GoogleAuthService.StaticClasses
 {
-    public class UserInfoFromGoogle
+    public class UserInfoFromGoogle : BaseResponseModel
     {
         public string Email { get; set; }
 
@@ -16,8 +16,5 @@ namespace ShoppingApp.Services.AuthServices.GoogleAuthService.StaticClasses
 
 
         public string Id { get; set; }
-
-        public bool HasError { get; set; } = false;
-        public InternalErrorModel Error { get; set; }
     }
 }

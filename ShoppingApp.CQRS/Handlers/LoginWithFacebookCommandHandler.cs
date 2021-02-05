@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using ShoppingApp.CQRS.Models.CommandModels;
 using ShoppingApp.CQRS.Models.ResponseModels;
-using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.AuthServices.FacebookAuthService;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Services.EmailServices;
-using ShoppingApp.UnitOFWork.Persistence;
-using ShoppingApp.UnitOFWork.Repositories;
+using ShoppingApp.Utils.Enums;
 using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Handlers
@@ -21,18 +19,15 @@ namespace ShoppingApp.CQRS.Handlers
     public class LoginWithFacebookCommandHandler : IRequestHandler<LoginWithFacebookCommand, ExternalLoginCommandsResponseModel>
     {
         private readonly IFacebookAuthService _facebookAuthService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserIdentityService _userIdentityService;
         private readonly IEmailSender _emailSender;
 
         public LoginWithFacebookCommandHandler(
             IFacebookAuthService facebookAuthService,
-            UserManager<User> userManager,
-            DbContextOptions<ShoppingAppDbContext> contextOptions,
-            IUserIdentityService userIdentityService, IEmailSender emailSender)
+            IUserIdentityService userIdentityService,
+            IEmailSender emailSender)
         {
             _facebookAuthService = facebookAuthService;
-            _unitOfWork = new UnitOfWork(new ShoppingAppDbContext(contextOptions));
             _userIdentityService = userIdentityService;
             _emailSender = emailSender;
         }
@@ -44,11 +39,9 @@ namespace ShoppingApp.CQRS.Handlers
                 var userInfoFromFacebook = await _facebookAuthService.ValidateTokenAndGetUserInfoAsync(request.Token);
                 if (userInfoFromFacebook != null)
                 {
-                    if (userInfoFromFacebook.Error != null)
+                    if (userInfoFromFacebook.HasError)
                     {
-                        // write error to db with Unique id
-
-                        return ReturnError(error: userInfoFromFacebook.Error);
+                        return ReturnError(errorList: userInfoFromFacebook.Errors.ToList(), errorType: ErrorType.Server);
                     }
 
                     var userInDb = await _userIdentityService.FindByEmailAsync(userInfoFromFacebook.Email);
@@ -63,7 +56,7 @@ namespace ShoppingApp.CQRS.Handlers
                         }
                         else
                         {
-                            return ReturnError(loginresult);
+                            return ReturnError(result: loginresult, errorType: ErrorType.Model);
                         }
                     }
                     else
@@ -93,64 +86,61 @@ namespace ShoppingApp.CQRS.Handlers
                             var addLoginResult = await _userIdentityService.AddLoginAsync(user, loginInfo);
                             if (addLoginResult.Succeeded)
                             {
-                                await _emailSender.SendWelcomeEmailAsync(userInDb.Email, "Welcome", user.FirstName, "no-link");
+                                await _emailSender.SendWelcomeEmailAsync(userInDb.Email, user.FirstName);
                                 return ReturnSuccess(user);
                             }
                             else
                             {
-                                return ReturnError(addLoginResult);
+                                return ReturnError(result: addLoginResult, errorType: ErrorType.Model);
                             }
                         }
                         else
                         {
-                            return ReturnError(result);
+                            return ReturnError(result: result, errorType: ErrorType.Model);
                         }
                     }
                 }
-                return ReturnError(error: new InternalErrorModel
-                {
-                    Type = Utils.Enums.ErrorType.Model,
-                    Message = "Not Authorized"
-                });
+                return ReturnError(
+                    error: new InternalErrorModel
+                    {
+                        Message = "Not Authorized"
+                    },
+                    errorType: ErrorType.Model);
             }
             catch (Exception ex)
             {
-                return ReturnError(error: new InternalErrorModel
-                {
-                    Type = Utils.Enums.ErrorType.Exception,
-                    Message = ex.Message
-                });
+                return ReturnError(
+                    error: new InternalErrorModel
+                    {
+                        Message = ex.Message
+                    },
+                    errorType: ErrorType.Exception);
             }
 
 
         }
 
         #region Helpers
-        private ExternalLoginCommandsResponseModel ReturnError(IdentityResult result = null, InternalErrorModel error = null)
+        private ExternalLoginCommandsResponseModel ReturnError(ErrorType errorType, IdentityResult result = null, InternalErrorModel error = null, List<InternalErrorModel> errorList = null)
         {
+            var errors = new List<InternalErrorModel>();
             if (error != null)
             {
-                return new ExternalLoginCommandsResponseModel
-                {
-                    HasError = true,
-                    Errors = new List<InternalErrorModel> { error }
-                };
+                errors.Add(error);
             }
-
-            var errors = new List<InternalErrorModel>();
 
             foreach (var item in result.Errors)
             {
                 errors.Add(new InternalErrorModel
                 {
-                    Type = Utils.Enums.ErrorType.Model,
                     Message = item.Description
                 });
             }
-
+            errors.AddRange(errorList);
             return new ExternalLoginCommandsResponseModel
             {
-                HasError = false,
+                HasError = true,
+                ErrorType = errorType,
                 Errors = errors
             };
         }

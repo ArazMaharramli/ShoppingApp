@@ -3,7 +3,7 @@ using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.Services.AuthServices.FacebookAuthService.StaticClasses
 {
-    public class UserInfoFromFacebook
+    public class UserInfoFromFacebook : BaseResponseModel
     {
         public string Email { get; set; }
 
@@ -15,8 +15,5 @@ namespace ShoppingApp.Services.AuthServices.FacebookAuthService.StaticClasses
 
 
         public string Id { get; set; }
-
-        public bool HasError { get; set; } = false;
-        public InternalErrorModel Error { get; set; }
     }
 }

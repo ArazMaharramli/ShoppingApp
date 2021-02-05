@@ -17,16 +17,22 @@ namespace ShoppingApp.Services.EmailServices
             _options = options;
         }
 
-        public async Task SendResetPasswordEmailAsync(string email, string subject, string userName, string resetPasswordUrl)
+        public async Task SendResetPasswordEmailAsync(string email, string userName, string resetPasswordUrl)
         {
             var message = string.Format((new EmailTemplates()).ForgotPassword, userName, resetPasswordUrl);
-            await SendEmailAsync(email, subject, message);
+            await SendEmailAsync(email, "Reset Password", message);
         }
 
-        public async Task SendWelcomeEmailAsync(string email, string subject, string userName, string confirmEmailUrl)
+        public async Task SendWelcomeEmailAsync(string email, string userName)
         {
-            var message = string.Format((new EmailTemplates()).Welcome, userName, confirmEmailUrl);
-            await SendEmailAsync(email, subject, message);
+            var message = string.Format((new EmailTemplates()).Welcome, userName);
+            await SendEmailAsync(email, "Welcome", message);
+        }
+
+        public async Task SendWelcomeConfirmEmailAsync(string email, string userName, string confirmEmailUrl)
+        {
+            var message = string.Format((new EmailTemplates()).WelcomeConfirmEmail, userName, confirmEmailUrl);
+            await SendEmailAsync(email, "Welcome", message);
         }
 
         #region privates
@@ -43,11 +49,18 @@ namespace ShoppingApp.Services.EmailServices
             emailMessage.Body = bodyBuilder.ToMessageBody();
             using (var client = new SmtpClient())
             {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                await client.ConnectAsync(_options.Value.SmtpHost, _options.Value.SmtpPort, SecureSocketOptions.Auto);
-                client.Authenticate(_options.Value.EmailAddress, _options.Value.SmtpPassword);
-                client.Send(emailMessage);
-                await client.DisconnectAsync(true);
+                try
+                {
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    await client.ConnectAsync(_options.Value.SmtpHost, _options.Value.SmtpPort, SecureSocketOptions.Auto);
+                    client.Authenticate(_options.Value.EmailAddress, _options.Value.SmtpPassword);
+                    client.Send(emailMessage);
+                    await client.DisconnectAsync(true);
+                }
+                catch (System.Exception ex)
+                {
+
+                }
             }
         }
         #endregion

@@ -30,23 +30,11 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
             return _userManager.FindByIdAsync(userId);
         }
 
-        public async Task<RefreshTokenResponseModel> CreateRefreshTokenAsync(string userId, string jwtId)
+        public async Task<RefreshTokenResponseModel> CreateRefreshTokenAsync(string userId)
         {
             try
             {
-                var refreshTokenInDb = await _unitOfWork.RefreshTokens.GetAsync(x => x.JwtId == jwtId);
-                if (refreshTokenInDb != null)
-                {
-                    return new RefreshTokenResponseModel
-                    {
-                        HasError = true,
-                        Error = new InternalErrorModel
-                        {
-                            Type = Utils.Enums.ErrorType.Model,
-                            Message = "This JWT is in use. Try an other one."
-                        }
-                    };
-                }
+                var jwtId = Guid.NewGuid().ToString();
 
                 var newRefreshToken = new RefreshToken
                 {
@@ -62,6 +50,7 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
 
                 return new RefreshTokenResponseModel
                 {
+                    JwtId = newRefreshToken.JwtId,
                     RefreshToken = newRefreshToken.Token,
                     ExpireDate = newRefreshToken.ExpireDate,
                     HasError = false
@@ -72,16 +61,18 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
                 return new RefreshTokenResponseModel
                 {
                     HasError = true,
-                    Error = new InternalErrorModel
-                    {
-                        Type = Utils.Enums.ErrorType.Exception,
-                        Message = ex.InnerException.Message
+                    ErrorType = Utils.Enums.ErrorType.Exception,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Message = ex.InnerException.Message
+                        }
                     }
                 };
             }
         }
 
-        public async Task<RefreshTokenResponseModel> UpdateRefreshTokenAsync(string oldRefreshToken, string oldJwtId, string newJwtId)
+        public async Task<RefreshTokenResponseModel> UpdateRefreshTokenAsync(string oldRefreshToken, string oldJwtId)
         {
             var refreshTokenInDb = await _unitOfWork.RefreshTokens.GetAsync(x => x.JwtId == oldJwtId);
             if (refreshTokenInDb == null)
@@ -89,10 +80,12 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
                 return new RefreshTokenResponseModel
                 {
                     HasError = true,
-                    Error = new InternalErrorModel
-                    {
-                        Type = Utils.Enums.ErrorType.Model,
-                        Message = "Not Found"
+                    ErrorType = Utils.Enums.ErrorType.Model,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Message = "Not Found"
+                        }
                     }
                 };
             }
@@ -101,10 +94,12 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
                 return new RefreshTokenResponseModel
                 {
                     HasError = true,
-                    Error = new InternalErrorModel
-                    {
-                        Type = Utils.Enums.ErrorType.Model,
-                        Message = "RefreshToken does not match. Please enter valid one"
+                    ErrorType = Utils.Enums.ErrorType.Model,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Message = "RefreshToken does not match. Please enter valid one"
+                        }
                     }
                 };
             }
@@ -113,10 +108,12 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
                 return new RefreshTokenResponseModel
                 {
                     HasError = true,
-                    Error = new InternalErrorModel
-                    {
-                        Type = Utils.Enums.ErrorType.Model,
-                        Message = "RefreshToken lifetime is expired. Please log in again."
+                    ErrorType = Utils.Enums.ErrorType.Model,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Message = "RefreshToken lifetime is expired. Please log in again."
+                        }
                     }
                 };
             }
@@ -128,7 +125,7 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
             {
                 var newRefreshToken = new RefreshToken
                 {
-                    JwtId = newJwtId,
+                    JwtId = Guid.NewGuid().ToString(),
                     Token = Guid.NewGuid().ToString("N"),
                     ExpireDate = DateTime.Now.AddMonths(6),
                     Status = Utils.Enums.RefreshTokenStatus.Active,
@@ -140,6 +137,7 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
 
                 return new RefreshTokenResponseModel
                 {
+                    JwtId = newRefreshToken.JwtId,
                     RefreshToken = newRefreshToken.Token,
                     ExpireDate = newRefreshToken.ExpireDate,
                     HasError = false
@@ -150,11 +148,12 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
                 return new RefreshTokenResponseModel
                 {
                     HasError = true,
-
-                    Error = new InternalErrorModel
-                    {
-                        Type = Utils.Enums.ErrorType.Exception,
-                        Message = ex.Message
+                    ErrorType = Utils.Enums.ErrorType.Exception,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Message = ex.InnerException.Message
+                        }
                     }
                 };
             }
@@ -169,6 +168,17 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
         public Task<IList<string>> GetRolesAsync(User user)
         {
             return _userManager.GetRolesAsync(user);
+        }
+
+        public async Task<IList<Claim>> GetAllRolesAndClaimsAsync(User user)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            return claims;
         }
 
         public Task<User> FindByEmailAsync(string email)
@@ -204,6 +214,32 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
         public Task<bool> IsEmailConfirmedAsync(User user)
         {
             return _userManager.IsEmailConfirmedAsync(user);
+        }
+
+        public Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public Task<IdentityResult> ResetPasswordAsync(User user, string code, string password)
+        {
+            return _userManager.ResetPasswordAsync(user, code, password);
+        }
+
+        public async Task<string> GetEmail(string userId)
+        {
+            return (await _userManager.FindByIdAsync(userId)).Email;
+        }
+
+        public async Task<bool> ConfirmEmailAsync(string userId, string code)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null && code != null)
+            {
+                var result = await _userManager.ConfirmEmailAsync(user, code);
+                return result.Succeeded;
+            }
+            return false;
         }
     }
 }

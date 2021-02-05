@@ -19,7 +19,8 @@ namespace ShoppingApp.Web.API.ApiRoutes.v1
             //?????? sorgu mentiqini dusunmek lazimdi
             public const string LoginWithPhoneNumber = Base + ControllerName + "/login/phonenumber";
             public const string Register = Base + ControllerName + "/register";
-
+            public const string ForgotPassword = Base + ControllerName + "/forgotpassword";
+            public const string ResetPassword = Base + ControllerName + "/resetpassword";
         }
     }
 }

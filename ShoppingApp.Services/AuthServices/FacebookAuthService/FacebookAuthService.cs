@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -30,11 +31,13 @@ namespace ShoppingApp.Services.AuthServices.FacebookAuthService
             {
                 return new UserInfoFromFacebook
                 {
-                    Error = new InternalErrorModel
-                    {
-                        Code = tokenValidationResult.Data.Error.Code,
-                        Type = Utils.Enums.ErrorType.Model,
-                        Message = tokenValidationResult.Data.Error.Message,
+                    ErrorType = Utils.Enums.ErrorType.Model,
+                    Errors = new List<InternalErrorModel>{
+                        new InternalErrorModel
+                        {
+                            Code = tokenValidationResult.Data.Error.Code,
+                            Message = tokenValidationResult.Data.Error.Message,
+                        }
                     }
                 };
             }

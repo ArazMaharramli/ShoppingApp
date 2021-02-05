@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Utils.InternalModels;
 

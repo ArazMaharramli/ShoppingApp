@@ -7,6 +7,7 @@ using ShoppingApp.Services.AuthServices.GoogleAuthService.Options;
 using ShoppingApp.Utils.InternalModels;
 using ShoppingApp.Utils.Enums;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace ShoppingApp.Services.AuthServices.GoogleAuthService
 {
@@ -31,12 +32,14 @@ namespace ShoppingApp.Services.AuthServices.GoogleAuthService
                     return new UserInfoFromGoogle
                     {
                         HasError = true,
-                        Error = new InternalErrorModel
-                        {
-                            //ixtiyari verilib http response codlarina uygun
-                            Code = 401,
-                            Type = ErrorType.Model,
-                            Message = "Token is not valid!"
+                        ErrorType = ErrorType.Model,
+                        Errors = new List<InternalErrorModel>{
+                            new InternalErrorModel
+                            {
+                                //ixtiyari verilib http response codlarina uygun
+                                Code = 401,
+                                Message = "Token is not valid!"
+                            }
                         }
                     };
                 }
@@ -55,11 +58,13 @@ namespace ShoppingApp.Services.AuthServices.GoogleAuthService
             return new UserInfoFromGoogle
             {
                 HasError = true,
-                Error = new InternalErrorModel
-                {
-                    Code = 401,
-                    Type = ErrorType.Server,
-                    Message = "Google Server did not respond."
+                ErrorType = ErrorType.Server,
+                Errors = new List<InternalErrorModel>{
+                    new InternalErrorModel
+                    {
+                        Code = 401,
+                        Message = "Google Server did not respond."
+                    }
                 }
             };
         }

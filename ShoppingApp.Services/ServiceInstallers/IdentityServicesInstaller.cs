@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShoppingApp.Domain.Data;
@@ -18,6 +19,10 @@ namespace ShoppingApp.Services.ServiceInstallers
                 config.Password.RequireUppercase = configuration.GetValue<bool>("PasswordSettings:RequireUppercase");
                 config.Password.RequiredLength = configuration.GetValue<int>("PasswordSettings:RequiredLength");
                 config.SignIn.RequireConfirmedEmail = configuration.GetValue<bool>("PasswordSettings:RequireConfirmedEmail");
+
+                config.Lockout.AllowedForNewUsers = false;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                config.Lockout.MaxFailedAccessAttempts = 5;
             })
                 .AddEntityFrameworkStores<ShoppingAppDbContext>()
                 .AddDefaultTokenProviders();

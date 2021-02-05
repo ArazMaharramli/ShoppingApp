@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ShoppingApp.Web.API.Contracts.ResponseModels.V1
 {
