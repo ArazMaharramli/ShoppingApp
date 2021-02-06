@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingApp.CQRS.Models.CommandModels;
@@ -213,6 +214,14 @@ namespace ShoppingApp.Web.UI.Controllers
                 return RedirectToAction("Login", "Account", new { Area = "", returnUrl = returnUrl });
             }
             return RedirectToAction("Login", "Account", new { Area = "", returnUrl = returnUrl });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
 
         #region MyRegion
