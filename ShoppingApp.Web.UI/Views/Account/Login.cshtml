@@ -1,6 +1,8 @@
 ﻿@model ShoppingApp.Web.UI.ViewModels.Account.LoginViewModel
 @{ ViewData["Title"] = "Login";
-    Layout = "/Views/Shared/_AccountLayout.cshtml"; }
+    Layout = "/Views/Shared/_AccountLayout.cshtml";
+    var url = $"{Context.Request.Path}{Context.Request.QueryString}";
+}
 
 @section Styles{
     <link href="assets/css/pages/login/login-3.css" rel="stylesheet" type="text/css" />
@@ -11,8 +13,6 @@
 }
 
 @section Scripts{
-
-    @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script>// google
         var googleUser = {};
@@ -32,8 +32,9 @@
                 function (googleUser) {
 
                     var profile = googleUser.getAuthResponse();
-                    console.log(JSON.stringify(profile, null, 2));
-                    console.log('ID: ' + profile.id_token);
+                    @*console.log(JSON.stringify(profile, null, 2));*@
+                    window.location = "/Account/Login/Google/" + profile.id_token;
+                    @*console.log('ID: ' + profile.id_token);*@
                 }, function (error) {
                     alert(JSON.stringify(error, undefined, 2));
                 });

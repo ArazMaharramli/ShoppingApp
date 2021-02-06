@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingApp.CQRS.Models.CommandModels;
+using ShoppingApp.CQRS.Models.ResponseModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.Enums;
@@ -30,22 +31,22 @@ namespace ShoppingApp.Web.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             var command = new LoginCommand(email: model.Email, password: model.Password);
             var response = await _mediator.Send(command);
             if (!response.HasError)
             {
                 await _signInManager.SignInAsync(response.User, true);
-                return RedirectToAction("Index", "Home");
+                return RedirectToLocal(returnUrl);
             }
-            if (response.ErrorType == Utils.Enums.ErrorType.Model)
+            if (response.ErrorType == ErrorType.Model)
             {
                 foreach (var item in response.Errors)
                 {
@@ -184,5 +185,48 @@ namespace ShoppingApp.Web.UI.Controllers
             return RedirectToAction("Error", "Home", new { area = "" });
         }
 
+        [HttpGet("[controller]/Login/{provider}/{idToken}")]
+        public async Task<IActionResult> ExternalLogin(string provider, string idToken, string returnUrl)
+        {
+            ExternalLoginCommandsResponseModel response = new ExternalLoginCommandsResponseModel();
+            if (provider.ToLower() == "facebook")
+            {
+                var command = new LoginWithFacebookCommand(token: idToken, userType: UserType.Customer);
+                response = await _mediator.Send(command);
+            }
+            else if (provider.ToLower() == "google")
+            {
+                var command = new LoginWithGoogleCommand(token: idToken, userType: UserType.Customer);
+                response = await _mediator.Send(command);
+            }
+            if (!response.HasError)
+            {
+                await _signInManager.SignInAsync(response.User, true);
+                return RedirectToLocal(returnUrl);
+            }
+            if (response.ErrorType == ErrorType.Model)
+            {
+                foreach (var item in response.Errors)
+                {
+                    ModelState.AddModelError("", item.Message);
+                }
+                return RedirectToAction("Login", "Account", new { Area = "", returnUrl = returnUrl });
+            }
+            return RedirectToAction("Login", "Account", new { Area = "", returnUrl = returnUrl });
+        }
+
+        #region MyRegion
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("index", "home", new { Area = "" });
+            }
+        }
+        #endregion
     }
 }

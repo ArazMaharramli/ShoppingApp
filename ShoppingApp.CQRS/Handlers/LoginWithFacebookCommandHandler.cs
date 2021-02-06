@@ -49,15 +49,22 @@ namespace ShoppingApp.CQRS.Handlers
                     var loginInfo = new UserLoginInfo("Facebook", userInfoFromFacebook.Id, null);
                     if (userInDb != null)
                     {
-                        var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
-                        if (loginresult.Succeeded)
+                        var userWithThisLogin = await _userIdentityService.FindByLoginAsync("Facebook", userInfoFromFacebook.Id);
+                        if (userWithThisLogin == null)
                         {
-                            return ReturnSuccess(userInDb);
+                            var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
+                            if (loginresult.Succeeded)
+                            {
+
+                                return ReturnSuccess(userInDb);
+                            }
+                            else
+                            {
+                                return ReturnError(result: loginresult, errorType: ErrorType.Model);
+                            }
                         }
-                        else
-                        {
-                            return ReturnError(result: loginresult, errorType: ErrorType.Model);
-                        }
+
+                        return ReturnSuccess(userWithThisLogin);
                     }
                     else
                     {
@@ -69,6 +76,7 @@ namespace ShoppingApp.CQRS.Handlers
                             UserName = userInfoFromFacebook.Email,
                             UserType = request.UserType,
                             ProfilePhoto = userInfoFromFacebook.PictureUrl,
+                            LockoutEnabled = false
                         };
 
                         var userContact = new UserContact
@@ -136,7 +144,10 @@ namespace ShoppingApp.CQRS.Handlers
                     Message = item.Description
                 });
             }
-            errors.AddRange(errorList);
+            if (errorList != null)
+            {
+                errors.AddRange(errorList);
+            }
             return new ExternalLoginCommandsResponseModel
             {
                 HasError = true,

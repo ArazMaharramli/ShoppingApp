@@ -50,16 +50,21 @@ namespace ShoppingApp.CQRS.Handlers
                     var loginInfo = new UserLoginInfo("Google", userInfoFromGoogle.Id, null);
                     if (userInDb != null)
                     {
-                        var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
-                        if (loginresult.Succeeded)
+                        var userWithThisLogin = await _userIdentityService.FindByLoginAsync("Google", userInfoFromGoogle.Id);
+                        if (userWithThisLogin == null)
                         {
+                            var loginresult = await _userIdentityService.AddLoginAsync(userInDb, loginInfo);
+                            if (loginresult.Succeeded)
+                            {
+                                return ReturnSuccess(userInDb);
+                            }
+                            else
+                            {
+                                return ReturnError(result: loginresult, errorType: ErrorType.Model);
+                            }
+                        }
 
-                            return ReturnSuccess(userInDb);
-                        }
-                        else
-                        {
-                            return ReturnError(result: loginresult, errorType: ErrorType.Model);
-                        }
+                        return ReturnSuccess(userWithThisLogin);
                     }
                     else
                     {
@@ -72,6 +77,7 @@ namespace ShoppingApp.CQRS.Handlers
                             UserName = userInfoFromGoogle.Email,
                             UserType = request.UserType,
                             ProfilePhoto = userInfoFromGoogle.PictureUrl,
+                            LockoutEnabled = false
                         };
 
                         var userContact = new UserContact
@@ -137,7 +143,10 @@ namespace ShoppingApp.CQRS.Handlers
                     Message = item.Description
                 });
             }
-            errors.AddRange(errorList);
+            if (errorList != null)
+            {
+                errors.AddRange(errorList);
+            }
             return new ExternalLoginCommandsResponseModel
             {
                 HasError = true,
