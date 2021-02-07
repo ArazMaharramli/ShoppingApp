@@ -25,6 +25,7 @@ namespace ShoppingApp.Services.ServiceInstallers
                 config.Lockout.MaxFailedAccessAttempts = 5;
             })
                 .AddEntityFrameworkStores<ShoppingAppDbContext>()
+                .AddRoles<Role>()
                 .AddDefaultTokenProviders();
         }
     }
