@@ -22,6 +22,8 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 
         public Task<bool> IsEmailConfirmedAsync(User user);
 
+        public Task<BaseResponseModel> InvalidateRefreshTokenAsync(string jwtId);
+
         public Task<IdentityResult> AddLoginAsync(User user, UserLoginInfo loginInfo);
         public Task<IdentityResult> CreateAsync(User user, string password = null);
         public Task<IdentityResult> ResetPasswordAsync(User user, string code, string password);

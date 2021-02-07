@@ -72,6 +72,32 @@ namespace ShoppingApp.Services.DBServices.SqlDBServices
             }
         }
 
+        public async Task<BaseResponseModel> InvalidateRefreshTokenAsync(string jwtId)
+        {
+            var refreshToken = await _unitOfWork.RefreshTokens.GetAsync(x => x.JwtId == jwtId);
+            if (!(refreshToken is null))
+            {
+                refreshToken.Status = Utils.Enums.RefreshTokenStatus.Invalidated;
+                _unitOfWork.RefreshTokens.Update(refreshToken);
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Dispose();
+                return new BaseResponseModel
+                {
+                    HasError = false
+                };
+            }
+            return new BaseResponseModel
+            {
+                HasError = true,
+                Errors = new List<InternalErrorModel> {
+                    new InternalErrorModel
+                    {
+                        Message = "Not Found"
+                    }
+                }
+            };
+        }
+
         public async Task<RefreshTokenResponseModel> UpdateRefreshTokenAsync(string oldRefreshToken, string oldJwtId)
         {
             var refreshTokenInDb = await _unitOfWork.RefreshTokens.GetAsync(x => x.JwtId == oldJwtId);

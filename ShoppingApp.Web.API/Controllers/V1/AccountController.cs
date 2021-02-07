@@ -10,6 +10,7 @@ using ShoppingApp.CQRS.Models.CommandModels;
 using AutoMapper;
 using System;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
+using ShoppingApp.Web.API.ExtentionMethods;
 
 namespace ShoppingApp.Web.API.Controllers
 {
@@ -318,6 +319,27 @@ namespace ShoppingApp.Web.API.Controllers
                 });
             }
             return BadRequest();
+        }
+
+        [HttpPost(APIRoutes.Account.Logout)]
+        public async Task<IActionResult> Logout()
+        {
+            var jwt = HttpContext.GetJwt();
+            if (!(jwt is null))
+            {
+                var jwtId = _jwtTokenService.GetTokenId(jwt);
+                if (!(jwtId is null))
+                {
+                    var result = await _userIdentityService.InvalidateRefreshTokenAsync(jwtId);
+                    if (!result.HasError)
+                    {
+                        return Ok();
+                    }
+                }
+                return BadRequest();
+            }
+            return BadRequest();
+
         }
     }
 }

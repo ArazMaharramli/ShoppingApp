@@ -1,25 +1,20 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
-using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.Web.API.ExtentionMethods
 {
-    //public static class HttpContextExtentionMethods
-    //{
-    //    public static UserInfoModel GetUserInfo(this HttpContext httpContext)
-    //    {
-    //        if (httpContext.User == null)
-    //        {
-    //            return new UserInfoModel
-    //            {
-    //                UserId = string.Empty,
-    //            };
-    //        }
+    public static class HttpContextExtentionMethods
+    {
+        public static string GetJwt(this HttpContext httpContext)
+        {
 
-    //        return new UserInfoModel{
-    //            UserId = httpContext.User.Claims.Single(x => x.Type == "Id").Value,
-    //        };
+            httpContext.Request.Headers.TryGetValue("authorization", out var value);
+            if (value.FirstOrDefault() != null)
+            {
+                return value.FirstOrDefault().Split(" ").Last();
+            }
 
-    //    }
-    //}
+            return null;
+        }
+    }
 }
