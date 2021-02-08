@@ -19,6 +19,20 @@
     <Folder Include="Views\Account\" />
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\Account\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="wwwroot\adminfiles\" />
+    <Folder Include="wwwroot\adminfiles\assets\" />
+    <Folder Include="wwwroot\adminfiles\assets\plugins\" />
+    <Folder Include="wwwroot\adminfiles\assets\css\" />
+    <Folder Include="wwwroot\adminfiles\assets\plugins\global\" />
+    <Folder Include="wwwroot\adminfiles\assets\plugins\custom\" />
+    <Folder Include="wwwroot\adminfiles\assets\js\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

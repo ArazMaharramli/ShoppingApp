@@ -1,22 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoppingApp.CQRS.Handlers;
-using ShoppingApp.Domain.Data;
-using ShoppingApp.Domain.Models.Domain.UserModels;
-using ShoppingApp.UnitOFWork.Persistence;
-using ShoppingApp.UnitOFWork.Repositories;
 using MediatR;
-using ShoppingApp.Services.DBServices.DBServiceInterfaces;
-using ShoppingApp.Services.DBServices.SqlDBServices;
-using ShoppingApp.Services.AuthServices.FacebookAuthService;
-using ShoppingApp.Services.AuthServices.FacebookAuthService.Options;
-using ShoppingApp.Services.AuthServices.GoogleAuthService.Options;
-using ShoppingApp.Services.AuthServices.GoogleAuthService;
 using System;
 using ShoppingApp.Services.ServiceInstallers;
 using System.Linq;
@@ -75,6 +63,12 @@ namespace ShoppingApp.Web.UI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                   name: "areas",
+                   pattern: "{area:exists}/{controller}/{action}/{id?}",
+                   defaults: new { controller = "Home", action = "Index" }
+                   );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
