@@ -22,7 +22,7 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
                .WithMany(c => c.Children);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

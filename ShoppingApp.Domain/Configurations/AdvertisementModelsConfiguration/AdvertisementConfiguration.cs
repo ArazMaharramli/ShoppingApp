@@ -14,7 +14,7 @@ namespace ShoppingApp.Domain.Configurations.AdvertisementModelsConfiguration
                 .IsRequired();
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

@@ -17,7 +17,7 @@ namespace ShoppingApp.Domain.Configurations.PaymentModelsConfiguration
                 .HasMaxLength(2100);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

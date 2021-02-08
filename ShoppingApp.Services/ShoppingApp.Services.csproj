@@ -15,7 +15,7 @@
     <Folder Include="AuthServices\JwtTokenServices\Options\" />
     <Folder Include="DBServices\" />
     <Folder Include="DBServices\NoSqlDBServices\" />
-    <Folder Include="DBServices\SqlDBServices\" />
+    <Folder Include="DBServices\DBServicesImplementations\" />
     <Folder Include="DBServices\DBServiceInterfaces\" />
     <Folder Include="AuthServices\GoogleAuthService\" />
     <Folder Include="AuthServices\GoogleAuthService\Options\" />

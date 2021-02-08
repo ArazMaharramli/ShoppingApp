@@ -350,5 +350,6 @@ MigrationBackup/
 .DS_Store
 ShoppingApp.Web.UI/appsettings.json
 ShoppingApp.Web.API/appsettings.json
+ShoppingApp.Domain/Migrations
 SharedSettings.json
 sharedappsettings.json

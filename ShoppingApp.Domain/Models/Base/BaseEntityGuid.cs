@@ -7,6 +7,6 @@ namespace ShoppingApp.Domain.Models.Base
     public class BaseEntityGuid<TStatus> : BaseEntity<TStatus> where TStatus : IConvertible
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Id { get; set; } = Guid.NewGuid().ToString("N");
     }
 }

@@ -7,6 +7,6 @@ namespace ShoppingApp.Domain.Models.Base
     {
         [Key]
         public long Id { get; set; }
-        public Guid UniqueId { get; set; } = Guid.NewGuid();
+        public string GlobalId { get; set; } = Guid.NewGuid().ToString("N");
     }
 }

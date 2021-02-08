@@ -24,7 +24,7 @@ namespace ShoppingApp.Domain.Configurations.AddressModelsConfiguration
                 .WithMany(c => c.Addresses);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

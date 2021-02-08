@@ -12,7 +12,7 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
                 .IsRequired();
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

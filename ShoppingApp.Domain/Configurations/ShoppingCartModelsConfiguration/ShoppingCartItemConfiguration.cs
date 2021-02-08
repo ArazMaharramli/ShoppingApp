@@ -18,7 +18,7 @@ namespace ShoppingApp.Domain.Configurations.ShoppingCartModelsConfiguration
                 .WithMany(x => x.ShoppingCartItems);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
 
         }

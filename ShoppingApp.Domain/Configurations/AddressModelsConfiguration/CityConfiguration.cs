@@ -15,7 +15,7 @@ namespace ShoppingApp.Domain.Configurations.AddressModelsConfiguration
             builder.HasOne(x => x.Country)
                 .WithMany(c => c.Cities);
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

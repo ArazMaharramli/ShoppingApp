@@ -15,7 +15,7 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
                 .WithMany(x => x.Sizes);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

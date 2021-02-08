@@ -19,7 +19,7 @@ namespace ShoppingApp.Domain.Configurations.OrderModelsConfiguration
                 .WithMany(x => x.Orders);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

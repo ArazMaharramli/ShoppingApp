@@ -17,7 +17,7 @@ namespace ShoppingApp.Domain.Configurations.DeliveryModelsConfiguration
                 .IsRequired();
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

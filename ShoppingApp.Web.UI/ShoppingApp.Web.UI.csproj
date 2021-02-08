@@ -33,6 +33,8 @@
     <Folder Include="wwwroot\adminfiles\assets\plugins\global\" />
     <Folder Include="wwwroot\adminfiles\assets\plugins\custom\" />
     <Folder Include="wwwroot\adminfiles\assets\js\" />
+    <Folder Include="Areas\Admin\Views\Category\" />
+    <Folder Include="wwwroot\adminfiles\assets\js\datatablescripts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

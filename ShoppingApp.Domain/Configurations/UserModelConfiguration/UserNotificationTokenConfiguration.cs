@@ -15,7 +15,7 @@ namespace ShoppingApp.Domain.Configurations.UserModelConfiguration
                 .WithMany(x => x.NotificationTokens);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

@@ -10,6 +10,8 @@
     <Folder Include="Models\CommandModels\" />
     <Folder Include="Models\QueryModels\" />
     <Folder Include="Models\ResponseModels\" />
+    <Folder Include="Models\ResponseModels\QueryResponseModels\" />
+    <Folder Include="Handlers\QueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

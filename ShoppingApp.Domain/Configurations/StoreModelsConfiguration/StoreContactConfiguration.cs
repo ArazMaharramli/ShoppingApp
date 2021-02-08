@@ -16,7 +16,7 @@ namespace ShoppingApp.Domain.Configurations.StoreModelsConfiguration
 
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

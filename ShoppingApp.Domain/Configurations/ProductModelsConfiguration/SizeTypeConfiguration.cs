@@ -15,7 +15,7 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
                 .HasMaxLength(7);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

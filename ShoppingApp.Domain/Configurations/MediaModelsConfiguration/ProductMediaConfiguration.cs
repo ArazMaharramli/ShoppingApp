@@ -19,7 +19,7 @@ namespace ShoppingApp.Domain.Configurations.MediaModelsConfiguration
                 .WithMany(x => x.ProductMedias);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }

@@ -11,7 +11,7 @@ using ShoppingApp.UnitOFWork.Persistence;
 using ShoppingApp.UnitOFWork.Repositories;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.Services.DBServices.SqlDBServices
+namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 {
     public class UserIdentityService : IUserIdentityService
     {

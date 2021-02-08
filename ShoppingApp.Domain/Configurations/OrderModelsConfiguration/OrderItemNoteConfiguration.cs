@@ -15,7 +15,7 @@ namespace ShoppingApp.Domain.Configurations.OrderModelsConfiguration
                 .WithMany(x => x.OrderItemNotes);
 
 
-            builder.HasIndex(x => x.UniqueId);
+            builder.HasIndex(x => x.GlobalId);
 
         }
     }
