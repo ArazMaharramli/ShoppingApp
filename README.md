@@ -17,7 +17,7 @@ For using code, you need to modify following files:
  3. appsettings_forgit.json (In Web.UI project)
 
 Required Steps are:
- 1. Replace values of keys with your parameters. For example:\
+ 1. Replace values of keys with your parameters. For example:
 ```json
 "ApiKey":"AbC123KJE43avfe96"
 ```
