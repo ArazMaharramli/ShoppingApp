@@ -148,6 +148,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("float");
 
@@ -162,9 +165,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -177,7 +177,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Address");
                 });
@@ -195,6 +195,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("CountryId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
@@ -208,9 +211,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -218,7 +218,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("City");
                 });
@@ -238,6 +238,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -256,15 +259,12 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Country");
                 });
@@ -285,6 +285,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PropmotionImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(2100)")
@@ -304,15 +307,12 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Advertisement");
                 });
@@ -331,6 +331,9 @@ namespace ShoppingApp.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -338,9 +341,6 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
-
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
@@ -352,7 +352,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("DeliveryOption");
                 });
@@ -504,6 +504,9 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(2100)")
                         .HasMaxLength(2100);
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte>("IsAssignedToStore")
                         .HasColumnType("tinyint");
 
@@ -515,9 +518,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -525,7 +525,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("CreatorStoreId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("PhotoFrame");
                 });
@@ -539,6 +539,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MediaAltAttribute")
                         .HasColumnType("nvarchar(max)");
@@ -565,17 +568,14 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductMedia");
                 });
@@ -592,6 +592,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsUsed")
                         .HasColumnType("bit");
@@ -611,17 +614,14 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("StoreId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("UploadedProductMediaForFutureUse");
                 });
@@ -639,6 +639,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("DeliveryAddressId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<long>("PaymentOptionId")
                         .HasColumnType("bigint");
 
@@ -650,9 +653,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -663,9 +663,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("DeliveryAddressId");
 
-                    b.HasIndex("PaymentOptionId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("PaymentOptionId");
 
                     b.HasIndex("UserId");
 
@@ -685,6 +685,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("DeliveryOptionId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
@@ -702,9 +705,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -712,11 +712,11 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("DeliveryOptionId");
 
+                    b.HasIndex("GlobalId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductDetailId");
-
-                    b.HasIndex("UniqueId");
 
                     b.ToTable("OrderItem");
                 });
@@ -730,6 +730,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -746,17 +749,14 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderItemId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("OrderItemId");
 
                     b.ToTable("OrderItemNote");
                 });
@@ -771,6 +771,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("IconUrl")
                         .HasColumnType("nvarchar(2100)")
                         .HasMaxLength(2100);
@@ -783,9 +786,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -796,7 +796,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("PaymentOption");
                 });
@@ -814,6 +814,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("BrandCountryId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("LogoUrl")
                         .HasColumnType("nvarchar(2100)")
                         .HasMaxLength(2100);
@@ -825,9 +828,6 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
-
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
@@ -845,7 +845,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("BrandCountryId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Brand");
                 });
@@ -859,6 +859,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IconUrl")
                         .HasColumnType("nvarchar(2100)")
@@ -878,9 +881,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -895,9 +895,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Category");
                 });
@@ -911,6 +911,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HexCode")
                         .HasColumnType("nvarchar(9)")
@@ -927,9 +930,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(30)")
@@ -940,7 +940,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Color");
                 });
@@ -955,6 +955,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
@@ -968,15 +971,12 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Material");
                 });
@@ -997,6 +997,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("MaterialId")
                         .HasColumnType("bigint");
@@ -1027,9 +1030,6 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueSlug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1041,9 +1041,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("MaterialId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("MaterialId");
 
                     b.ToTable("Product");
                 });
@@ -1060,6 +1060,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<long>("ColorId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
@@ -1078,9 +1081,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -1088,11 +1088,11 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("ColorId");
 
+                    b.HasIndex("GlobalId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("SizeId");
-
-                    b.HasIndex("UniqueId");
 
                     b.ToTable("ProductDetail");
                 });
@@ -1107,6 +1107,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -1118,9 +1121,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1130,9 +1130,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SizeTypeId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("SizeTypeId");
 
                     b.ToTable("Size");
                 });
@@ -1151,6 +1151,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -1158,9 +1161,6 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
-
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
@@ -1171,7 +1171,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("SizeType");
                 });
@@ -1186,6 +1186,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -1193,9 +1196,6 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
-
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
@@ -1206,7 +1206,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("Tag");
                 });
@@ -1221,6 +1221,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -1232,9 +1235,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -1243,7 +1243,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.HasIndex("UserId");
 
@@ -1259,6 +1259,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
@@ -1277,19 +1280,16 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GlobalId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("ShoppingCartId");
-
-                    b.HasIndex("UniqueId");
 
                     b.ToTable("ShoppingCartItem");
                 });
@@ -1319,6 +1319,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("FacebookUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("InstagramUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -1341,9 +1344,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("StoreTypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("UniqueSlug")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1355,9 +1355,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("StoreTypeId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("StoreTypeId");
 
                     b.ToTable("Store");
                 });
@@ -1371,6 +1371,9 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -1387,17 +1390,14 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<long>("StoreId")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("GlobalId");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("StoreContact");
                 });
@@ -1412,6 +1412,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1424,15 +1427,12 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.ToTable("StoreType");
                 });
@@ -1599,6 +1599,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("ContactType")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -1606,9 +1609,6 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
-
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -1623,7 +1623,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.HasIndex("UserId");
 
@@ -1643,6 +1643,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("DeviceInfo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GlobalId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("NotificationToken")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1655,9 +1658,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<Guid>("UniqueId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -1666,7 +1666,7 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UniqueId");
+                    b.HasIndex("GlobalId");
 
                     b.HasIndex("UserId");
 
