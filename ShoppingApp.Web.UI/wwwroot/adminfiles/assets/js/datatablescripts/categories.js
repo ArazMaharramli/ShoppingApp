@@ -13,18 +13,16 @@ var KTDefaultDatatableDemo = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: 'https://preview.keenthemes.com/metronic/theme/html/tools/preview/api/datatables/demos/default.php'
+                        url: '/admin/category/getpagedcategories/'
                     },
                 },
-                pageSize: 20, // display 20 records per page
+                pageSize: 10, // display 20 records per page
                 serverPaging: true,
                 serverFiltering: true,
                 serverSorting: true,
             },
-
-            // layout definition
             layout: {
-                scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
+                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
                 height: 550, // datatable's body's fixed height
                 footer: false, // display/hide footer
             },
@@ -42,67 +40,35 @@ var KTDefaultDatatableDemo = function () {
             // columns definition
             columns: [
                 {
-                    field: 'RecordID',
+                    field: 'globalId',
                     title: '#',
                     sortable: false,
                     width: 30,
                     type: 'number',
                     selector: { class: 'kt-checkbox--solid' },
                     textAlign: 'center',
+                },
+                {
+                    field: 'uniqueName',
+                    title: 'Name',
                 }, {
-                    field: 'ID',
-                    title: 'ID',
-                    width: 30,
-                    type: 'number',
-                    template: function (row) {
-                        return row.RecordID;
-                    },
+                    field: 'parentName',
+                    title: 'Parent ',
                 }, {
-                    field: 'OrderID',
-                    title: 'Order ID',
-                }, {
-                    field: 'Country',
-                    title: 'Country',
-                    template: function (row) {
-                        return row.Country + ' ' + row.ShipCountry;
-                    },
-                }, {
-                    field: 'ShipDate',
-                    title: 'Ship Date',
+                    field: 'addedDate',
+                    title: 'Added Date',
                     type: 'date',
                     format: 'MM/DD/YYYY',
                 }, {
-                    field: 'CompanyName',
-                    title: 'Company Name',
-                }, {
-                    field: 'Status',
+                    field: 'status',
                     title: 'Status',
-                    // callback function support for column rendering
                     template: function (row) {
                         var status = {
-                            1: { 'title': 'Pending', 'class': 'label-light-primary' },
-                            2: { 'title': 'Delivered', 'class': ' label-light-danger' },
-                            3: { 'title': 'Canceled', 'class': ' label-light-primary' },
-                            4: { 'title': 'Success', 'class': ' label-light-success' },
-                            5: { 'title': 'Info', 'class': ' label-light-info' },
-                            6: { 'title': 'Danger', 'class': ' label-light-danger' },
-                            7: { 'title': 'Warning', 'class': ' label-light-warning' },
+                            "Active": { 'title': 'Active', 'class': 'label-light-primary' },
+                            "Deleted": { 'title': 'Deleted', 'class': 'label-light-danger' },
+                            "Hidden": { 'title': 'Hidden', 'class': 'label-light-info' },
                         };
-                        return '<span class="label ' + status[row.Status].class + ' label-inline font-weight-bold label-lg">' + status[row.Status].title + '</span>';
-                    },
-                }, {
-                    field: 'Type',
-                    title: 'Type',
-                    autoHide: false,
-                    // callback function support for column rendering
-                    template: function (row) {
-                        var status = {
-                            1: { 'title': 'Online', 'state': 'danger' },
-                            2: { 'title': 'Retail', 'state': 'primary' },
-                            3: { 'title': 'Direct', 'state': 'success' },
-                        };
-                        return '<span class="label label-' + status[row.Type].state + ' label-dot mr-2"></span><span class="font-weight-bold text-' + status[row.Type].state + '">' +
-                            status[row.Type].title + '</span>';
+                        return '<span class="label ' + status[row.status].class + ' label-inline font-weight-bold label-lg">' + status[row.status].title + '</span>';
                     },
                 }, {
                     field: 'Actions',

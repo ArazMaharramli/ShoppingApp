@@ -27,7 +27,9 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers
                     pageSize: request.PageSize,
                     pageNumber: request.PageNumber,
                     sortColumn: request.SortColumn,
-                    sortDirection: request.SortDirection);
+                    sortDirection: request.SortDirection,
+                    status: request.Status);
+
                 if (categories.Data != null)
                 {
                     return new GetPagedCategoriesResponseModel

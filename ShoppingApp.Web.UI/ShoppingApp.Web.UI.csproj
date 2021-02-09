@@ -35,6 +35,7 @@
     <Folder Include="wwwroot\adminfiles\assets\js\" />
     <Folder Include="Areas\Admin\Views\Category\" />
     <Folder Include="wwwroot\adminfiles\assets\js\datatablescripts\" />
+    <Folder Include="Areas\Admin\PagedResponseModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

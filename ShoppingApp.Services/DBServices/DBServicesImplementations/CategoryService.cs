@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
@@ -55,10 +56,27 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return _unitOfWork.Categories.GetCategoryTreeAsync(x => x.Status == Utils.Enums.Status.Active);
         }
 
-        public Task<IPagedList<Category>> GetPagedCategoriesAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection)
+        public Task<IPagedList<Category>> GetPagedCategoriesAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)
         {
+            Expression<Func<Category, bool>> predicate;
+            switch (status?.ToLower())
+            {
+                case ("active"):
+                    predicate = x => x.Status == Status.Active;
+                    break;
+                case ("deleted"):
+                    predicate = x => x.Status == Status.Deleted;
+                    break;
+                case ("hidden"):
+                    predicate = x => x.Status == Status.Hidden;
+                    break;
+                default:
+                    predicate = x => true;
+                    break;
+            }
+
             return _unitOfWork.Categories.GetPagedCategoriesAsync(
-               predicate: x => x.Status == Utils.Enums.Status.Active,
+               predicate: predicate,
                searchString: searchString,
                pageSize: pageSize,
                pageNumber: pageNumber,

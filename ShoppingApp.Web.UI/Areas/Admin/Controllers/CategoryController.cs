@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoppingApp.CQRS.Models.CommandModels;
 using ShoppingApp.CQRS.Models.QueryModels;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
+using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
 using ShoppingApp.Web.UI.Areas.Admin.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,19 +28,53 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> GetPagedCategoriesAsync()
+        public async Task<IActionResult> GetPagedCategories()
         {
+            var pageNumber = int.Parse(Request.Form["pagination[page]"].FirstOrDefault() ?? "1");
+            var pageSize = int.Parse(Request.Form["pagination[perpage]"].FirstOrDefault() ?? "10");
+            var totalRecordCount = Request.Form["pagination[total]"].FirstOrDefault();
+            var totalPageCount = Request.Form["pagination[pages]"].FirstOrDefault();
+            var searchString = Request.Form["query[generalSearch]"].FirstOrDefault();
+            var status = Request.Form["query[Status]"].FirstOrDefault();
+            var sortColumn = Request.Form["sort[field]"].FirstOrDefault();
+            var sortDirection = Request.Form["sort[sort]"].FirstOrDefault();
+
+
             var query = new GetPagedCategoriesQuery(
-                searchString: "",
-                pageSize: 10,
-                pageNumber: 1,
-                sortColumn: "Name",
-                sortDirection: "asc");
+                searchString: searchString,
+                pageSize: pageSize,
+                pageNumber: pageNumber,
+                sortColumn: sortColumn,
+                sortDirection: sortDirection,
+                status: status);
+
             var response = await _mediator.Send(query);
+
             if (!response.HasError)
             {
-                return Ok(response.Categories);
+                var model = new BasePagedResponseModel<CategoryResponseModel>
+                {
+                    Meta = new Meta
+                    {
+                        Field = sortColumn,
+                        Sort = sortDirection,
+                        Page = pageNumber,
+                        Pages = response.Categories.PageCount,
+                        Perpage = pageSize,
+                        Total = response.Categories.Total
+                    },
+                    data = response.Categories.Data.Select(x => new CategoryResponseModel
+                    {
+                        GlobalId = x.GlobalId,
+                        UniqueName = x.UniqueName,
+                        ParentName = x.Parent?.UniqueName,
+                        Status = x.Status.ToString(),
+                        AddedDate = x.AddedDate.ToString("dd/MM/yyyy"),
+                    }).ToList()
+                };
+                return Ok(model);
             }
             return NotFound();
         }

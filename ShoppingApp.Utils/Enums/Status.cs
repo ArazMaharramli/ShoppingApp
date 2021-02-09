@@ -1,5 +1,4 @@
-﻿using System;
-namespace ShoppingApp.Utils.Enums
+﻿namespace ShoppingApp.Utils.Enums
 {
     public enum Status : byte
     {
@@ -7,7 +6,7 @@ namespace ShoppingApp.Utils.Enums
         Active = 0,
         Deleted = 1,
         Hidden = 2,
-        
+
     }
 
     public enum StoreStatus : byte
@@ -23,11 +22,11 @@ namespace ShoppingApp.Utils.Enums
         Official = 11,
     }
 
-    public enum OrderStatus:byte
+    public enum OrderStatus : byte
     {
         Active = 0,
         Deleted = 1,
-        
+
         Hidden = 2,
 
         // 16 -> 25
@@ -43,7 +42,7 @@ namespace ShoppingApp.Utils.Enums
     {
         Active = 0,
         Deleted = 1,
-        
+
         Hidden = 2,
 
         //26 -> 36
@@ -54,7 +53,7 @@ namespace ShoppingApp.Utils.Enums
     {
         Active = 0,
         Deleted = 1,
-        
+
         Hidden = 2,
 
         // 37 -> 47
@@ -63,7 +62,7 @@ namespace ShoppingApp.Utils.Enums
     {
         Active = 0,
         Deleted = 1,
-        
+
         Hidden = 2,
 
         // 48 -> 58
@@ -102,6 +101,6 @@ namespace ShoppingApp.Utils.Enums
 
         // 77 -> 88
         Used = 70,
-        Invalidated = 71 
+        Invalidated = 71
     }
 }
