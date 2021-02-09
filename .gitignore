@@ -353,3 +353,4 @@ ShoppingApp.Web.API/appsettings.json
 ShoppingApp.Domain/Migrations
 SharedSettings.json
 sharedappsettings.json
+ShoppingApp.Domain/Migrations/ShoppingAppDbContextModelSnapshot.cs
