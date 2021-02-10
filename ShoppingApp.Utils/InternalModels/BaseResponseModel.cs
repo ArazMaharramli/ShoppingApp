@@ -8,5 +8,7 @@ namespace ShoppingApp.Utils.InternalModels
         public bool HasError { get; set; }
         public ErrorType ErrorType { get; set; }
         public IEnumerable<InternalErrorModel> Errors { get; set; }
+
+
     }
 }

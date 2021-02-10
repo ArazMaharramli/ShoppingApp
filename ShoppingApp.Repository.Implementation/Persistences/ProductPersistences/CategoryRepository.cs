@@ -21,9 +21,9 @@ namespace ShoppingApp.Repository.Implementation.Persistences.ProductPersistences
 
         public ShoppingAppDbContext ShoppingAppDbContext => Context as ShoppingAppDbContext;
 
-        public async Task<List<Category>> GetCategoryTreeAsync(Expression<Func<Category, bool>> predicate)
+        public Task<List<Category>> GetCategoryTreeAsync(Expression<Func<Category, bool>> predicate)
         {
-            return await Context.Set<Category>()
+            return Context.Set<Category>()
                 .Include(x => x.Children)
                 .Where(predicate)
                 .ToListAsync();
@@ -92,6 +92,15 @@ namespace ShoppingApp.Repository.Implementation.Persistences.ProductPersistences
                 pageSize: pageSize,
                 pageNumber: pageNumber,
                 pageCount: pageCount);
+        }
+
+        public Task<Category> GetWithAllNavigationsAsync(Expression<Func<Category, bool>> predicate)
+        {
+            return Context.Set<Category>()
+                .Include(x => x.Children)
+                .Include(x => x.Parent)
+                .Where(predicate)
+                .FirstOrDefaultAsync();
         }
     }
 }

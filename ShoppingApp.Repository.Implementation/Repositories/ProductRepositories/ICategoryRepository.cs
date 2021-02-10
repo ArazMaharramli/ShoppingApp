@@ -11,6 +11,7 @@ namespace ShoppingApp.Repository.Implementation.Repositories.ProductRepositories
     public interface ICategoryRepository : IRepository<Category>
     {
         Task<List<Category>> GetCategoryTreeAsync(Expression<Func<Category, bool>> predicate);
+        Task<Category> GetWithAllNavigationsAsync(Expression<Func<Category, bool>> predicate);
         Task<IPagedList<Category>> GetPagedCategoriesAsync(Expression<Func<Category, bool>> predicate, string searchString, string sortColumn, string sortDirection, int pageSize = 10, int pageNumber = 1);
     }
 }

@@ -78,7 +78,7 @@ var KTDefaultDatatableDemo = function () {
                     overflow: 'visible',
                     autoHide: false,
                     template: function (row) {
-                        return '\<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                        return '\<a href="/admin/category/edit/' + row.globalId + '"class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 								<i class="la la-edit"></i>\
 							</a>\
 							<a id="'+ row.globalId + '" class="btn btn-sm btn-clean btn-icon deletebtn" title="Delete">\

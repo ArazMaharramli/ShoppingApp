@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.UnitOFWork.Repositories;
+using ShoppingApp.Utils.Classes;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Utils.InternalModels;
 
@@ -68,7 +69,11 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public Task<Category> FindByGobalIdAsync(string globalId)
         {
-            return _unitOfWork.Categories.GetAsync(x => x.GlobalId == globalId);
+            return _unitOfWork.Categories.GetWithAllNavigationsAsync(x => x.GlobalId == globalId);
+        }
+        public Task<IEnumerable<Category>> FindRangeAsync(string[] globalIds)
+        {
+            return _unitOfWork.Categories.FindAsync(x => globalIds.Contains(x.GlobalId));
         }
 
         public Task<Category> FindByNameAndStatusAsync(string name, Status status = Status.Active)
@@ -81,9 +86,14 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return _unitOfWork.Categories.GetCategoryTreeAsync(x => x.Status != Status.Deleted);
         }
 
+        public Task<List<Category>> GetAllHiddenCategoriesAsync()
+        {
+            return _unitOfWork.Categories.GetCategoryTreeAsync(x => x.Status == Status.Hidden);
+        }
+
         public Task<Category> GetBySlugAsync(string slug)
         {
-            return _unitOfWork.Categories.GetAsync(x => x.UniqueSlug.ToLower() == slug.ToLower());
+            return _unitOfWork.Categories.GetWithAllNavigationsAsync(x => x.UniqueSlug.ToLower() == slug.ToLower());
         }
 
         public Task<IPagedList<Category>> GetPagedCategoriesAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)
@@ -114,6 +124,14 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                sortDirection: sortDirection);
         }
 
+        public async Task<Category> UpdateAsync(Category category)
+        {
+            category.UpdatedDate = LocalTime.Now();
+            _unitOfWork.Categories.Update(category);
+            await _unitOfWork.SaveChangesAsync();
+            return category;
+        }
+
         public async Task<List<Category>> UpdateStatusRangeAsync(string[] globalIds, Status status)
         {
             var categoriesInDb = (await _unitOfWork.Categories.FindAsync(x => globalIds.Contains(x.GlobalId)))?.ToList();
@@ -122,6 +140,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 for (int i = 0; i < categoriesInDb.Count(); i++)
                 {
                     categoriesInDb[i].Status = status;
+                    categoriesInDb[i].UpdatedDate = LocalTime.Now();
                 }
 
                 _unitOfWork.Categories.UpdateRange(categoriesInDb);

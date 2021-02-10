@@ -130,6 +130,65 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             return View(model);
         }
 
+
+
+        [HttpGet("[area]/[controller]/[action]/{globalId}")]
+        public async Task<IActionResult> Edit(string globalId)
+        {
+
+            var query = new GetCategoriesQuery();
+            var response = await _mediator.Send(query);
+
+            var model = new EditCategoryViewModel();
+
+            if (!response.HasError)
+            {
+                var getCategoryQuery = new GetCategoryByIdQuery(globalId: globalId);
+                var getCategoryResponse = await _mediator.Send(getCategoryQuery);
+
+                if (!getCategoryResponse.HasError)
+                {
+                    model.CategoryName = getCategoryResponse.Category.UniqueName;
+                    model.CategorySlug = getCategoryResponse.Category.UniqueSlug;
+                    model.SelectedChildrenCategoryIds = getCategoryResponse.Category.Children.Select(x => x.GlobalId).ToArray();
+                    model.SelectedParentCategoryId = getCategoryResponse.Category.Parent?.GlobalId;
+                }
+
+                model.Categories = new SelectList(response.Categories.Where(x => x.GlobalId != globalId), nameof(Category.GlobalId), nameof(Category.UniqueName));
+            }
+
+            return View(model);
+        }
+        [HttpPost("[area]/[controller]/[action]/{globalId}")]
+        public async Task<IActionResult> Edit(string globalId, EditCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var command = new UpdateCategoryCommand(
+                    globalId: globalId,
+                    name: model.CategoryName,
+                    slug: model.CategorySlug,
+                    parentId: model.SelectedParentCategoryId,
+                    childrenIds: model.SelectedChildrenCategoryIds);
+                var response = await _mediator.Send(command);
+
+                if (!response.HasError)
+                {
+                    return RedirectToAction("Index", "Category", new { Area = "Admin" });
+                }
+                if (response.ErrorType == ErrorType.Model)
+                {
+                    foreach (var item in response.Errors)
+                    {
+                        ModelState.AddModelError("", item.Message);
+                    }
+                    return View(FillEditCategoryViewModelAsync(model, globalId));
+                }
+            }
+            return View(FillEditCategoryViewModelAsync(model, globalId));
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> UpdateStatusRange(string[] globalIds, string status)
         {
@@ -197,6 +256,20 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             }
             return NotFound();
         }
+
+        #region modelFillers
+        private async Task<EditCategoryViewModel> FillEditCategoryViewModelAsync(EditCategoryViewModel model, string globalId)
+        {
+            var query = new GetCategoriesQuery();
+            var response = await _mediator.Send(query);
+            if (!response.HasError)
+            {
+                model.Categories = new SelectList(response.Categories.Where(x => x.GlobalId != globalId), nameof(Category.GlobalId), nameof(Category.UniqueName));
+            }
+            return model;
+
+        }
+        #endregion
     }
 
 }
