@@ -64,7 +64,7 @@ var KTDefaultDatatableDemo = function () {
                     title: 'Status',
                     template: function (row) {
                         var status = {
-                            "Active": { 'title': 'Active', 'class': 'label-light-primary' },
+                            "Active": { 'title': 'Active', 'class': 'label-light-success' },
                             "Deleted": { 'title': 'Deleted', 'class': 'label-light-danger' },
                             "Hidden": { 'title': 'Hidden', 'class': 'label-light-info' },
                         };
@@ -77,24 +77,11 @@ var KTDefaultDatatableDemo = function () {
                     width: 125,
                     overflow: 'visible',
                     autoHide: false,
-                    template: function () {
-                        return '\
-							<div class="dropdown dropdown-inline">\
-								<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" data-toggle="dropdown">\
-	                                <i class="la la-cog"></i>\
-	                            </a>\
-							  	<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">\
-									<ul class="nav nav-hoverable flex-column">\
-							    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-edit"></i><span class="nav-text">Edit Details</span></a></li>\
-							    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-leaf"></i><span class="nav-text">Update Status</span></a></li>\
-							    		<li class="nav-item"><a class="nav-link" href="#"><i class="nav-icon la la-print"></i><span class="nav-text">Print</span></a></li>\
-									</ul>\
-							  	</div>\
-							</div>\
-							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                    template: function (row) {
+                        return '\<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 								<i class="la la-edit"></i>\
 							</a>\
-							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+							<a id="'+ row.globalId + '" class="btn btn-sm btn-clean btn-icon deletebtn" title="Delete">\
 								<i class="la la-trash"></i>\
 							</a>\
 						';
@@ -104,6 +91,9 @@ var KTDefaultDatatableDemo = function () {
         };
 
         var datatable = $('#kt_datatable').KTDatatable(options);
+
+
+
 
         // both methods are supported
         // datatable.methodName(args); or $(datatable).KTDatatable(methodName, args);
@@ -131,40 +121,186 @@ var KTDefaultDatatableDemo = function () {
         });
 
         // get checked record and get value by column name
-        $('#kt_datatable_get').on('click', function () {
-            // select active rows
-            datatable.rows('.datatable-row-active');
-            // check selected nodes
+
+        $('#setStatusActive').on('click', function () {
+
             if (datatable.nodes().length > 0) {
                 // get column by field name and get the column nodes
-                var value = datatable.columns('CompanyName').nodes().text();
-                console.log(value);
+
+                var ids = datatable.rows('.datatable-row-active').
+                    nodes().
+                    find('.checkbox > [type="checkbox"]').
+                    map(function (i, chk) {
+                        return $(chk).val();
+                    }).get();
+
+                let data = {
+                    globalIds: ids,
+                    status: "Active"
+                };
+                console.log(data);
+                $.ajax({
+                    url: "admin/category/UpdateStatusRange/",
+                    method: "Post",
+                    data: data,
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Updated",
+                            text: response.Message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        });
+
+                        $('#kt_datatable').KTDatatable('reload');
+                        $('#kt_datatable_group_action_form').collapse('hide');
+                    },
+                    error: function (request, status, error) {
+                        Swal.fire({
+                            title: "Something went wrong!",
+                            text: response.Message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    },
+                });
             }
         });
 
-        // record selection
-        $('#kt_datatable_check').on('click', function () {
-            var input = $('#kt_datatable_check_input').val();
-            datatable.setActive(input);
+        $('#setStatusHide').on('click', function () {
+
+            if (datatable.nodes().length > 0) {
+                // get column by field name and get the column nodes
+
+                var ids = datatable.rows('.datatable-row-active').
+                    nodes().
+                    find('.checkbox > [type="checkbox"]').
+                    map(function (i, chk) {
+                        return $(chk).val();
+                    }).get();
+
+                let data = {
+                    globalIds: ids,
+                    status: "Hidden"
+                };
+                console.log(data);
+                $.ajax({
+                    url: "admin/category/UpdateStatusRange/",
+                    method: "Post",
+                    data: data,
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Updated",
+                            text: response.Message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        });
+
+                        $('#kt_datatable').KTDatatable('reload');
+                        $('#kt_datatable_group_action_form').collapse('hide');
+                    },
+                    error: function (request, status, error) {
+                        Swal.fire({
+                            title: "Something went wrong!",
+                            text: response.Message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    },
+                });
+            }
         });
 
-        $('#kt_datatable_check_all').on('click', function () {
-            // datatable.setActiveAll(true);
-            $('#kt_datatable').KTDatatable('setActiveAll', true);
+        $('#deleteSelectedBtn').on('click', function () {
+
+            if (datatable.nodes().length > 0) {
+                // get column by field name and get the column nodes
+
+                var ids = datatable.rows('.datatable-row-active').
+                    nodes().
+                    find('.checkbox > [type="checkbox"]').
+                    map(function (i, chk) {
+                        return $(chk).val();
+                    }).get();
+
+                let data = {
+                    globalIds: ids
+                };
+                console.log(data);
+                $.ajax({
+                    url: "admin/category/deleterange/",
+                    method: "Post",
+                    data: data,
+                    success: function (response) {
+                        Swal.fire({
+                            title: "Deleted",
+                            text: response.Message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        });
+
+                        $('#kt_datatable').KTDatatable('reload');
+                        $('#kt_datatable_group_action_form').collapse('hide');
+                    },
+                    error: function (request, status, error) {
+                        Swal.fire({
+                            title: "Something went wrong!",
+                            text: response.Message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    },
+                });
+
+            }
         });
 
-        $('#kt_datatable_uncheck_all').on('click', function () {
-            // datatable.setActiveAll(false);
-            $('#kt_datatable').KTDatatable('setActiveAll', false);
+        datatable.on('click', '.deletebtn', function (e) {
+            var id = this.id;
+            console.log(this);
+
+            let data = {
+                globalId: id
+            };
+            console.log(data);
+            $.ajax({
+                url: "admin/category/delete/",
+                method: "Post",
+                data: data,
+                success: function (response) {
+                    Swal.fire({
+                        title: "Deleted",
+                        text: response.Message,
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+
+                    $('#kt_datatable').KTDatatable('reload');
+                    $('#kt_datatable_group_action_form').collapse('hide');
+                },
+                error: function (request, status, error) {
+                    Swal.fire({
+                        title: "Something went wrong!",
+                        text: response.Message,
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                },
+            });
+
         });
 
-        $('#kt_datatable_hide_column').on('click', function () {
-            datatable.columns('ShipDate').visible(false);
-        });
-
-        $('#kt_datatable_show_column').on('click', function () {
-            datatable.columns('ShipDate').visible(true);
-        });
+        datatable.on(
+            'datatable-on-check datatable-on-uncheck',
+            function (e) {
+                var checkedNodes = datatable.rows('.datatable-row-active').nodes();
+                var count = checkedNodes.length;
+                $('#kt_datatable_selected_records').html(count);
+                if (count > 0) {
+                    $('#kt_datatable_group_action_form').collapse('show');
+                } else {
+                    $('#kt_datatable_group_action_form').collapse('hide');
+                }
+            });
 
         $('#kt_datatable_remove_row').on('click', function () {
             datatable.rows('.datatable-row-active').remove();

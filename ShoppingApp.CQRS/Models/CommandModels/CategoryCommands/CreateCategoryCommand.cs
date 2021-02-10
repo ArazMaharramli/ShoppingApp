@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ShoppingApp.CQRS.Models.ResponseModels;
 
-namespace ShoppingApp.CQRS.Models.CommandModels
+namespace ShoppingApp.CQRS.Models.CommandModels.CategoryCommands
 {
     public class CreateCategoryCommand : IRequest<CreateCategoryResponseModel>
     {

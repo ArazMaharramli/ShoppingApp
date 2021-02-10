@@ -12,6 +12,9 @@
     <Folder Include="Models\ResponseModels\" />
     <Folder Include="Models\ResponseModels\QueryResponseModels\" />
     <Folder Include="Handlers\QueryHandlers\" />
+    <Folder Include="Models\CommandModels\CategoryCommands\" />
+    <Folder Include="Handlers\CommandHandlers\" />
+    <Folder Include="Handlers\CommandHandlers\CategoryCommandHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

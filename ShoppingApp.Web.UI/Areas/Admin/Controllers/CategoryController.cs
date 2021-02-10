@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ShoppingApp.CQRS.Models.CommandModels;
+using ShoppingApp.CQRS.Models.CommandModels.CategoryCommands;
 using ShoppingApp.CQRS.Models.QueryModels;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
+using ShoppingApp.Utils.Enums;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
 using ShoppingApp.Web.UI.Areas.Admin.ViewModels;
 
@@ -96,7 +97,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CreateCategoryViewModel model)
+        public async Task<IActionResult> Create(CreateCategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -129,6 +130,73 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatusRange(string[] globalIds, string status)
+        {
+            Status selectedStatus;
+            switch (status.ToLower())
+            {
+                case ("active"):
+                    selectedStatus = Status.Active;
+                    break;
+                case ("deleted"):
+                    selectedStatus = Status.Deleted;
+                    break;
+                case ("hidden"):
+                    selectedStatus = Status.Hidden;
+                    break;
+                default:
+                    return BadRequest();
+            }
+
+            var command = new UpdateCategoryStatusRangeCommand(globalIds: globalIds, status: selectedStatus);
+            var response = await _mediator.Send(command);
+            if (!response.HasError)
+            {
+                return Ok(new { Message = "Updated" });
+            }
+            if (response.ErrorType == ErrorType.Model)
+            {
+                return BadRequest(new { Message = response.Errors.FirstOrDefault().Message });
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRange(string[] globalIds)
+        {
+            var command = new UpdateCategoryStatusRangeCommand(globalIds: globalIds, status: Status.Deleted);
+            var response = await _mediator.Send(command);
+
+
+            if (!response.HasError)
+            {
+                return Ok(new { Message = "Deleted" });
+            }
+            if (response.ErrorType == ErrorType.Model)
+            {
+                return BadRequest(new { Message = response.Errors.FirstOrDefault().Message });
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string globalId)
+        {
+            var command = new DeleteCategoryCommand(globalId: globalId);
+            var response = await _mediator.Send(command);
+
+
+            if (!response.HasError)
+            {
+                return Ok(new { Message = "Deleted" });
+            }
+            if (response.ErrorType == ErrorType.Model)
+            {
+                return BadRequest(new { Message = response.Errors.FirstOrDefault().Message });
+            }
+            return NotFound();
+        }
     }
 
 }

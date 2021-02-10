@@ -13,6 +13,12 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 
         Task<Category> FindByNameAndStatusAsync(string name, Status status = Status.Active);
         Task<Category> FindByGobalIdAsync(string globalId);
+        Task<Category> GetBySlugAsync(string slug);
+
         Task<Category> CreateAsync(string name, string slug, Category parentCategory);
+        Task<List<Category>> UpdateStatusRangeAsync(string[] globalIds, Status status);
+
+        Task<int> DeleteRangeAsync(string[] globalIds);
+        Task<int> DeleteAsync(string globalId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
@@ -21,24 +22,48 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Category> CreateAsync(string name, string slug, Category parentCategory)
         {
-            try
-            {
-                var category = new Category
-                {
 
-                    GlobalId = Guid.NewGuid().ToString("N"),
-                    UniqueName = name,
-                    UniqueSlug = slug,
-                    Parent = parentCategory
-                };
-                _unitOfWork.Categories.Add(category);
-                await _unitOfWork.SaveChangesAsync();
-                return category;
-            }
-            catch (Exception ex)
+            var category = new Category
             {
-                return null;
+
+                GlobalId = Guid.NewGuid().ToString("N"),
+                UniqueName = name,
+                UniqueSlug = slug,
+                Parent = parentCategory
+            };
+            _unitOfWork.Categories.Add(category);
+            await _unitOfWork.SaveChangesAsync();
+            return category;
+        }
+
+        public async Task<int> DeleteAsync(string globalId)
+        {
+            var categoryInDb = await _unitOfWork.Categories.GetAsync(x => x.GlobalId == globalId);
+            if (!(categoryInDb is null))
+            {
+                categoryInDb.Status = Status.Deleted;
+                _unitOfWork.Categories.Update(categoryInDb);
+
+                return await _unitOfWork.SaveChangesAsync(); ;
             }
+            return 0;
+        }
+
+        public async Task<int> DeleteRangeAsync(string[] globalIds)
+        {
+            var categoriesInDb = (await _unitOfWork.Categories.FindAsync(x => globalIds.Contains(x.GlobalId)))?.ToList();
+            if (!(categoriesInDb is null))
+            {
+                for (int i = 0; i < categoriesInDb.Count(); i++)
+                {
+                    categoriesInDb[i].Status = Status.Deleted;
+                }
+
+                _unitOfWork.Categories.UpdateRange(categoriesInDb);
+
+                return await _unitOfWork.SaveChangesAsync(); ;
+            }
+            return 0;
         }
 
         public Task<Category> FindByGobalIdAsync(string globalId)
@@ -53,7 +78,12 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public Task<List<Category>> GetAllCategoriesAsync()
         {
-            return _unitOfWork.Categories.GetCategoryTreeAsync(x => x.Status == Utils.Enums.Status.Active);
+            return _unitOfWork.Categories.GetCategoryTreeAsync(x => x.Status != Status.Deleted);
+        }
+
+        public Task<Category> GetBySlugAsync(string slug)
+        {
+            return _unitOfWork.Categories.GetAsync(x => x.UniqueSlug.ToLower() == slug.ToLower());
         }
 
         public Task<IPagedList<Category>> GetPagedCategoriesAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)
@@ -82,6 +112,23 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                pageNumber: pageNumber,
                sortColumn: sortColumn,
                sortDirection: sortDirection);
+        }
+
+        public async Task<List<Category>> UpdateStatusRangeAsync(string[] globalIds, Status status)
+        {
+            var categoriesInDb = (await _unitOfWork.Categories.FindAsync(x => globalIds.Contains(x.GlobalId)))?.ToList();
+            if (!(categoriesInDb is null))
+            {
+                for (int i = 0; i < categoriesInDb.Count(); i++)
+                {
+                    categoriesInDb[i].Status = status;
+                }
+
+                _unitOfWork.Categories.UpdateRange(categoriesInDb);
+                await _unitOfWork.SaveChangesAsync();
+                return categoriesInDb;
+            }
+            return null;
         }
     }
 }

@@ -2,13 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ShoppingApp.CQRS.Models.CommandModels;
+using ShoppingApp.CQRS.Models.CommandModels.CategoryCommands;
 using ShoppingApp.CQRS.Models.ResponseModels;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.CQRS.Handlers
+namespace ShoppingApp.CQRS.Handlers.CommandHandlers.CategoryCommandHandlers
 {
     public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, CreateCategoryResponseModel>
     {

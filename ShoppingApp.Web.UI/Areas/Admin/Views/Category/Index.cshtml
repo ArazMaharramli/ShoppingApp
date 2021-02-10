@@ -131,6 +131,34 @@
         </div>
         <!--end::Search Form-->
         <!--end: Search Form-->
+        <!--begin: Selected Rows Group Action Form-->
+        <div class="mt-10 mb-5 collapse" id="kt_datatable_group_action_form">
+            <div class="d-flex align-items-center">
+                <div class="font-weight-bold text-danger mr-3">
+                    Selected
+                    <span id="kt_datatable_selected_records">0</span> records:
+                </div>
+                <div class="dropdown mr-2">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">Update status</button>
+                    <div class="dropdown-menu dropdown-menu-sm">
+                        <ul class="nav nav-hover flex-column">
+                            <li class="nav-item">
+                                <a id="setStatusActive" class="nav-link">
+                                    <span class="nav-text">Active</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a id="setStatusHide" class="nav-link">
+                                    <span class="nav-text">Hide</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-danger mr-2" type="button" id="deleteSelectedBtn">Delete</button>
+            </div>
+        </div>
+        <!--end: Selected Rows Group Action Form-->
         <!--begin: Datatable-->
         <div class="datatable datatable-bordered datatable-head-custom" id="kt_datatable"></div>
         <!--end: Datatable-->
@@ -144,3 +172,30 @@
     </div>
 </div>
 <!--end::Card-->
+
+
+@section Modals{
+    <!--begin::Modal-->
+    <div class="modal fade" id="exampleModalSizeSm" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Modal-->
+}
