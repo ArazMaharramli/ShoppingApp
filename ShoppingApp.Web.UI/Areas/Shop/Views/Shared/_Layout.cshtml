@@ -18,20 +18,20 @@
     <!--begin::Page Vendors Styles(used by this page)-->
     @RenderSection("Styles", required: false)
     <!--end::Page Vendors Styles-->
-    <partial name="~/Views/Shared/_StylesPartial.cshtml" />
+    <partial name="_StylesPartial.cshtml" />
     @RenderSection("metaTags", required: false)
 </head>
 <body id="kt_body" class="header-fixed header-mobile-fixed header-bottom-enabled subheader-enabled page-loading">
 
     <!--begin::Main-->
     <!--begin::Header Mobile-->
-    <partial name="~/Views/Shared/_HeaderMobilePartial.cshtml" />
+    <partial name="_HeaderMobilePartial.cshtml" />
     <!--end::Header Mobile-->
     <!--end::Main-->
     @if (signInManager.IsSignedIn(User))
     {
         <!--begin::User Panel-->
-        <partial name="~/Views/Shared/_UserPanelPartial.cshtml" />
+        <partial name="_UserPanelPartial.cshtml" />
         <!--end::User Panel-->
     }
 
@@ -41,12 +41,12 @@
             <!--begin::Wrapper-->
             <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
                 <!--begin::Header-->
-                <partial name="~/Views/Shared/_HeaderPartial.cshtml" />
+                <partial name="_HeaderPartial.cshtml" />
                 <!--end::Header-->
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <!--begin::Subheader-->
-                    @*<partial name="~/Views/Shared/_SubHeaderPartial.cshtml" />*@
+                    <partial name="_SubHeaderPartial.cshtml" />
                     <!--end::Subheader-->
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
@@ -60,7 +60,7 @@
                 </div>
                 <!--end::Content-->
                 <!--begin::Footer-->
-                <partial name="~/Views/Shared/_FooterPartial.cshtml" />
+                <partial name="_FooterPartial.cshtml" />
                 <!--end::Footer-->
             </div>
 

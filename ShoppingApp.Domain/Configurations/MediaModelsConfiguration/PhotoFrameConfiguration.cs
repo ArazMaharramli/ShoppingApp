@@ -17,9 +17,8 @@ namespace ShoppingApp.Domain.Configurations.MediaModelsConfiguration
                 .HasMaxLength(2100)
                 .IsRequired();
 
-            builder.HasOne(x => x.CreatorStore)
-                .WithMany(x => x.PhotoFrames);
-
+            builder.HasMany(x => x.Stores)
+                .WithOne(x => x.PhotoFrame);
 
             builder.HasIndex(x => x.GlobalId);
 

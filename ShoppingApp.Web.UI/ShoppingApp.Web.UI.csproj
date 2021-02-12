@@ -7,15 +7,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\assets\plugins\" />
-    <Folder Include="wwwroot\assets\plugins\custom\" />
-    <Folder Include="wwwroot\assets\plugins\custom\fullcalendar\" />
-    <Folder Include="wwwroot\assets\plugins\global\" />
-    <Folder Include="wwwroot\assets\css\" />
-    <Folder Include="wwwroot\assets\js\" />
-    <Folder Include="wwwroot\assets\js\pages\" />
-    <Folder Include="wwwroot\assets\media\" />
     <Folder Include="Views\Account\" />
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\Account\" />
@@ -27,15 +18,21 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="wwwroot\adminfiles\" />
-    <Folder Include="wwwroot\adminfiles\assets\" />
-    <Folder Include="wwwroot\adminfiles\assets\plugins\" />
-    <Folder Include="wwwroot\adminfiles\assets\css\" />
-    <Folder Include="wwwroot\adminfiles\assets\plugins\global\" />
-    <Folder Include="wwwroot\adminfiles\assets\plugins\custom\" />
-    <Folder Include="wwwroot\adminfiles\assets\js\" />
     <Folder Include="Areas\Admin\Views\Category\" />
-    <Folder Include="wwwroot\adminfiles\assets\js\datatablescripts\" />
     <Folder Include="Areas\Admin\PagedResponseModels\" />
+    <Folder Include="wwwroot\shopuifiles\" />
+    <Folder Include="wwwroot\shopuifiles\assets\" />
+    <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\adminfiles\js\" />
+    <Folder Include="wwwroot\adminfiles\js\datatablescripts\" />
+    <Folder Include="wwwroot\assets\media\" />
+    <Folder Include="Areas\Shop\" />
+    <Folder Include="Areas\Shop\Views\" />
+    <Folder Include="Areas\Shop\Views\Shared\" />
+    <Folder Include="Areas\Shop\Controllers\" />
+    <Folder Include="Areas\Shop\ViewModels\" />
+    <Folder Include="Areas\Shop\Views\Home\" />
+    <Folder Include="wwwroot\assets\css\pages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">
@@ -51,6 +48,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />

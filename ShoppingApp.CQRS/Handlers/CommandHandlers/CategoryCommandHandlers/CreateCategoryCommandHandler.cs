@@ -33,7 +33,7 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.CategoryCommandHandlers
 
                 var category = await _categoryService.CreateAsync(categoryName, request.Slug, parentCategory);
 
-                if (category != null)
+                if (!(category is null))
                 {
                     return new CreateCategoryResponseModel
                     {

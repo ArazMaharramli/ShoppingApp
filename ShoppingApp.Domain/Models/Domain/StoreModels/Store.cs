@@ -28,12 +28,14 @@ namespace ShoppingApp.Domain.Models.Domain.StoreModels
         public long AddressId { get; set; }
         public Address Address { get; set; }
 
+        public long? PhotoFrameId { get; set; }
+        public PhotoFrame PhotoFrame { get; set; }
+
         // companycontact,companypaymentoption
         public ICollection<StoreContact> StoreContacts { get; set; } = new HashSet<StoreContact>();
         public ICollection<StorePaymentOption> StorePaymentOptions { get; set; } = new HashSet<StorePaymentOption>();
         public ICollection<UploadedProductMediaForFutureUse> UploadedProductMediasForFutureUse { get; set; } = new HashSet<UploadedProductMediaForFutureUse>();
         public ICollection<StoreDeliveryOption> StoreDeliveryOptions { get; set; } = new HashSet<StoreDeliveryOption>();
-        public ICollection<PhotoFrame> PhotoFrames { get; set; } = new HashSet<PhotoFrame>();
 
         public ICollection<User> Users { get; set; }
     }

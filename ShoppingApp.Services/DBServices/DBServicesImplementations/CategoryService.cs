@@ -23,11 +23,8 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Category> CreateAsync(string name, string slug, Category parentCategory)
         {
-
             var category = new Category
             {
-
-                GlobalId = Guid.NewGuid().ToString("N"),
                 UniqueName = name,
                 UniqueSlug = slug,
                 Parent = parentCategory
@@ -71,6 +68,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
         {
             return _unitOfWork.Categories.GetWithAllNavigationsAsync(x => x.GlobalId == globalId);
         }
+
         public Task<IEnumerable<Category>> FindRangeAsync(string[] globalIds)
         {
             return _unitOfWork.Categories.FindAsync(x => globalIds.Contains(x.GlobalId));

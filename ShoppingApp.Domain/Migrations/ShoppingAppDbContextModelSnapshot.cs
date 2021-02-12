@@ -491,9 +491,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("CreatorStoreId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("FrameName")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)")
@@ -522,8 +519,6 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorStoreId");
 
                     b.HasIndex("GlobalId");
 
@@ -1325,6 +1320,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("InstagramUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("PhotoFrameId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ProfilePhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -1356,6 +1354,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("GlobalId");
+
+                    b.HasIndex("PhotoFrameId");
 
                     b.HasIndex("StoreTypeId");
 
@@ -1798,15 +1798,6 @@ namespace ShoppingApp.Domain.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MediaModels.PhotoFrame", b =>
-                {
-                    b.HasOne("ShoppingApp.Domain.Models.Domain.StoreModels.Store", "CreatorStore")
-                        .WithMany("PhotoFrames")
-                        .HasForeignKey("CreatorStoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MediaModels.ProductMedia", b =>
                 {
                     b.HasOne("ShoppingApp.Domain.Models.Domain.ProductModels.Product", "Product")
@@ -1964,6 +1955,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ShoppingApp.Domain.Models.Domain.MediaModels.PhotoFrame", "PhotoFrame")
+                        .WithMany("Stores")
+                        .HasForeignKey("PhotoFrameId");
 
                     b.HasOne("ShoppingApp.Domain.Models.Domain.StoreModels.StoreType", "StoreType")
                         .WithMany("Stores")
