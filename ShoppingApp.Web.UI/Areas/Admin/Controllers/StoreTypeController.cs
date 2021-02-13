@@ -2,24 +2,22 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ShoppingApp.CQRS.Models.CommandModels.CategoryCommands;
-using ShoppingApp.CQRS.Models.QueryModels;
-using ShoppingApp.Domain.Models.Domain.ProductModels;
+using ShoppingApp.CQRS.Models.CommandModels.StoreTypeCommands;
+using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
-using ShoppingApp.Web.UI.Areas.Admin.ViewModels.CategoryViewModels;
+using ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreTypeViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class StoreTypeController : Controller
     {
         private readonly IMediator _mediator;
 
-        public CategoryController(IMediator mediator)
+        public StoreTypeController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -31,7 +29,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetPagedCategories()
+        public async Task<IActionResult> GetPagedStoreTypes()
         {
             var pageNumber = int.Parse(Request.Form["pagination[page]"].FirstOrDefault() ?? "1");
             var pageSize = int.Parse(Request.Form["pagination[perpage]"].FirstOrDefault() ?? "10");
@@ -43,7 +41,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             var sortDirection = Request.Form["sort[sort]"].FirstOrDefault();
 
 
-            var query = new GetPagedCategoriesQuery(
+            var query = new GetPagedStoreTypesQuery(
                 searchString: searchString,
                 pageSize: pageSize,
                 pageNumber: pageNumber,
@@ -55,22 +53,21 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 
             if (!response.HasError)
             {
-                var model = new BasePagedResponseModel<CategoryResponseModel>
+                var model = new BasePagedResponseModel<StoreTypeResponseModel>
                 {
                     Meta = new Meta
                     {
                         Field = sortColumn,
                         Sort = sortDirection,
                         Page = pageNumber,
-                        Pages = response.Categories.PageCount,
+                        Pages = response.StoreTypes.PageCount,
                         Perpage = pageSize,
-                        Total = response.Categories.Total
+                        Total = response.StoreTypes.Total
                     },
-                    data = response.Categories.Data.Select(x => new CategoryResponseModel
+                    data = response.StoreTypes.Data.Select(x => new StoreTypeResponseModel
                     {
                         GlobalId = x.GlobalId,
-                        UniqueName = x.UniqueName,
-                        ParentName = x.Parent?.UniqueName,
+                        Name = x.Name,
                         Status = x.Status.ToString(),
                         AddedDate = x.AddedDate.ToString("dd/MM/yyyy"),
                     }).ToList()
@@ -83,33 +80,20 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var query = new GetCategoriesQuery();
-            var response = await _mediator.Send(query);
-
-            var model = new CreateCategoryViewModel();
-
-            if (!response.HasError)
-            {
-                model.Categories = new SelectList(response.Categories, nameof(Category.GlobalId), nameof(Category.UniqueName));
-            }
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryViewModel model)
+        public async Task<IActionResult> Create(CreateStoreTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var command = new CreateCategoryCommand(
-                categoryName: model.CategoryName,
-                slug: model.CategorySlug,
-                parentId: model.SelectedParentCategoryId);
+                var command = new CreateStoreTypeCommand(name: model.Name);
 
                 var response = await _mediator.Send(command);
                 if (!response.HasError)
                 {
-                    return RedirectToAction("Index", "Category", new { Area = "Admin" });
+                    return RedirectToAction("Index", "StoreType", new { Area = "Admin" });
                 }
                 if (response.ErrorType == Utils.Enums.ErrorType.Model)
                 {
@@ -119,14 +103,6 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
                     }
                 }
             }
-            var query = new GetCategoriesQuery();
-            var allCategoriesResponse = await _mediator.Send(query);
-
-            if (!allCategoriesResponse.HasError)
-            {
-                model.Categories = new SelectList(allCategoriesResponse.Categories, nameof(Category.GlobalId), nameof(Category.UniqueName));
-            }
-
             return View(model);
         }
 
@@ -135,46 +111,31 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpGet("[area]/[controller]/[action]/{globalId}")]
         public async Task<IActionResult> Edit(string globalId)
         {
-
-            var query = new GetCategoriesQuery();
+            var query = new GetStoreTypeByIdQuery(globalId: globalId);
             var response = await _mediator.Send(query);
 
-            var model = new EditCategoryViewModel();
+            var model = new EditStoreTypeViewModel();
 
             if (!response.HasError)
             {
-                var getCategoryQuery = new GetCategoryByIdQuery(globalId: globalId);
-                var getCategoryResponse = await _mediator.Send(getCategoryQuery);
-
-                if (!getCategoryResponse.HasError)
-                {
-                    model.CategoryName = getCategoryResponse.Category.UniqueName;
-                    model.CategorySlug = getCategoryResponse.Category.UniqueSlug;
-                    model.SelectedChildrenCategoryIds = getCategoryResponse.Category.Children.Select(x => x.GlobalId).ToArray();
-                    model.SelectedParentCategoryId = getCategoryResponse.Category.Parent?.GlobalId;
-                }
-
-                model.Categories = new SelectList(response.Categories.Where(x => x.GlobalId != globalId), nameof(Category.GlobalId), nameof(Category.UniqueName));
+                model.Name = response.StoreType.Name;
             }
 
             return View(model);
         }
         [HttpPost("[area]/[controller]/[action]/{globalId}")]
-        public async Task<IActionResult> Edit(string globalId, EditCategoryViewModel model)
+        public async Task<IActionResult> Edit(string globalId, EditStoreTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var command = new UpdateCategoryCommand(
+                var command = new UpdateStoreTypeCommand(
                     globalId: globalId,
-                    name: model.CategoryName,
-                    slug: model.CategorySlug,
-                    parentId: model.SelectedParentCategoryId,
-                    childrenIds: model.SelectedChildrenCategoryIds);
+                    name: model.Name);
                 var response = await _mediator.Send(command);
 
                 if (!response.HasError)
                 {
-                    return RedirectToAction("Index", "Category", new { Area = "Admin" });
+                    return RedirectToAction("Index", "StoreType", new { Area = "Admin" });
                 }
                 if (response.ErrorType == ErrorType.Model)
                 {
@@ -182,10 +143,10 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
                     {
                         ModelState.AddModelError("", item.Message);
                     }
-                    return View(FillEditCategoryViewModelAsync(model, globalId));
+                    return View(model);
                 }
             }
-            return View(FillEditCategoryViewModelAsync(model, globalId));
+            return View(model);
         }
 
 
@@ -208,7 +169,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
                     return BadRequest();
             }
 
-            var command = new UpdateCategoryStatusRangeCommand(globalIds: globalIds, status: selectedStatus);
+            var command = new UpdateStoreTypeStatusRangeCommand(globalIds: globalIds, status: selectedStatus);
             var response = await _mediator.Send(command);
             if (!response.HasError)
             {
@@ -224,13 +185,13 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRange(string[] globalIds)
         {
-            var command = new DeleteCategoryRangeCommand(globalIds: globalIds);
+            var command = new DeleteStoreTypeRangeCommand(globalIds: globalIds);
             var response = await _mediator.Send(command);
 
 
             if (!response.HasError)
             {
-                return Ok(new { Message = $"{response.DeletedCount} Categories Deleted" });
+                return Ok(new { Message = $"{response.DeletedCount} Store Types Deleted" });
             }
             if (response.ErrorType == ErrorType.Model)
             {
@@ -242,7 +203,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string globalId)
         {
-            var command = new DeleteCategoryCommand(globalId: globalId);
+            var command = new DeleteStoreTypeCommand(globalId: globalId);
             var response = await _mediator.Send(command);
 
 
@@ -257,19 +218,5 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             return NotFound();
         }
 
-        #region modelFillers
-        private async Task<EditCategoryViewModel> FillEditCategoryViewModelAsync(EditCategoryViewModel model, string globalId)
-        {
-            var query = new GetCategoriesQuery();
-            var response = await _mediator.Send(query);
-            if (!response.HasError)
-            {
-                model.Categories = new SelectList(response.Categories.Where(x => x.GlobalId != globalId), nameof(Category.GlobalId), nameof(Category.UniqueName));
-            }
-            return model;
-
-        }
-        #endregion
     }
-
 }

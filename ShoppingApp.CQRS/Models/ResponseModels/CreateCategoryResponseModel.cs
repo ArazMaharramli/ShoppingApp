@@ -8,4 +8,5 @@ namespace ShoppingApp.CQRS.Models.ResponseModels
     {
         public Category Category { get; set; }
     }
+
 }

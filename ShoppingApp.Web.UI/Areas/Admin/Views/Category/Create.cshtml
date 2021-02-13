@@ -1,4 +1,4 @@
-﻿@model ShoppingApp.Web.UI.Areas.Admin.ViewModels.CreateCategoryViewModel
+﻿@model ShoppingApp.Web.UI.Areas.Admin.ViewModels.CategoryViewModels.CreateCategoryViewModel
 
 
 @section Scripts{
@@ -30,12 +30,14 @@
                 <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="CategoryName"></label>
                 <div class=" col-lg-4 col-md-9 col-sm-12">
                     <input class="form-control form-control-solid name" asp-for="CategoryName" placeholder="Category Name" />
+                    <span asp-validation-for="CategoryName"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="CategorySlug"></label>
                 <div class=" col-lg-4 col-md-9 col-sm-12">
                     <input class="form-control form-control-solid slug" asp-for="CategorySlug" placeholder="Category Slug" />
+                    <span asp-validation-for="CategorySlug"></span>
                 </div>
             </div>
             <div class="form-group row">
@@ -44,6 +46,7 @@
                     <select class="form-control" asp-for="SelectedParentCategoryId" asp-items="Model.Categories">
                         <option>-- None --</option>
                     </select>
+                    <span asp-validation-for="SelectedParentCategoryId"></span>
                 </div>
             </div>
         </div>

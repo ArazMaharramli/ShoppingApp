@@ -10,33 +10,32 @@ using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Handlers.QueryHandlers
 {
-    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, GetCategoriesResponseModel>
+    public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, GetCategoryResponseModel>
     {
         private readonly ICategoryService _categoryService;
 
-        public GetCategoriesQueryHandler(ICategoryService categoryService)
+        public GetCategoryByIdQueryHandler(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
-
-        public async Task<GetCategoriesResponseModel> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<GetCategoryResponseModel> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var categories = await _categoryService.GetAllCategoriesAsync();
-                if (!(categories is null))
+                var category = await _categoryService.FindByGobalIdAsync(globalId: request.GlobalId);
+                if (!(category is null))
                 {
-                    if (categories.Count > 0)
+                    if (!(category is null))
                     {
-                        return new GetCategoriesResponseModel
+                        return new GetCategoryResponseModel
                         {
-                            Categories = categories,
+                            Category = category,
                             HasError = false
                         };
                     }
                 }
-                return new GetCategoriesResponseModel
+                return new GetCategoryResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,
@@ -51,7 +50,7 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers
             }
             catch (Exception ex)
             {
-                return new GetCategoriesResponseModel
+                return new GetCategoryResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Exception,

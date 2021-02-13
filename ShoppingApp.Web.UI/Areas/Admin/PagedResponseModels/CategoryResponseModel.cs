@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels
 {
     public class CategoryResponseModel

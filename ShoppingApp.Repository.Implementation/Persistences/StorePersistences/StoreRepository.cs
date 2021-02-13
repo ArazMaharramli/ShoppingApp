@@ -1,7 +1,13 @@
-﻿using ShoppingApp.Domain.Data;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ShoppingApp.Domain.Data;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Repository.Implementation.Repositories.StoreRepositories;
 using ShoppingApp.Repository.Persistences;
+using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.Repository.Implementation.Persistences.StorePersistences
 {

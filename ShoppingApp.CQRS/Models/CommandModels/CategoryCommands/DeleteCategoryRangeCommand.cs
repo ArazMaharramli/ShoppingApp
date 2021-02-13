@@ -12,13 +12,4 @@ namespace ShoppingApp.CQRS.Models.CommandModels.CategoryCommands
 
         public string[] GlobalIds { get; set; }
     }
-    public class DeleteCategoryCommand : IRequest<DeleteCategoryRangeResponseModel>
-    {
-        public DeleteCategoryCommand(string globalId)
-        {
-            GlobalId = globalId;
-        }
-
-        public string GlobalId { get; set; }
-    }
 }

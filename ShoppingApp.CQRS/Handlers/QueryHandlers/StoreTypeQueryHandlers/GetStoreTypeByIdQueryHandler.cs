@@ -3,40 +3,39 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ShoppingApp.CQRS.Models.QueryModels;
-using ShoppingApp.CQRS.Models.ResponseModels.QueryResponseModels;
+using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
+using ShoppingApp.CQRS.Models.ResponseModels.StoreTypeResponseModels.QueryResponseModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Handlers.QueryHandlers
 {
-    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, GetCategoriesResponseModel>
+    public class GetStoreTypeByIdQueryHandler : IRequestHandler<GetStoreTypeByIdQuery, GetStoreTypeResponseModel>
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IStoreTypeService _StoreTypeService;
 
-        public GetCategoriesQueryHandler(ICategoryService categoryService)
+        public GetStoreTypeByIdQueryHandler(IStoreTypeService StoreTypeService)
         {
-            _categoryService = categoryService;
+            _StoreTypeService = StoreTypeService;
         }
 
-
-        public async Task<GetCategoriesResponseModel> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<GetStoreTypeResponseModel> Handle(GetStoreTypeByIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var categories = await _categoryService.GetAllCategoriesAsync();
-                if (!(categories is null))
+                var storeType = await _StoreTypeService.FindByGobalIdAsync(globalId: request.GlobalId);
+                if (!(storeType is null))
                 {
-                    if (categories.Count > 0)
+                    if (!(storeType is null))
                     {
-                        return new GetCategoriesResponseModel
+                        return new GetStoreTypeResponseModel
                         {
-                            Categories = categories,
+                            StoreType = storeType,
                             HasError = false
                         };
                     }
                 }
-                return new GetCategoriesResponseModel
+                return new GetStoreTypeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,
@@ -51,7 +50,7 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers
             }
             catch (Exception ex)
             {
-                return new GetCategoriesResponseModel
+                return new GetStoreTypeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Exception,

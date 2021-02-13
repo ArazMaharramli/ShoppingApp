@@ -15,6 +15,13 @@
     <Folder Include="Models\CommandModels\CategoryCommands\" />
     <Folder Include="Handlers\CommandHandlers\" />
     <Folder Include="Handlers\CommandHandlers\CategoryCommandHandlers\" />
+    <Folder Include="Models\CommandModels\StoreTypeCommands\" />
+    <Folder Include="Models\QueryModels\StoreTypeQueryModels\" />
+    <Folder Include="Models\ResponseModels\StoreTypeResponseModels\" />
+    <Folder Include="Models\ResponseModels\StoreTypeResponseModels\QueryResponseModels\" />
+    <Folder Include="Models\ResponseModels\StoreTypeResponseModels\CommandResponseModels\" />
+    <Folder Include="Handlers\CommandHandlers\StoreTypeCommandHandlers\" />
+    <Folder Include="Handlers\QueryHandlers\StoreTypeQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

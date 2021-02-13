@@ -12,6 +12,7 @@ namespace ShoppingApp.Services.ServiceInstallers
             services.AddTransient<IUserIdentityService, UserIdentityService>();
 
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IStoreTypeService, StoreTypeService>();
 
         }
     }

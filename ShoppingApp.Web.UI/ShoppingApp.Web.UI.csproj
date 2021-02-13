@@ -33,6 +33,9 @@
     <Folder Include="Areas\Shop\ViewModels\" />
     <Folder Include="Areas\Shop\Views\Home\" />
     <Folder Include="wwwroot\assets\css\pages\" />
+    <Folder Include="Areas\Admin\Views\StoreType\" />
+    <Folder Include="Areas\Admin\ViewModels\StoreTypeViewModels\" />
+    <Folder Include="Areas\Admin\ViewModels\CategoryViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">
