@@ -8,6 +8,7 @@ namespace ShoppingApp.Web.API.Controllers
     [ApiController]
     [ApiKeyAuth]
     [Authorize]
+    [Route("/api/[controller]/[action]")]
     public class PostController : ControllerBase
     {
         // GET: api/Post

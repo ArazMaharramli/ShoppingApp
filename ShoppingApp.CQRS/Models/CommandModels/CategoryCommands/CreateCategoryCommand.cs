@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ShoppingApp.CQRS.Models.ResponseModels;
+using ShoppingApp.CQRS.Models.ResponseModels.CategoryResponseModels.CommandResponseModels;
 
 namespace ShoppingApp.CQRS.Models.CommandModels.CategoryCommands
 {

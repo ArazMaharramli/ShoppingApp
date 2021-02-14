@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingApp.CQRS.Models.CommandModels.DeliveryOptionCommands;
 using ShoppingApp.CQRS.Models.QueryModels.DeliveryOptionQueryModels;
-using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
 using ShoppingApp.Web.UI.Areas.Admin.ViewModels.DeliveryOptionViewModels;

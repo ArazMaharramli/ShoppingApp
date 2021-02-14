@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoppingApp.CQRS.Models.CommandModels.CategoryCommands;
-using ShoppingApp.CQRS.Models.QueryModels;
+using ShoppingApp.CQRS.Models.QueryModels.CategoryQueryModels;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;

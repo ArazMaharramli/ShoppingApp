@@ -6,12 +6,11 @@ using ShoppingApp.Web.API.ApiRoutes.v1;
 using ShoppingApp.Web.API.Contracts.ResponseModels.V1;
 using ShoppingApp.Web.API.Filters;
 using MediatR;
-using ShoppingApp.CQRS.Models.CommandModels;
+using ShoppingApp.CQRS.Models.CommandModels.IdentityCommands;
 using AutoMapper;
 using System;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Web.API.ExtentionMethods;
-using ShoppingApp.Utils.InternalModels;
 using System.Collections.Generic;
 
 namespace ShoppingApp.Web.API.Controllers

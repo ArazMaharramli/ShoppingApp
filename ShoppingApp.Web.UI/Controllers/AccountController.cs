@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingApp.CQRS.Models.CommandModels;
-using ShoppingApp.CQRS.Models.ResponseModels;
+using ShoppingApp.CQRS.Models.CommandModels.IdentityCommands;
+using ShoppingApp.CQRS.Models.ResponseModels.IdentityResponseModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.Enums;

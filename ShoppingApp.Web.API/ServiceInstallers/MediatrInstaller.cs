@@ -1,8 +1,7 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ShoppingApp.CQRS.Handlers;
+using ShoppingApp.CQRS.Handlers.IdentityCommandHandlers;
 using ShoppingApp.Services.ServiceInstallers;
 
 namespace ShoppingApp.Web.API.ServiceInstallers

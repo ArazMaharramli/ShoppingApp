@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ShoppingApp.Web.API.Filters
 {
-    public class ModelStateValidationFilter :IAsyncActionFilter
+    public class ModelStateValidationFilter : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -17,8 +17,7 @@ namespace ShoppingApp.Web.API.Filters
 
                 context.Result = new BadRequestObjectResult(errors);
             }
-
-           await next();
+            await next();
         }
     }
 }

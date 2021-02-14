@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
-using ShoppingApp.CQRS.Models.ResponseModels;
+﻿using AutoMapper;
+using ShoppingApp.CQRS.Models.ResponseModels.IdentityResponseModels;
 using ShoppingApp.Utils.InternalModels;
 using ShoppingApp.Web.API.Contracts.ResponseModels.V1;
 
 namespace ShoppingApp.Web.API.AutoMappers
 {
-    public class RefreshAndJwtTokenResponseMapper : Profile
+    public class CQRSResponseToAPIResponseMapperProfile : Profile
     {
-        public RefreshAndJwtTokenResponseMapper()
+        public CQRSResponseToAPIResponseMapperProfile()
         {
             CreateMap<ExternalLoginCommandsResponseModel, RefreshAndJwtTokenResponseModel>();
 

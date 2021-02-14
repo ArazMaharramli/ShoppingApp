@@ -10,7 +10,6 @@
     <Folder Include="Models\CommandModels\" />
     <Folder Include="Models\QueryModels\" />
     <Folder Include="Models\ResponseModels\" />
-    <Folder Include="Models\ResponseModels\QueryResponseModels\" />
     <Folder Include="Handlers\QueryHandlers\" />
     <Folder Include="Models\CommandModels\CategoryCommands\" />
     <Folder Include="Handlers\CommandHandlers\" />
@@ -28,6 +27,14 @@
     <Folder Include="Models\CommandModels\DeliveryOptionCommands\" />
     <Folder Include="Models\ResponseModels\DeliveryOptionResponseModels\CommandResponseModels\" />
     <Folder Include="Handlers\QueryHandlers\DeliveryOptionQueryHandlers\" />
+    <Folder Include="Models\ResponseModels\CategoryResponseModels\" />
+    <Folder Include="Models\ResponseModels\CategoryResponseModels\QueryResponseModels\" />
+    <Folder Include="Models\ResponseModels\CategoryResponseModels\CommandResponseModels\" />
+    <Folder Include="Models\QueryModels\CategoryQueryModels\" />
+    <Folder Include="Handlers\QueryHandlers\CategoryQueryHandlers\" />
+    <Folder Include="Models\ResponseModels\IdentityResponseModels\" />
+    <Folder Include="Models\CommandModels\IdentityCommands\" />
+    <Folder Include="Handlers\CommandHandlers\IdentityCommandHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

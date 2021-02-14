@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using ShoppingApp.CQRS.Models.CommandModels.CategoryCommands;
-using ShoppingApp.CQRS.Models.ResponseModels;
+using ShoppingApp.CQRS.Models.ResponseModels.CategoryResponseModels.CommandResponseModels;
 using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;

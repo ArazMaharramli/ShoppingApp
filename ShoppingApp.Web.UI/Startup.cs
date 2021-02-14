@@ -8,6 +8,7 @@ using MediatR;
 using System;
 using ShoppingApp.Services.ServiceInstallers;
 using System.Linq;
+using ShoppingApp.CQRS.Handlers.IdentityCommandHandlers;
 
 namespace ShoppingApp.Web.UI
 {

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ShoppingApp.CQRS.Models.ResponseModels;
+using ShoppingApp.CQRS.Models.ResponseModels.CategoryResponseModels.CommandResponseModels;
 using ShoppingApp.Utils.Enums;
 
 namespace ShoppingApp.CQRS.Models.CommandModels.CategoryCommands
