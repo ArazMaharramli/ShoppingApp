@@ -11,6 +11,8 @@ using AutoMapper;
 using System;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Web.API.ExtentionMethods;
+using ShoppingApp.Utils.InternalModels;
+using System.Collections.Generic;
 
 namespace ShoppingApp.Web.API.Controllers
 {
@@ -61,7 +63,7 @@ namespace ShoppingApp.Web.API.Controllers
                 }
                 if (refreshTokenResult.ErrorType == Utils.Enums.ErrorType.Model)
                 {
-                    return Unauthorized(refreshTokenResult.Errors);
+                    return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(refreshTokenResult.Errors));
                 }
                 else
                 {
@@ -74,7 +76,7 @@ namespace ShoppingApp.Web.API.Controllers
             }
             if (response.ErrorType == Utils.Enums.ErrorType.Model)
             {
-                return Unauthorized(response.Errors);
+                return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
             }
             else
             {
@@ -111,7 +113,7 @@ namespace ShoppingApp.Web.API.Controllers
                 }
                 if (refreshTokenResult.ErrorType == Utils.Enums.ErrorType.Model)
                 {
-                    return Unauthorized(refreshTokenResult.Errors);
+                    return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(refreshTokenResult.Errors));
                 }
                 else
                 {
@@ -125,7 +127,7 @@ namespace ShoppingApp.Web.API.Controllers
 
             if (response.ErrorType == Utils.Enums.ErrorType.Model)
             {
-                return Unauthorized(response.Errors);
+                return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
             }
             else
             {
@@ -161,7 +163,7 @@ namespace ShoppingApp.Web.API.Controllers
                 }
                 if (refreshTokenResult.ErrorType == Utils.Enums.ErrorType.Model)
                 {
-                    return Unauthorized(refreshTokenResult.Errors);
+                    return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(refreshTokenResult.Errors));
                 }
                 else
                 {
@@ -175,7 +177,7 @@ namespace ShoppingApp.Web.API.Controllers
 
             if (response.ErrorType == Utils.Enums.ErrorType.Model)
             {
-                return Unauthorized(response.Errors);
+                return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
             }
             else
             {
@@ -188,9 +190,6 @@ namespace ShoppingApp.Web.API.Controllers
         [Produces("application/json")]//register request model
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestModel model)
         {
-            //var jwtTokenValidatioon = _jwtTokenService.GetClaimsPrincipalFromToken(model.JwtToken);
-            //var refreshTokenCommand = new RefreshTokenCommand(refreshToken: model.RefreshToken, jwt: model.JwtToken);
-            //var response = await _mediatr.Send(refreshTokenCommand);
             try
             {
                 var oldJwtId = _jwtTokenService.GetTokenId(model.JwtToken);
@@ -266,7 +265,7 @@ namespace ShoppingApp.Web.API.Controllers
                 }
                 if (refreshTokenResult.ErrorType == Utils.Enums.ErrorType.Model)
                 {
-                    return Unauthorized(refreshTokenResult.Errors);
+                    return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(refreshTokenResult.Errors));
                 }
                 else
                 {
@@ -279,7 +278,7 @@ namespace ShoppingApp.Web.API.Controllers
             }
             if (response.ErrorType == Utils.Enums.ErrorType.Model)
             {
-                return Unauthorized(response.Errors);
+                return Unauthorized(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
             }
             else
             {
@@ -301,15 +300,19 @@ namespace ShoppingApp.Web.API.Controllers
                     Message = response.Message
                 });
             }
+            if (response.ErrorType == Utils.Enums.ErrorType.Model)
+            {
+                return BadRequest(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
+            }
             return BadRequest();
         }
 
 
         [HttpPost(APIRoutes.Account.ResetPassword)]
         [Produces("Application/json")]
-        public async Task<IActionResult> ResetPasswordAsync([FromQuery] string userId, [FromBody] ResetPasswordRequestModel model)
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequestModel model)
         {
-            var command = new ResetPasswordCommand(email: model.Email, code: model.Code, password: model.Password, userId: userId);
+            var command = new ResetPasswordCommand(email: model.Email, code: model.Code, password: model.Password, userId: model.userId);
             var response = await _mediatr.Send(command);
             if (!response.HasError)
             {
@@ -317,6 +320,10 @@ namespace ShoppingApp.Web.API.Controllers
                 {
                     Message = response.Message
                 });
+            }
+            if (response.ErrorType == Utils.Enums.ErrorType.Model)
+            {
+                return BadRequest(_mapper.Map<List<ErrorResponseModel>>(response.Errors));
             }
             return BadRequest();
         }

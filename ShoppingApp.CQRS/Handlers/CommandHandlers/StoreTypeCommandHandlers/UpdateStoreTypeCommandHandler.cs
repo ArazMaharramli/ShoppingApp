@@ -8,7 +8,7 @@ using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.CQRS.Handlers.CommandHandlers.CategoryCommandHandlers
+namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
 {
     public class UpdateStoreTypeCommandHandler : IRequestHandler<UpdateStoreTypeCommand, UpdateStoreTypeResponseModel>
     {

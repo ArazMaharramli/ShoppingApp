@@ -2,35 +2,35 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ShoppingApp.CQRS.Models.CommandModels.StoreTypeCommands;
-using ShoppingApp.CQRS.Models.ResponseModels.StoreTypeResponseModels.CommandResponseModels;
+using ShoppingApp.CQRS.Models.CommandModels.DeliveryOptionCommands;
+using ShoppingApp.CQRS.Models.ResponseModels.DeliveryOptionResponseModels.CommandResponseModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
+namespace ShoppingApp.CQRS.Handlers.CommandHandlers.DeliveryOptionCommandHandlers
 {
-    public class DeleteStoreTypeCommandHandler : IRequestHandler<DeleteStoreTypeCommand, DeleteStoreTypeRangeResponseModel>
+    public class DeleteDeliveryOptionCommandHandler : IRequestHandler<DeleteDeliveryOptionCommand, DeleteDeliveryOptionRangeResponseModel>
     {
-        private readonly IStoreTypeService _storeTypeService;
+        private readonly IDeliveryOptionService _deliveryOptionService;
 
-        public DeleteStoreTypeCommandHandler(IStoreTypeService storeTypeService)
+        public DeleteDeliveryOptionCommandHandler(IDeliveryOptionService deliveryOptionService)
         {
-            _storeTypeService = storeTypeService;
+            _deliveryOptionService = deliveryOptionService;
         }
 
-        public async Task<DeleteStoreTypeRangeResponseModel> Handle(DeleteStoreTypeCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteDeliveryOptionRangeResponseModel> Handle(DeleteDeliveryOptionCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var deletedCount = await _storeTypeService.DeleteAsync(globalId: request.GlobalId);
+                var deletedCount = await _deliveryOptionService.DeleteAsync(globalId: request.GlobalId);
                 if (deletedCount > 0)
                 {
-                    return new DeleteStoreTypeRangeResponseModel
+                    return new DeleteDeliveryOptionRangeResponseModel
                     {
                         DeletedCount = deletedCount
                     };
                 }
-                return new DeleteStoreTypeRangeResponseModel
+                return new DeleteDeliveryOptionRangeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,
@@ -45,7 +45,7 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
             }
             catch (System.Exception ex)
             {
-                return new DeleteStoreTypeRangeResponseModel
+                return new DeleteDeliveryOptionRangeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,

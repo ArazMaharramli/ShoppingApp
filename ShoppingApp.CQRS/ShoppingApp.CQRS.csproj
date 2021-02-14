@@ -22,6 +22,12 @@
     <Folder Include="Models\ResponseModels\StoreTypeResponseModels\CommandResponseModels\" />
     <Folder Include="Handlers\CommandHandlers\StoreTypeCommandHandlers\" />
     <Folder Include="Handlers\QueryHandlers\StoreTypeQueryHandlers\" />
+    <Folder Include="Models\QueryModels\DeliveryOptionQueryModels\" />
+    <Folder Include="Models\ResponseModels\DeliveryOptionResponseModels\" />
+    <Folder Include="Handlers\CommandHandlers\DeliveryOptionCommandHandlers\" />
+    <Folder Include="Models\CommandModels\DeliveryOptionCommands\" />
+    <Folder Include="Models\ResponseModels\DeliveryOptionResponseModels\CommandResponseModels\" />
+    <Folder Include="Handlers\QueryHandlers\DeliveryOptionQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

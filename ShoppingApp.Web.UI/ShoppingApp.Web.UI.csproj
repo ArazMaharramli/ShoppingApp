@@ -36,6 +36,8 @@
     <Folder Include="Areas\Admin\Views\StoreType\" />
     <Folder Include="Areas\Admin\ViewModels\StoreTypeViewModels\" />
     <Folder Include="Areas\Admin\ViewModels\CategoryViewModels\" />
+    <Folder Include="Areas\Admin\ViewModels\DeliveryOptionViewModels\" />
+    <Folder Include="Areas\Admin\Views\DeliveryOption\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

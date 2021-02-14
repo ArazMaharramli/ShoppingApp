@@ -6,5 +6,7 @@ namespace ShoppingApp.Web.API.Contracts.RequestModels.V1
         public string Email { get; set; }
         public string Code { get; set; }
         public string Password { get; set; }
+
+        public string userId { get; set; }
     }
 }

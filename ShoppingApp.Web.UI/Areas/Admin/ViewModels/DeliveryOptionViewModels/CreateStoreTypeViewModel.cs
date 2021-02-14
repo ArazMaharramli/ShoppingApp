@@ -7,5 +7,6 @@ namespace ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreTypeViewModels
     {
         [Required]
         public string Name { get; set; }
+
     }
 }

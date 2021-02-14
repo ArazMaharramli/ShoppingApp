@@ -7,7 +7,7 @@ using ShoppingApp.CQRS.Models.ResponseModels.StoreTypeResponseModels.CommandResp
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.CQRS.Handlers.CommandHandlers.CategoryCommandHandlers
+namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
 {
     public class CreateStoreTypeCommandHandler : IRequestHandler<CreateStoreTypeCommand, CreateStoreTypeResponseModel>
     {
@@ -20,18 +20,18 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.CategoryCommandHandlers
 
         public async Task<CreateStoreTypeResponseModel> Handle(CreateStoreTypeCommand request, CancellationToken cancellationToken)
         {
-            var categoryName = request.Name.Trim();
-            var categoryInDb = await _storeTypeService.FindByNameAndStatusAsync(categoryName);
-            if (categoryInDb is null)
+            var storeTypeName = request.Name.Trim();
+            var storeTypeInDb = await _storeTypeService.FindByNameAndStatusAsync(storeTypeName);
+            if (storeTypeInDb is null)
             {
 
-                var category = await _storeTypeService.CreateAsync(categoryName);
+                var storeType = await _storeTypeService.CreateAsync(storeTypeName);
 
-                if (!(category is null))
+                if (!(storeType is null))
                 {
                     return new CreateStoreTypeResponseModel
                     {
-                        StoreType = category
+                        StoreType = storeType
                     };
                 }
                 return new CreateStoreTypeResponseModel

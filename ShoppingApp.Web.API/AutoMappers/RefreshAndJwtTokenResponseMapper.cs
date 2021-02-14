@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using ShoppingApp.CQRS.Models.ResponseModels;
+using ShoppingApp.Utils.InternalModels;
 using ShoppingApp.Web.API.Contracts.ResponseModels.V1;
 
 namespace ShoppingApp.Web.API.AutoMappers
@@ -11,9 +13,11 @@ namespace ShoppingApp.Web.API.AutoMappers
         {
             CreateMap<ExternalLoginCommandsResponseModel, RefreshAndJwtTokenResponseModel>();
 
-            CreateMap<RefreshTokenCommandResponseModel, RefreshAndJwtTokenResponseModel > ();
+            CreateMap<RefreshTokenCommandResponseModel, RefreshAndJwtTokenResponseModel>();
 
             CreateMap<LoginAndRegisterCommandsResponseModel, RefreshAndJwtTokenResponseModel>();
+
+            CreateMap<InternalErrorModel, ErrorListResponseModel>();
         }
     }
 }

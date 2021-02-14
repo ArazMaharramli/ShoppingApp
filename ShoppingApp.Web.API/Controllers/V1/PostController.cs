@@ -5,7 +5,6 @@ using ShoppingApp.Web.API.Filters;
 
 namespace ShoppingApp.Web.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
     [ApiKeyAuth]
     [Authorize]
