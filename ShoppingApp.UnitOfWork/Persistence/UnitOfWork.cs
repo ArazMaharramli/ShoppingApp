@@ -129,9 +129,9 @@ namespace ShoppingApp.UnitOFWork.Persistence
         }
 
 
-        public async Task<int> SaveChangesAsync()
+        public Task<int> SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
     }
 }

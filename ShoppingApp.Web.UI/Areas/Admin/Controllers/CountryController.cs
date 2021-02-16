@@ -1,23 +1,25 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingApp.CQRS.Models.CommandModels.StoreTypeCommands;
-using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
+using ShoppingApp.CQRS.Models.CommandModels.CountryCommands;
+using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
-using ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreTypeViewModels;
+using ShoppingApp.Web.UI.Areas.Admin.ViewModels.CountryViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class StoreTypeController : Controller
+    public class CountryController : Controller
     {
         private readonly IMediator _mediator;
 
-        public StoreTypeController(IMediator mediator)
+        public CountryController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -29,7 +31,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetPagedStoreTypes()
+        public async Task<IActionResult> GetPagedCountries()
         {
             var pageNumber = int.Parse(Request.Form["pagination[page]"].FirstOrDefault() ?? "1");
             var pageSize = int.Parse(Request.Form["pagination[perpage]"].FirstOrDefault() ?? "10");
@@ -41,7 +43,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             var sortDirection = Request.Form["sort[sort]"].FirstOrDefault();
 
 
-            var query = new GetPagedStoreTypesQuery(
+            var query = new GetPagedCountriesQuery(
                 searchString: searchString,
                 pageSize: pageSize,
                 pageNumber: pageNumber,
@@ -53,18 +55,18 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 
             if (!response.HasError)
             {
-                var model = new BasePagedResponseModel<StoreTypeResponseModel>
+                var model = new BasePagedResponseModel<CountryResponseModel>
                 {
                     Meta = new Meta
                     {
                         Field = sortColumn,
                         Sort = sortDirection,
                         Page = pageNumber,
-                        Pages = response.StoreTypes.PageCount,
+                        Pages = response.Countries.PageCount,
                         Perpage = pageSize,
-                        Total = response.StoreTypes.Total
+                        Total = response.Countries.Total
                     },
-                    data = response.StoreTypes.Data.Select(x => new StoreTypeResponseModel
+                    data = response.Countries.Data.Select(x => new CountryResponseModel
                     {
                         GlobalId = x.GlobalId,
                         Name = x.Name,
@@ -84,18 +86,22 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateStoreTypeViewModel model)
+        public async Task<IActionResult> Create(CreateCountryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var command = new CreateStoreTypeCommand(name: model.Name);
+                var command = new CreateCountryCommand(
+                    name: model.Name,
+                    abbreviation: model.Abbreviation,
+                    phoneNumberPrefix: model.PhoneNumberPrefix,
+                    citieNames: model.Cities);
 
                 var response = await _mediator.Send(command);
                 if (!response.HasError)
                 {
-                    return RedirectToAction("Index", "StoreType", new { Area = "Admin" });
+                    return RedirectToAction("Index", "Country", new { Area = "Admin" });
                 }
-                if (response.ErrorType == Utils.Enums.ErrorType.Model)
+                if (response.ErrorType == ErrorType.Model)
                 {
                     foreach (var item in response.Errors)
                     {
@@ -111,31 +117,38 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpGet("[area]/[controller]/[action]/{globalId}")]
         public async Task<IActionResult> Edit(string globalId)
         {
-            var query = new GetStoreTypeByIdQuery(globalId: globalId);
+            var query = new GetCountryByIdQuery(globalId: globalId);
             var response = await _mediator.Send(query);
 
-            var model = new EditStoreTypeViewModel();
+            var model = new EditCountryViewModel();
 
             if (!response.HasError)
             {
-                model.Name = response.StoreType.Name;
+                model.Name = response.Country.Name;
+                model.Abbreviation = response.Country.Abbreviation;
+                model.PhoneNumberPrefix = response.Country.PhoneNumberPrefix;
+                model.Cities = response.Country.Cities.Select(x => x.Name).ToArray();
+                model.CitiesAsString = string.Join(", ", model.Cities);
             }
 
             return View(model);
         }
         [HttpPost("[area]/[controller]/[action]/{globalId}")]
-        public async Task<IActionResult> Edit(string globalId, EditStoreTypeViewModel model)
+        public async Task<IActionResult> Edit(string globalId, EditCountryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var command = new UpdateStoreTypeCommand(
+                var command = new UpdateCountryCommand(
                     globalId: globalId,
-                    name: model.Name);
+                    name: model.Name,
+                    abbreviation: model.Abbreviation,
+                    phoneNumberPrefix: model.PhoneNumberPrefix,
+                    citieNames: model.Cities);
                 var response = await _mediator.Send(command);
 
                 if (!response.HasError)
                 {
-                    return RedirectToAction("Index", "StoreType", new { Area = "Admin" });
+                    return RedirectToAction("Index", "Country", new { Area = "Admin" });
                 }
                 if (response.ErrorType == ErrorType.Model)
                 {
@@ -169,7 +182,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
                     return BadRequest();
             }
 
-            var command = new UpdateStoreTypeStatusRangeCommand(globalIds: globalIds, status: selectedStatus);
+            var command = new UpdateCountryStatusRangeCommand(globalIds: globalIds, status: selectedStatus);
             var response = await _mediator.Send(command);
             if (!response.HasError)
             {
@@ -185,7 +198,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRange(string[] globalIds)
         {
-            var command = new DeleteStoreTypeRangeCommand(globalIds: globalIds);
+            var command = new DeleteCountryRangeCommand(globalIds: globalIds);
             var response = await _mediator.Send(command);
 
 
@@ -203,7 +216,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string globalId)
         {
-            var command = new DeleteStoreTypeCommand(globalId: globalId);
+            var command = new DeleteCountryCommand(globalId: globalId);
             var response = await _mediator.Send(command);
 
 
@@ -217,6 +230,5 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
             }
             return NotFound();
         }
-
     }
 }

@@ -35,6 +35,11 @@
     <Folder Include="Models\ResponseModels\IdentityResponseModels\" />
     <Folder Include="Models\CommandModels\IdentityCommands\" />
     <Folder Include="Handlers\CommandHandlers\IdentityCommandHandlers\" />
+    <Folder Include="Models\ResponseModels\CountryResponseModels\" />
+    <Folder Include="Models\QueryModels\CountryQueryModels\" />
+    <Folder Include="Models\CommandModels\CountryCommands\" />
+    <Folder Include="Handlers\CommandHandlers\CountryCommandHandlers\" />
+    <Folder Include="Handlers\QueryHandlers\CountryQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

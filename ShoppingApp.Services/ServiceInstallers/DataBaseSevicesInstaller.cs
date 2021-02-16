@@ -14,6 +14,7 @@ namespace ShoppingApp.Services.ServiceInstallers
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IStoreTypeService, StoreTypeService>();
             services.AddTransient<IDeliveryOptionService, DeliveryOptionService>();
+            services.AddTransient<ICountryService, CountryService>();
         }
     }
 }

@@ -1,0 +1,75 @@
+﻿@model ShoppingApp.Web.UI.Areas.Admin.ViewModels.CountryViewModels.CreateCountryViewModel
+
+
+@section Scripts{
+
+    <script>$(document).ready(function () {
+            var input = document.getElementById('citiesAsTags');
+
+            // init Tagify script on the above inputs
+            var tagify = new Tagify(input);
+
+            // add a class to Tagify's input element
+            //tagify.DOM.input.classList.remove('tagify__input');
+            tagify.DOM.input.classList.add('form-control');
+            tagify.DOM.input.setAttribute('placeholder', 'enter tag...');
+
+            // re-place Tagify's input element outside of the  element (tagify.DOM.scope), just before it
+            tagify.DOM.scope.parentNode.insertBefore(tagify.DOM.input, tagify.DOM.scope);
+
+            tagify.on('change', function () {
+                $('#Cities').empty();
+                $.each(tagify.value, function (index, val) {
+                    $('#Cities').append('<option selected="true" value="' + val.value + '"></option>');
+                });
+
+            });
+        }
+        );</script>
+}
+<div class="card card-custom">
+    <div class="card-header">
+        <h3 class="card-title">
+            Country Create
+        </h3>
+    </div>
+    <!--begin::Form-->
+    <form class="form" method="post">
+        <div class="card-body">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="Name"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="Name" placeholder="Name" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="Abbreviation"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="Abbreviation" placeholder="Abbreviation" />
+                    <span asp-validation-for="Abbreviation"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="PhoneNumberPrefix"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="PhoneNumberPrefix" placeholder="Phone Number Prefix" />
+                    <span asp-validation-for="PhoneNumberPrefix"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="Cities"></label>
+                <div class="col-lg-4 col-md-9 col-sm-12">
+                    <input id="citiesAsTags" class='form-control form-control-solid tagify tagify--outside' placeholder='Cities' />
+                    <div class="mt-3 text-muted"></div>
+                </div>
+            </div>
+        </div>
+        <select type="hidden" asp-for="Cities" multiple></select>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </div>
+    </form>
+</div>

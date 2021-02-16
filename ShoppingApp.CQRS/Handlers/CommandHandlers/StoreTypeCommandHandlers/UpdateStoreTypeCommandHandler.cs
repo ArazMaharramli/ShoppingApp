@@ -26,8 +26,6 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
                 var storeTypeInDb = await _storeTypeService.FindByGobalIdAsync(globalId: request.GlobalId);
                 if (!(storeTypeInDb is null))
                 {
-                    IEnumerable<Category> children = new List<Category>();
-
                     storeTypeInDb.Name = request.Name.Trim();
                     storeTypeInDb = await _storeTypeService.UpdateAsync(storeTypeInDb);
                     return new UpdateStoreTypeResponseModel
