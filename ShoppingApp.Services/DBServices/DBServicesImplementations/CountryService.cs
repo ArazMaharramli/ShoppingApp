@@ -270,5 +270,9 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return countries;
         }
 
+        public Task<IEnumerable<Country>> GetAllActivesAsync()
+        {
+            return _unitOfWork.Countries.FindWithAllNavigationsAsync(x => x.Status == Status.Active);
+        }
     }
 }

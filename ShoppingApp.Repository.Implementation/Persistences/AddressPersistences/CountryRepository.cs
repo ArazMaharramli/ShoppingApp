@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,6 +20,14 @@ namespace ShoppingApp.Repository.Implementation.Persistences.AddressPersistences
         }
 
         public ShoppingAppDbContext ShoppingAppDbContext => Context as ShoppingAppDbContext;
+
+        public async Task<IEnumerable<Country>> FindWithAllNavigationsAsync(Expression<Func<Country, bool>> predicate)
+        {
+            return await Context.Set<Country>()
+                .Include(x => x.Cities)
+                .Where(predicate)
+                .ToListAsync();
+        }
 
         public async Task<IPagedList<Country>> GetPagedAsync(Expression<Func<Country, bool>> predicate, string searchString, string sortColumn, string sortDirection, int pageSize = 10, int pageNumber = 1)
         {

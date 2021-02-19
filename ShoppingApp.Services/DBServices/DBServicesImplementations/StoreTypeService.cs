@@ -74,9 +74,9 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return _unitOfWork.StoreTypes.FindAsync(x => globalIds.Contains(x.GlobalId));
         }
 
-        public Task<IEnumerable<StoreType>> GetAllAsync()
+        public Task<IEnumerable<StoreType>> GetAllActivesAsync()
         {
-            return _unitOfWork.StoreTypes.GetAllAsync();
+            return _unitOfWork.StoreTypes.FindAsync(x => x.Status == Status.Active);
         }
 
         public Task<IEnumerable<StoreType>> GetAllHiddenAsync()

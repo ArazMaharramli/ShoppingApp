@@ -67,4 +67,59 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers.CountryQueryHandlers
             }
         }
     }
+    public class GetCountriesWithCities : IRequestHandler<GetCountriesWithCitiesQuery, GetCountriesResponseModel>
+    {
+        private readonly ICountryService _countryService;
+
+        public GetCountriesWithCities(ICountryService countryService)
+        {
+            _countryService = countryService;
+        }
+
+        public async Task<GetCountriesResponseModel> Handle(GetCountriesWithCitiesQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var countries = await _countryService.GetAllActivesAsync();
+                if (!(countries is null))
+                {
+                    if (countries.ToList().Count > 0)
+                    {
+                        return new GetCountriesResponseModel
+                        {
+                            Countries = countries,
+                            HasError = false
+                        };
+                    }
+                }
+                return new GetCountriesResponseModel
+                {
+                    HasError = true,
+                    ErrorType = Utils.Enums.ErrorType.Model,
+                    Errors = new List<InternalErrorModel>
+                        {
+                            new InternalErrorModel
+                            {
+                                Message ="Not found"
+                            }
+                        }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new GetCountriesResponseModel
+                {
+                    HasError = true,
+                    ErrorType = Utils.Enums.ErrorType.Exception,
+                    Errors = new List<InternalErrorModel>
+                        {
+                            new InternalErrorModel
+                            {
+                                Message = ex.InnerException?.Message
+                            }
+                        }
+                };
+            }
+        }
+    }
 }

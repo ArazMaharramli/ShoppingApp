@@ -8,13 +8,11 @@ namespace ShoppingApp.Domain.Configurations.StoreModelsConfiguration
     {
         public void Configure(EntityTypeBuilder<StoreContact> builder)
         {
-            builder.Property(x => x.PhoneNumber)
+            builder.Property(x => x.Value)
                 .IsRequired();
 
             builder.HasOne(x => x.Store)
                 .WithMany(x => x.StoreContacts);
-
-
 
             builder.HasIndex(x => x.GlobalId);
 

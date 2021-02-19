@@ -17,8 +17,6 @@ namespace ShoppingApp.Domain.Models.Domain.StoreModels
         public string FacebookUrl { get; set; }
         public string InstagramUrl { get; set; }
 
-        public string Email { get; set; }
-
         public string ProfilePhotoUrl { get; set; }
         public string CoverPhotoUrl { get; set; }
 

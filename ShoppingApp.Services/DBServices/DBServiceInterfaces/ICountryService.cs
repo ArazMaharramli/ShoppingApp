@@ -9,6 +9,7 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
     public interface ICountryService
     {
         Task<IEnumerable<Country>> GetAllAsync();
+        Task<IEnumerable<Country>> GetAllActivesAsync();
         Task<IEnumerable<Country>> GetAllHiddenAsync();
         Task<Country> GetWithCitiesAsync(string countryId);
         Task<IEnumerable<City>> GetCitiesAsync(string countryId);

@@ -8,7 +8,7 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 {
     public interface IStoreTypeService
     {
-        Task<IEnumerable<StoreType>> GetAllAsync();
+        Task<IEnumerable<StoreType>> GetAllActivesAsync();
         Task<IEnumerable<StoreType>> GetAllHiddenAsync();
 
         Task<IPagedList<StoreType>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status);

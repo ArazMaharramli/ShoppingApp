@@ -13,11 +13,11 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers.StoreTypeQueryHandlers
 {
     public class GetStoreTypesQueryHandler : IRequestHandler<GetStoreTypesQuery, GetStoreTypesResponseModel>
     {
-        private readonly IStoreTypeService _StoreTypeService;
+        private readonly IStoreTypeService _storeTypeService;
 
-        public GetStoreTypesQueryHandler(IStoreTypeService StoreTypeService)
+        public GetStoreTypesQueryHandler(IStoreTypeService storeTypeService)
         {
-            _StoreTypeService = StoreTypeService;
+            _storeTypeService = storeTypeService;
         }
 
 
@@ -25,7 +25,7 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers.StoreTypeQueryHandlers
         {
             try
             {
-                var storeTypes = await _StoreTypeService.GetAllAsync();
+                var storeTypes = await _storeTypeService.GetAllActivesAsync();
                 if (!(storeTypes is null))
                 {
                     if (storeTypes.ToList().Count > 0)

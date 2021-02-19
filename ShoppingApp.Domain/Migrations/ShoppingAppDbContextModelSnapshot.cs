@@ -1308,9 +1308,6 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FacebookUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -1372,12 +1369,11 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte>("ContactType")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("GlobalId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -1392,6 +1388,10 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
