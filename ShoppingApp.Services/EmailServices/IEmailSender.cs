@@ -7,5 +7,6 @@ namespace ShoppingApp.Services.EmailServices
         Task SendWelcomeEmailAsync(string email, string userName);
         Task SendWelcomeConfirmEmailAsync(string email, string userName, string confirmEmailUrl);
         Task SendResetPasswordEmailAsync(string email, string userName, string resetPasswordUrl);
+        Task SendStoreCreatedEmailAsync(string email, string userName, string resetPasswordUrl);
     }
 }

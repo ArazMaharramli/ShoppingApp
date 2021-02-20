@@ -40,6 +40,9 @@
     <Folder Include="Models\CommandModels\CountryCommands\" />
     <Folder Include="Handlers\CommandHandlers\CountryCommandHandlers\" />
     <Folder Include="Handlers\QueryHandlers\CountryQueryHandlers\" />
+    <Folder Include="Models\CommandModels\StoreCommands\" />
+    <Folder Include="Models\ResponseModels\StoreResponseModels\" />
+    <Folder Include="Handlers\CommandHandlers\StoreCommandHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

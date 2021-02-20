@@ -10,8 +10,6 @@ namespace ShoppingApp.Services.EmailServices
     {
         private readonly IOptions<SmtpOptions> _options;
 
-
-
         public EmailSender(IOptions<SmtpOptions> options)
         {
             _options = options;
@@ -35,6 +33,11 @@ namespace ShoppingApp.Services.EmailServices
             await SendEmailAsync(email, "Welcome", message);
         }
 
+        public async Task SendStoreCreatedEmailAsync(string email, string userName, string resetPasswordUrl)
+        {
+            var message = string.Format((new EmailTemplates()).StoreCreated, userName, resetPasswordUrl);
+            await SendEmailAsync(email, "Store Created", message);
+        }
         #region privates
         private async Task SendEmailAsync(string email, string subject, string message)
         {

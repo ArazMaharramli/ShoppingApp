@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
 using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
 using ShoppingApp.Domain.Models.Domain.AddressModels;
@@ -27,40 +28,55 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> CreateShopAsync()
         {
+            return View(await FillModelFields(new CreateShopViewModel()));
+        }
+
+
+
+        [HttpPost]
+        public IActionResult CreateShop(CreateShopViewModel model)
+        {
+            var command = new CreateStoreCommand(
+                name: model.Name,
+                surname: model.Surname,
+                email: model.Email,
+                phoneNumber: model.PhoneNumber,
+                storeName: model.StoreName,
+                storeSlug: model.StoreSlug,
+                storeStatus: Utils.Enums.StoreStatus.PendingConfirmation,
+                storeTypeId: model.SelectedStoreType,
+                storeEmail: model.StoreEmail,
+                storePhone: model.StorePhone,
+                cityId: model.SelectedCityId,
+                address: model.Address,
+                zipCode: model.ZipCode);
+            var result = _mediator.Send(command).Result;
+            if (!result.HasError)
+            {
+                return RedirectToAction("index", "Home", new { Area = "" });
+            }
+            return View(FillModelFields(model).Result);
+        }
+
+        #region MyRegion
+        private async Task<CreateShopViewModel> FillModelFields(CreateShopViewModel model)
+        {
             var cityRequest = new GetCountriesWithCitiesQuery();
             var cities = await _mediator.Send(cityRequest);
-            if (cities.HasError)
-            {
-                return RedirectToAction("Error", "Home", new { Area = "" });
-            }
+
             var storeTypesRequest = new GetStoreTypesQuery();
             var storeTypes = await _mediator.Send(storeTypesRequest);
-            if (storeTypes.HasError)
-            {
-                return RedirectToAction("Error", "Home", new { Area = "" });
-            }
-            if (cities.HasError)
-            {
-                return RedirectToAction("Error", "Home", new { Area = "" });
-            }
+
             var citySLI = new List<SelectListItem>();
             foreach (var item in cities.Countries)
             {
                 citySLI.AddRange(item.Cities.Select(x => new SelectListItem { Text = x.Name, Value = x.GlobalId, Group = new SelectListGroup { Name = item.Name } }).ToList());
             }
-            var model = new CreateShopViewModel
-            {
-                StoreTypes = new SelectList(storeTypes.StoreTypes, nameof(StoreType.GlobalId), nameof(StoreType.Name)),
-                Cities = new SelectList(citySLI, "Value", "Text", null, "Group.Name")
-            };
-            return View(model);
-        }
 
-        [HttpPost]
-        public IActionResult CreateShop(CreateShopViewModel model)
-        {
-            return View();
+            model.StoreTypes = new SelectList(storeTypes.StoreTypes, nameof(StoreType.GlobalId), nameof(StoreType.Name));
+            model.Cities = new SelectList(citySLI, "Value", "Text", null, "Group.Name");
+            return model;
         }
-
+        #endregion
     }
 }

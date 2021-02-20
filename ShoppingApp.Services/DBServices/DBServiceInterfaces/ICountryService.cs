@@ -13,6 +13,7 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
         Task<IEnumerable<Country>> GetAllHiddenAsync();
         Task<Country> GetWithCitiesAsync(string countryId);
         Task<IEnumerable<City>> GetCitiesAsync(string countryId);
+        Task<City> GetCityAsync(string cityId);
 
 
         Task<IPagedList<Country>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status);

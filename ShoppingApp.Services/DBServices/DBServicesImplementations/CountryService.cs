@@ -274,5 +274,10 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
         {
             return _unitOfWork.Countries.FindWithAllNavigationsAsync(x => x.Status == Status.Active);
         }
+
+        public Task<City> GetCityAsync(string cityId)
+        {
+            return _unitOfWork.Cities.GetAsync(x => x.GlobalId == cityId && x.Status == Status.Active);
+        }
     }
 }

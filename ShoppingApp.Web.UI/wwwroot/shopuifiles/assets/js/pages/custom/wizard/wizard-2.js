@@ -36,7 +36,9 @@ var KTWizard2 = function () {
             KTUtil.scrollTop();
         });
 
-
+        _wizardObj.on('submit', function (wizard) {
+            _formEl.submit();
+        });
     }
 
 
