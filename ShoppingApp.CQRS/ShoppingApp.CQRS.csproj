@@ -43,6 +43,10 @@
     <Folder Include="Models\CommandModels\StoreCommands\" />
     <Folder Include="Models\ResponseModels\StoreResponseModels\" />
     <Folder Include="Handlers\CommandHandlers\StoreCommandHandlers\" />
+    <Folder Include="Models\QueryModels\StoreQueryModels\" />
+    <Folder Include="Models\ResponseModels\StoreResponseModels\CommandResponseModels\" />
+    <Folder Include="Models\ResponseModels\StoreResponseModels\QueryResponseModels\" />
+    <Folder Include="Handlers\QueryHandlers\StoreQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />

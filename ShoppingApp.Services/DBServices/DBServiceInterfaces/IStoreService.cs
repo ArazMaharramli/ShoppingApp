@@ -4,6 +4,7 @@ using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Utils.Enums;
+using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 {
@@ -17,6 +18,9 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
 
         Task<Store> ConfirmStoreAsync(string storeId);
         Task<Store> BlockStoreAsync(string storeId);
+
+
+        Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status);
 
     }
 }

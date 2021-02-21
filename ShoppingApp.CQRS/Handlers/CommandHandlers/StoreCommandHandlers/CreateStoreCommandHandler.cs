@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
-using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels;
+using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.CommandResponseModels;
 using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
