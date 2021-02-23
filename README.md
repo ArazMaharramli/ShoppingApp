@@ -5,7 +5,7 @@ E-commerce web project which contains both web api and web UI applications. Deve
 ## Installation requirements
 
 ```bash
-.Net Core 3.1
+.Net 5.0
 MSSQL server 2019
 ```
 
@@ -22,7 +22,8 @@ Required Steps are:
 "ApiKey":"AbC123KJE43avfe96"
 ```
  2. Remove "_forgit" part from the name of settings file and save
- 3. Open the terminal and go to project directory. Then type:
+ 3. In ShoppingAppDbContextFactory inside ShoppingApp.Domain project replace connectioon string with yours
+ 4. Open the terminal and go to project directory. Then type:
 ```bash
 cd shoppingapp.domain
 dotnet ef migrations add initial
