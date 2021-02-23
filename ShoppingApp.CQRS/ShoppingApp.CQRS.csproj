@@ -1,9 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel></WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Handlers\" />
@@ -49,7 +52,7 @@
     <Folder Include="Handlers\QueryHandlers\StoreQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Services\ShoppingApp.Services.csproj" />

@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.CommandResponseModels;
+using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
-using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.CommandResponseModels;
 using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
-using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Services.EmailServices;
+using ShoppingApp.Utils.InternalModels;
+using System.Collections.Generic;
 using ShoppingApp.Utils.Classes;
 using ShoppingApp.Utils.Enums;
-using ShoppingApp.Utils.InternalModels;
+using System.Threading.Tasks;
+using System.Threading;
+using MediatR;
 
 namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
 {
@@ -21,15 +21,13 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
         private readonly ICountryService _countryService;
         private readonly IStoreTypeService _storeTypeService;
         private readonly IUserIdentityService _userService;
-        private readonly IEmailSender _emailSender;
 
-        public CreateStoreCommandHandler(IStoreService service, ICountryService countryService, IStoreTypeService storeTypeService, IUserIdentityService userService, IEmailSender emailSender)
+        public CreateStoreCommandHandler(IStoreService service, ICountryService countryService, IStoreTypeService storeTypeService, IUserIdentityService userService)
         {
             _countryService = countryService;
             _storeTypeService = storeTypeService;
             _service = service;
             _userService = userService;
-            _emailSender = emailSender;
         }
 
         public async Task<CreateStoreResponseModel> Handle(CreateStoreCommand request, CancellationToken cancellationToken)
