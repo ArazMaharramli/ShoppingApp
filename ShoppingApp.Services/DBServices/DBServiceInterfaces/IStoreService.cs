@@ -14,11 +14,11 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
             string storeName, string storeSlug,
             StoreStatus storeStatus, StoreType storeType,
             List<StoreContact> storeContacts, Address storeAddress,
-            List<User> users);
+            User owner);
 
         Task<Store> ConfirmStoreAsync(string storeId);
         Task<Store> BlockStoreAsync(string storeId);
-
+        Task<Store> FindByIdAsync(string storeId);
 
         Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status);
 

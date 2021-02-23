@@ -1,0 +1,98 @@
+﻿@model ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreViewModels.EditStoreViewModel
+
+
+@section Scripts{
+
+}
+<div class="card card-custom">
+    <div class="card-header">
+        <h3 class="card-title">
+            Store Edit
+        </h3>
+    </div>
+    <!--begin::Form-->
+    <form class="form" method="post">
+        <div class="card-body">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="OwnerName"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="OwnerName" placeholder="Owner Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="OwnerSurname"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="OwnerSurname" placeholder="Owner Surname" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="OwnerEmail"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="OwnerEmail" placeholder="Owner Email" />
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="OwnerPhoneNumber"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="OwnerPhoneNumber" placeholder="Owner Phone" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="StoreName"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="StoreName" placeholder="Store Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="StoreSlug"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="StoreSlug" placeholder="Store Slug" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="SelectedStoreType"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <select class="form-control" asp-for="SelectedStoreType" asp-items="Model.StoreTypes">
+                    </select>
+                </div>
+            </div>
+            @foreach (var item in Model.StoreContacts)
+            {
+                <div class="form-group row">
+                    <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="@item.ContactType"></label>
+                    <div class=" col-lg-4 col-md-9 col-sm-12">
+                        <input class="form-control form-control-solid" asp-for="@item.Value" placeholder="Contact" />
+                    </div>
+                </div>
+            }
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="Address"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="Address" placeholder="Store Address" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="ZipCode"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <input class="form-control form-control-solid" asp-for="ZipCode" placeholder="Store ZipCode" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="SelectedCityId"></label>
+                <div class=" col-lg-4 col-md-9 col-sm-12">
+                    <select class="form-control" asp-for="SelectedCityId" asp-items="Model.Cities">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Confirm Store</button>
+            @*<button type="reset" class="btn btn-secondary">Cancel</button>*@
+        </div>
+    </form>
+</div>

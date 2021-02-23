@@ -9,7 +9,7 @@ namespace ShoppingApp.Domain.Configurations.UserModelConfiguration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasOne(u => u.Store)
-                   .WithMany(c => c.Users);
+                   .WithOne(c => c.Owner);
 
 
             builder.HasMany(e => e.Claims)

@@ -24,7 +24,11 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Store> BlockStoreAsync(string storeId)
         {
-            var store = await _unitOfWork.Stores.GetAsync(x => x.GlobalId == storeId && x.Status == StoreStatus.PendingConfirmation);
+            var store = await _unitOfWork.Stores.GetAsync(x => x.GlobalId == storeId && x.Status != StoreStatus.Deleted);
+            if (store is null)
+            {
+                return store;
+            }
             store.Status = StoreStatus.NotConfirmed;
             _unitOfWork.Stores.Update(store);
             await _unitOfWork.SaveChangesAsync();
@@ -33,8 +37,12 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Store> ConfirmStoreAsync(string storeId)
         {
-            var store = await _unitOfWork.Stores.GetAsync(x => x.GlobalId == storeId && x.Status == StoreStatus.PendingConfirmation);
-            store.Status = StoreStatus.Active;
+            var store = await _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId && x.Status == StoreStatus.PendingConfirmation);
+            if (store is null)
+            {
+                return store;
+            }
+            store.Status = StoreStatus.Confirmed;
             _unitOfWork.Stores.Update(store);
             await _unitOfWork.SaveChangesAsync();
             return store;
@@ -44,7 +52,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             string storeName, string storeSlug,
             StoreStatus storeStatus, StoreType storeType,
             List<StoreContact> storeContacts, Address storeAddress,
-            List<User> users)
+            User owner)
         {
             var store = new Store
             {
@@ -53,13 +61,18 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 Status = storeStatus,
                 StoreContacts = storeContacts,
                 StoreType = storeType,
-                Users = users,
+                Owner = owner,
                 Address = storeAddress
             };
 
             _unitOfWork.Stores.Add(store);
             await _unitOfWork.SaveChangesAsync();
             return store;
+        }
+
+        public Task<Store> FindByIdAsync(string storeId)
+        {
+            return _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId);
         }
 
         public Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)

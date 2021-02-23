@@ -53,6 +53,4 @@ namespace ShoppingApp.CQRS.Models.CommandModels.StoreCommands
         public string Address { get; set; }
         public string ZipCode { get; set; }
     }
-
-
 }

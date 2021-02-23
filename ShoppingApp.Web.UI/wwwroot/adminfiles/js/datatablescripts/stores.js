@@ -13,7 +13,7 @@ var KTDefaultDatatableDemo = function () {
                 type: 'remote',
                 source: {
                     read: {
-                        url: '/admin/shop/getpagedstores/'
+                        url: '/admin/store/getpagedstores/'
                     },
                 },
                 pageSize: 10, // display 20 records per page
@@ -62,9 +62,9 @@ var KTDefaultDatatableDemo = function () {
                     template: function (row) {
                         var status = {
                             "Confirmed": { 'title': 'Confirmed', 'class': 'label-light-success' },
-                            "NotConfirmed": { 'title': 'NotConfirmed', 'class': 'label-light-danger' },
+                            "NotConfirmed": { 'title': 'NotConfirmed', 'class': 'label-light-primary' },
                             "PendingConfirmation": { 'title': 'PendingConfirmation', 'class': 'label-light-info' },
-                            "Deleted": { 'title': 'Deleted', 'class': 'label-light-primary' }
+                            "Deleted": { 'title': 'Deleted', 'class': 'label-light-danger' }
                         };
                         return '<span class="label ' + status[row.status].class + ' label-inline font-weight-bold label-lg">' + status[row.status].title + '</span>';
                     },
@@ -76,7 +76,7 @@ var KTDefaultDatatableDemo = function () {
                     overflow: 'visible',
                     autoHide: false,
                     template: function (row) {
-                        return '\<a href="/admin/shop/edit/' + row.globalId + '"class="btn btn-sm btn-clean btn-icon" title="Edit details">\
+                        return '\<a href="/admin/store/edit/' + row.globalId + '"class="btn btn-sm btn-clean btn-icon" title="Edit details">\
 								<i class="la la-edit"></i>\
 							</a>\
 							<a id="'+ row.globalId + '" class="btn btn-sm btn-clean btn-icon deletebtn" title="Delete">\

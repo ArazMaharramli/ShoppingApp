@@ -89,5 +89,17 @@ namespace ShoppingApp.Repository.Implementation.Persistences.StorePersistences
                 pageNumber: pageNumber,
                 pageCount: pageCount);
         }
+
+        public Task<Store> GetWithAllNavigationsAsync(Expression<Func<Store, bool>> predicate)
+        {
+            return Context.Set<Store>()
+                .Include(x => x.Owner)
+                .Include(x => x.StoreContacts)
+                .Include(x => x.Address)
+                .ThenInclude(x => x.City)
+                .Include(x => x.StoreType)
+                .Where(predicate)
+                .FirstOrDefaultAsync();
+        }
     }
 }

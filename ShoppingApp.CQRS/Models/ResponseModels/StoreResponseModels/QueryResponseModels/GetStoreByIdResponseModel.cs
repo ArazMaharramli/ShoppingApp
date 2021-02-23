@@ -3,8 +3,8 @@ using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.QueryResponseModels
 {
-    public class GetPagedStoresResponseModel : BaseResponseModel
+    public class GetStoreByIdResponseModel : BaseResponseModel
     {
-        public IPagedList<Store> Stores { get; set; }
+        public Store Store { get; set; }
     }
 }

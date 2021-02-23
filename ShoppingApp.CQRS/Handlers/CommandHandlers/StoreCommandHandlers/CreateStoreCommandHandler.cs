@@ -4,7 +4,6 @@ using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
 using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
-using ShoppingApp.Services.EmailServices;
 using ShoppingApp.Utils.InternalModels;
 using System.Collections.Generic;
 using ShoppingApp.Utils.Classes;
@@ -76,7 +75,7 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
                     AddressLine1 = request.Address,
                     ZipCode = request.ZipCode
                 };
-                var users = new List<User> { user };
+                var owner = user;
 
                 return new CreateStoreResponseModel
                 {
@@ -87,7 +86,7 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
                     storeType: storetype,
                     storeContacts: contacts,
                     storeAddress: address,
-                    users: users)
+                    owner: owner)
                 };
             }
             catch (System.Exception ex)
