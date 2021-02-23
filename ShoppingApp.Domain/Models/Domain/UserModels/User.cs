@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using ShoppingApp.Domain.Models.Domain.OrderModels;
 using ShoppingApp.Domain.Models.Domain.ShoppingCartModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
+using ShoppingApp.Utils.Classes;
 using ShoppingApp.Utils.Enums;
 
 namespace ShoppingApp.Domain.Models.Domain.UserModels
@@ -29,7 +31,7 @@ namespace ShoppingApp.Domain.Models.Domain.UserModels
 
         public string ProfilePhoto { get; set; }
 
-
+        public DateTime RegistrationDate { get; set; } = LocalTime.Now();
         public UserType UserType { get; set; }
 
         public long? StoreId { get; set; }

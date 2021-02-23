@@ -15,8 +15,8 @@ namespace ShoppingApp.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -135,12 +135,12 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("AddressLine1")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<long>("CityId")
                         .HasColumnType("bigint");
@@ -170,8 +170,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -200,8 +200,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -232,8 +232,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
@@ -243,13 +243,13 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumberPrefix")
                         .IsRequired()
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -290,8 +290,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("PropmotionImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<string>("RedirectUrl")
                         .HasColumnType("nvarchar(max)");
@@ -344,8 +344,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -493,13 +493,13 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("FrameName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(15)")
-                        .HasMaxLength(15);
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("FrameUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<string>("GlobalId")
                         .HasColumnType("nvarchar(450)");
@@ -546,8 +546,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("MediaUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<byte>("OrderIndex")
                         .HasColumnType("tinyint");
@@ -770,8 +770,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IconUrl")
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -783,8 +783,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -813,8 +813,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LogoUrl")
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -826,8 +826,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UniqueSlug")
                         .IsRequired()
@@ -859,8 +859,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IconUrl")
-                        .HasColumnType("nvarchar(2100)")
-                        .HasMaxLength(2100);
+                        .HasMaxLength(2100)
+                        .HasColumnType("nvarchar(2100)");
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
@@ -878,8 +878,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("UniqueName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UniqueSlug")
                         .IsRequired()
@@ -911,8 +911,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HexCode")
-                        .HasColumnType("nvarchar(9)")
-                        .HasMaxLength(9);
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -927,8 +927,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("UniqueTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -955,8 +955,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -1022,8 +1022,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UniqueSlug")
                         .IsRequired()
@@ -1140,8 +1140,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Abbreviation")
-                        .HasColumnType("nvarchar(7)")
-                        .HasMaxLength(7);
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
 
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
@@ -1333,8 +1333,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("StoreName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<long>("StoreTypeId")
                         .HasColumnType("bigint");
@@ -1450,8 +1450,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("JwtId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(36)")
-                        .HasMaxLength(36);
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -1487,18 +1487,18 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -1517,8 +1517,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -1536,12 +1536,12 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -1555,6 +1555,9 @@ namespace ShoppingApp.Domain.Migrations
                     b.Property<string>("ProfilePhoto")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -1565,8 +1568,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
@@ -1574,11 +1577,11 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("StoreId");
@@ -1618,8 +1621,8 @@ namespace ShoppingApp.Domain.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(258)")
-                        .HasMaxLength(258);
+                        .HasMaxLength(258)
+                        .HasColumnType("nvarchar(258)");
 
                     b.HasKey("Id");
 
@@ -1731,6 +1734,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.AddressModels.City", b =>
@@ -1740,6 +1745,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MappingModels.ProductCategory", b =>
@@ -1755,6 +1762,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MappingModels.ProductTag", b =>
@@ -1766,6 +1777,10 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.ProductModels.Tag", "Tag")
                         .WithMany("ProductTags")
                         .HasForeignKey("TagId1");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MappingModels.StoreDeliveryOption", b =>
@@ -1781,6 +1796,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DeliveryOption");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MappingModels.StorePaymentOption", b =>
@@ -1796,6 +1815,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PaymentOption");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MediaModels.ProductMedia", b =>
@@ -1805,6 +1828,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MediaModels.UploadedProductMediaForFutureUse", b =>
@@ -1814,6 +1839,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.OrderModels.Order", b =>
@@ -1833,6 +1860,12 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.UserModels.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("DeliveryAddress");
+
+                    b.Navigation("PaymentOption");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.OrderModels.OrderItem", b =>
@@ -1854,6 +1887,12 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("ProductDetailId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("DeliveryOption");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.OrderModels.OrderItemNote", b =>
@@ -1863,6 +1902,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("OrderItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("OrderItem");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Brand", b =>
@@ -1872,6 +1913,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("BrandCountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BrandCountry");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Category", b =>
@@ -1879,6 +1922,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.ProductModels.Category", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Product", b =>
@@ -1894,6 +1939,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Material");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.ProductDetail", b =>
@@ -1915,6 +1964,12 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Size", b =>
@@ -1924,6 +1979,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("SizeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("SizeType");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ShoppingCartModels.ShoppingCart", b =>
@@ -1931,6 +1988,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.UserModels.User", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ShoppingCartModels.ShoppingCartItem", b =>
@@ -1946,6 +2005,10 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ShoppingCart");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.StoreModels.Store", b =>
@@ -1965,6 +2028,12 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("StoreTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("PhotoFrame");
+
+                    b.Navigation("StoreType");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.StoreModels.StoreContact", b =>
@@ -1974,6 +2043,8 @@ namespace ShoppingApp.Domain.Migrations
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.UserModels.RefreshToken", b =>
@@ -1981,6 +2052,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.UserModels.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.UserModels.User", b =>
@@ -1988,6 +2061,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.StoreModels.Store", "Store")
                         .WithMany("Users")
                         .HasForeignKey("StoreId");
+
+                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.UserModels.UserContact", b =>
@@ -1995,6 +2070,8 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.UserModels.User", "User")
                         .WithMany("UserContacts")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.UserModels.UserNotificationToken", b =>
@@ -2002,6 +2079,153 @@ namespace ShoppingApp.Domain.Migrations
                     b.HasOne("ShoppingApp.Domain.Models.Domain.UserModels.User", "User")
                         .WithMany("NotificationTokens")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.AddressModels.Address", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.AddressModels.City", b =>
+                {
+                    b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.AddressModels.Country", b =>
+                {
+                    b.Navigation("Brands");
+
+                    b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.DeliveryModels.DeliveryOption", b =>
+                {
+                    b.Navigation("OrderItems");
+
+                    b.Navigation("StoreDeliveryOptions");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.MediaModels.PhotoFrame", b =>
+                {
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.OrderModels.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.OrderModels.OrderItem", b =>
+                {
+                    b.Navigation("OrderItemNotes");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.PaymentModels.PaymentOption", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("StorePaymentOptions");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Brand", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Category", b =>
+                {
+                    b.Navigation("Children");
+
+                    b.Navigation("ProductCategories");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Color", b =>
+                {
+                    b.Navigation("ProductDetails");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Material", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Product", b =>
+                {
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductDetails");
+
+                    b.Navigation("ProductMedias");
+
+                    b.Navigation("ProductTags");
+
+                    b.Navigation("ShoppingCartItems");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.ProductDetail", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Size", b =>
+                {
+                    b.Navigation("ProductDetails");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.SizeType", b =>
+                {
+                    b.Navigation("Sizes");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ProductModels.Tag", b =>
+                {
+                    b.Navigation("ProductTags");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.ShoppingCartModels.ShoppingCart", b =>
+                {
+                    b.Navigation("ShoppingCartItems");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.StoreModels.Store", b =>
+                {
+                    b.Navigation("StoreContacts");
+
+                    b.Navigation("StoreDeliveryOptions");
+
+                    b.Navigation("StorePaymentOptions");
+
+                    b.Navigation("UploadedProductMediasForFutureUse");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.StoreModels.StoreType", b =>
+                {
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Domain.Models.Domain.UserModels.User", b =>
+                {
+                    b.Navigation("Claims");
+
+                    b.Navigation("Logins");
+
+                    b.Navigation("NotificationTokens");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("RefreshTokens");
+
+                    b.Navigation("Roles");
+
+                    b.Navigation("ShoppingCarts");
+
+                    b.Navigation("UserContacts");
                 });
 #pragma warning restore 612, 618
         }
