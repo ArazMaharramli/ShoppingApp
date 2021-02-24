@@ -24,7 +24,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Store> BlockStoreAsync(string storeId)
         {
-            var store = await _unitOfWork.Stores.GetAsync(x => x.GlobalId == storeId && x.Status != StoreStatus.Deleted);
+            var store = await _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId && x.Status != StoreStatus.Deleted);
             if (store is null)
             {
                 return store;
@@ -37,7 +37,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public async Task<Store> ConfirmStoreAsync(string storeId)
         {
-            var store = await _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId && x.Status == StoreStatus.PendingConfirmation);
+            var store = await _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId && x.Status != StoreStatus.Deleted);
             if (store is null)
             {
                 return store;

@@ -91,7 +91,14 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary mr-2">Confirm Store</button>
+            @if (!Model.IsConfirmed)
+            {
+                <button type="submit" name="Status" value="10" class="btn btn-success mr-2">Confirm Store</button>
+            }
+            @if (!Model.IsBlocked)
+            {
+                <button type="submit" name="Status" value="9" class="btn btn-danger mr-2">Block Store</button>
+            }
             @*<button type="reset" class="btn btn-secondary">Cancel</button>*@
         </div>
     </form>

@@ -38,6 +38,11 @@ namespace ShoppingApp.Services.EmailServices
             var message = string.Format((new EmailTemplates()).StoreCreated, userName, resetPasswordUrl);
             await SendEmailAsync(email, "Store Created", message);
         }
+        public async Task SendStoreBlockedEmailAsync(string email, string userName)
+        {
+            var message = string.Format((new EmailTemplates()).StoreBlocked, userName);
+            await SendEmailAsync(email, "Store Blocked", message);
+        }
         #region privates
         private async Task SendEmailAsync(string email, string subject, string message)
         {

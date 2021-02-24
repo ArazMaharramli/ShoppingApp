@@ -8,6 +8,7 @@ using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
 using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
+using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.CommandResponseModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Web.UI.Areas.Admin.PagedResponseModels;
 using ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreViewModels;
@@ -102,7 +103,9 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
 
                     Address = response.Store.Address.AddressLine1,
                     ZipCode = response.Store.Address.ZipCode,
-                    SelectedCityId = response.Store.Address.City.GlobalId
+                    SelectedCityId = response.Store.Address.City.GlobalId,
+                    IsBlocked = response.Store.Status == Utils.Enums.StoreStatus.NotConfirmed,
+                    IsConfirmed = response.Store.Status == Utils.Enums.StoreStatus.Confirmed
                 };
                 return View(await FillModelFields(model));
             }
@@ -115,13 +118,22 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var command = new ConfirmStoreCommand(storeId: storeId);
-                var response = await _mediator.Send(command);
+                var response = new UpdateStoreStatusResponseModel();
+                if (model.Status == Utils.Enums.StoreStatus.Confirmed)
+                {
+                    var command = new ConfirmStoreCommand(storeId: storeId);
+                    response = await _mediator.Send(command);
+                }
+                if (model.Status == Utils.Enums.StoreStatus.NotConfirmed)
+                {
+                    var command = new BlockStoreCommand(storeId: storeId);
+                    response = await _mediator.Send(command);
+                }
                 if (!response.HasError)
                 {
                     return RedirectToAction("Index", "Store", new { Area = "Admin" });
                 }
-                if (response.ErrorType == Utils.Enums.ErrorType.Exception)
+                if (response.ErrorType != Utils.Enums.ErrorType.Model)
                 {
                     return RedirectToAction("Error", "Home", new { Area = "" });
                 }

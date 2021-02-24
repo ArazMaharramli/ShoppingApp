@@ -31,6 +31,10 @@ namespace ShoppingApp.Web.UI.Areas.Admin.ViewModels.StoreViewModels
 
         public string Address { get; set; }
         public string ZipCode { get; set; }
+
+        public bool IsConfirmed { get; set; }
+        public bool IsBlocked { get; set; }
+        public StoreStatus Status { get; set; }
     }
     public class StoreContactViewModel
     {
