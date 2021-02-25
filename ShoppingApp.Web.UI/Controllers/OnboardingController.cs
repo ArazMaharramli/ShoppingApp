@@ -8,13 +8,12 @@ using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
 using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
-using ShoppingApp.Web.UI.Areas.Shop.ViewModels.OnboardingViewModels;
+using ShoppingApp.Web.UI.ViewModels.OnboardingViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
+namespace ShoppingApp.Web.Controllers
 {
-    [Area("Shop")]
     public class OnboardingController : Controller
     {
         private readonly IMediator _mediator;

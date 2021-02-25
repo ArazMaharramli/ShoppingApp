@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ShoppingApp.Web.UI.Areas.Shop.ViewModels.OnboardingViewModels
+namespace ShoppingApp.Web.UI.ViewModels.OnboardingViewModels
 {
     public class CreateShopViewModel
     {
