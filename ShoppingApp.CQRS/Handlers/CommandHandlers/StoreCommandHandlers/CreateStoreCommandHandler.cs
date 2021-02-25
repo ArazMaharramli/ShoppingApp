@@ -34,25 +34,40 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
             try
             {
                 var user = await _userService.FindByEmailAsync(request.Email);
-                if (user is null)
+                if (!(user is null))
                 {
-                    var password = PasswordGenerator.GenerateRandomPassword();
-                    var result = await _userService.CreateAsync(
-                        new User
-                        {
-                            FirstName = request.Name,
-                            LastName = request.Surname,
-                            UserName = request.Email,
-                            Email = request.Email,
-                            PhoneNumber = request.PhoneNumber
-                        },
-                        password: password);
-                    if (!result.Succeeded)
+                    return new CreateStoreResponseModel
                     {
-                        return null;
-                    }
-                    user = await _userService.FindByEmailAsync(request.Email);
+                        HasError = true,
+                        ErrorType = ErrorType.Model,
+                        Errors = new List<InternalErrorModel>
+                        {
+                            new InternalErrorModel
+                            {
+                                Message = "There is a user with this email address please enter other email."
+                            }
+                        }
+                    };
+
                 }
+
+                var password = PasswordGenerator.GenerateRandomPassword();
+                var result = await _userService.CreateAsync(
+                    new User
+                    {
+                        FirstName = request.Name,
+                        LastName = request.Surname,
+                        UserName = request.Email,
+                        Email = request.Email,
+                        PhoneNumber = request.PhoneNumber,
+                        UserType = UserType.Company
+                    },
+                    password: password);
+                if (!result.Succeeded)
+                {
+                    return null;
+                }
+                user = await _userService.FindByEmailAsync(request.Email);
 
                 var storetype = await _storeTypeService.FindByGobalIdAsync(request.StoreTypeId);
                 var city = await _countryService.GetCityAsync(request.CityId);

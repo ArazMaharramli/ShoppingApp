@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
 using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreTypeQueryModels;
-using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Web.UI.Areas.Shop.ViewModels.OnboardingViewModels;
 
@@ -34,7 +32,7 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateShop(CreateShopViewModel model)
+        public async Task<IActionResult> CreateShopAsync(CreateShopViewModel model)
         {
             var command = new CreateStoreCommand(
                 name: model.Name,
@@ -50,12 +48,19 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
                 cityId: model.SelectedCityId,
                 address: model.Address,
                 zipCode: model.ZipCode);
-            var result = _mediator.Send(command).Result;
+            var result = await _mediator.Send(command);
             if (!result.HasError)
             {
                 return RedirectToAction("index", "Home", new { Area = "" });
             }
-            return View(FillModelFields(model).Result);
+            if (result.ErrorType == Utils.Enums.ErrorType.Model)
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError("", item.Message);
+                }
+            }
+            return View(await FillModelFields(model));
         }
 
         #region MyRegion
