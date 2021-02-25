@@ -44,6 +44,14 @@ namespace ShoppingApp.Web.UI.Controllers
             if (!response.HasError)
             {
                 await _signInManager.SignInAsync(response.User, true);
+                if (response.User.UserType == UserType.Company)
+                {
+                    return RedirectToAction("Index", "Home", new { Area = "Shop" });
+                }
+                if (response.User.UserType == UserType.Admin)
+                {
+                    return RedirectToAction("Index", "Home", new { Area = "Admin" });
+                }
                 return RedirectToLocal(returnUrl);
             }
             if (response.ErrorType == ErrorType.Model)
