@@ -354,3 +354,4 @@ ShoppingApp.Domain/Migrations
 SharedSettings.json
 sharedappsettings.json
 ShoppingApp.Domain/Migrations/ShoppingAppDbContextModelSnapshot.cs
+ShoppingApp.Web.UI/wwwroot/uploads/
