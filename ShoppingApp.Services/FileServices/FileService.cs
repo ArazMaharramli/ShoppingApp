@@ -25,14 +25,14 @@ namespace ShoppingApp.Services.FileServices
         {
             if (file != null)
             {
-                string uniqueFileName = null;
+
                 string uploadsFolder = Path.Combine(root, "uploads", folder);
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
                 }
                 var extension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal)).ToLower();
-                uniqueFileName = Guid.NewGuid().ToString("N") + "_" + fileName + extension;
+                var uniqueFileName = Guid.NewGuid().ToString("N") + "_" + fileName + extension;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {

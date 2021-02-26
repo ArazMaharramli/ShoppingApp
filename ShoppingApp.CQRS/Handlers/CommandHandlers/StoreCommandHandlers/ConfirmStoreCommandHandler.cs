@@ -14,9 +14,9 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreCommandHandlers
 {
     public class ConfirmStoreCommandHandler : IRequestHandler<ConfirmStoreCommand, UpdateStoreStatusResponseModel>
     {
-        public IStoreService _storeService { get; set; }
-        public IEmailSender _emailService { get; set; }
-        public IUserIdentityService _userIdentityService { get; set; }
+        private readonly IStoreService _storeService;
+        private readonly IEmailSender _emailService;
+        private readonly IUserIdentityService _userIdentityService;
 
         public ConfirmStoreCommandHandler(IStoreService storeService, IEmailSender emailService, IUserIdentityService userIdentityService)
         {

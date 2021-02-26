@@ -5,7 +5,7 @@ namespace ShoppingApp.Services.FileServices
 {
     public interface IFileService
     {
-        public Task<string> UploadFileAsync(IFormFile file, string folder, string name, string fileNameType = "CompanyRegistrationCertificate");
+        public Task<string> UploadFileAsync(IFormFile file, string root, string folder, string fileName);
         public bool DeleteFile(string path);
     }
 }

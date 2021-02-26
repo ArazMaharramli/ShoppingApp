@@ -75,6 +75,11 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId);
         }
 
+        public Task<Store> FindByOwnerIdAsync(string ownerId)
+        {
+            return _unitOfWork.Stores.GetWithOwnerAsync(x => x.Owner.Id == ownerId);
+        }
+
         public Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)
         {
             Expression<Func<Store, bool>> predicate;
@@ -86,7 +91,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 case ("deleted"):
                     predicate = x => x.Status == StoreStatus.Deleted;
                     break;
-                case ("pendingponfirmation"):
+                case ("pendingconfirmation"):
                     predicate = x => x.Status == StoreStatus.PendingConfirmation;
                     break;
                 case ("notconfirmed"):
@@ -104,6 +109,19 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 pageNumber: pageNumber,
                 sortColumn: sortColumn,
                 sortDirection: sortDirection);
+        }
+
+        public async Task<Store> UpdateProfilePhotoAsync(string userId, string photoUrl)
+        {
+            var store = await _unitOfWork.Stores.GetWithOwnerAsync(x => x.Owner.Id == userId);
+            if (store is null)
+            {
+                throw new Exception("Store Not Found");
+            }
+            store.ProfilePhotoUrl = photoUrl;
+            _unitOfWork.Stores.Update(store);
+            await _unitOfWork.SaveChangesAsync();
+            return store;
         }
     }
 }

@@ -101,5 +101,13 @@ namespace ShoppingApp.Repository.Implementation.Persistences.StorePersistences
                 .Where(predicate)
                 .FirstOrDefaultAsync();
         }
+
+        public Task<Store> GetWithOwnerAsync(Expression<Func<Store, bool>> predicate)
+        {
+            return Context.Set<Store>()
+                .Include(x => x.Owner)
+                .Where(predicate)
+                .FirstOrDefaultAsync();
+        }
     }
 }

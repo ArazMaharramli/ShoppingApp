@@ -19,6 +19,9 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
         Task<Store> ConfirmStoreAsync(string storeId);
         Task<Store> BlockStoreAsync(string storeId);
         Task<Store> FindByIdAsync(string storeId);
+        Task<Store> FindByOwnerIdAsync(string ownerId);
+
+        Task<Store> UpdateProfilePhotoAsync(string userId, string photoUrl);
 
         Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status);
 
