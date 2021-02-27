@@ -7,16 +7,10 @@
             @*data.append("ProfilePhoto", imageInput.input.files[0]);*@
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', form.getAttribute('action'), true);
-            xhr.send(data);
 
-            @*$.ajax({
-                type: "POST",
-                url: "/shop/profile/UploadProfilePhoto/",
-                enctype: 'multipart/form-data',
-                contentType: false,
-                data: data,
-                success: function (response) {
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    jQuery('.image-input-wrapper').css('background-image', 'url(' + xhr.responseText + ')');
                     swal.fire({
                         title: 'Image successfully changed !',
                         type: 'success',
@@ -24,8 +18,11 @@
                         confirmButtonText: 'Awesome!',
                         confirmButtonClass: 'btn btn-primary font-weight-bold'
                     });
-                },
-            });*@
+                }
+            };
+            xhr.open('POST', form.getAttribute('action'), true);
+            xhr.send(data);
+
 
         });</script>
 }
