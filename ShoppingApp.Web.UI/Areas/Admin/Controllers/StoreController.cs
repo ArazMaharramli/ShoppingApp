@@ -85,7 +85,7 @@ namespace ShoppingApp.Web.UI.Areas.Admin.Controllers
         [HttpGet("[area]/[controller]/[action]/{storeId}")]
         public async Task<IActionResult> Edit(string storeId)
         {
-            var query = new GetStoreByIdQuery(storeId);
+            var query = new GetStoreByIdOrSlugQuery(storeId);
             var response = await _mediator.Send(query);
             if (!response.HasError)
             {

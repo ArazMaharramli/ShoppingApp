@@ -11,25 +11,25 @@ using ShoppingApp.Utils.InternalModels;
 
 namespace ShoppingApp.CQRS.Handlers.QueryHandlers.StoreQueryHandlers
 {
-    public class GetStoreByIdQueryHandler : IRequestHandler<GetStoreByIdQuery, GetStoreByIdResponseModel>
+    public class GetStoreByOwnerIdQueryHandler : IRequestHandler<GetStoreByOwnerIdQuery, GetStoreResponseModel>
     {
         public IStoreService _storeService { get; set; }
 
-        public GetStoreByIdQueryHandler(IStoreService storeService)
+        public GetStoreByOwnerIdQueryHandler(IStoreService storeService)
         {
             _storeService = storeService;
         }
 
-        public async Task<GetStoreByIdResponseModel> Handle(GetStoreByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetStoreResponseModel> Handle(GetStoreByOwnerIdQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var store = await _storeService.FindByIdAsync(request.StoreId);
+                var store = await _storeService.FindByOwnerIdAsync(request.OwnerId);
                 if (!(store is null))
                 {
-                    return new GetStoreByIdResponseModel { Store = store };
+                    return new GetStoreResponseModel { Store = store };
                 }
-                return new GetStoreByIdResponseModel
+                return new GetStoreResponseModel
                 {
                     HasError = true,
                     ErrorType = ErrorType.Model,
@@ -44,7 +44,7 @@ namespace ShoppingApp.CQRS.Handlers.QueryHandlers.StoreQueryHandlers
             }
             catch (Exception ex)
             {
-                return new GetStoreByIdResponseModel
+                return new GetStoreResponseModel
                 {
                     HasError = true,
                     ErrorType = ErrorType.Exception,

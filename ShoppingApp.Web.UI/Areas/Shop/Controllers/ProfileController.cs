@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using System.Linq;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
+using ShoppingApp.CQRS.Models.QueryModels.StoreQueryModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Web.UI.Areas.Shop.ViewModels;
 
@@ -23,9 +25,25 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+
+        public async System.Threading.Tasks.Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var query = new GetStoreByOwnerIdQuery(ownerId: user.Id);
+            var response = await _mediator.Send(query);
+            var contacts = response.Store.StoreContacts.Where(x => x.Status == Utils.Enums.Status.Active).ToList();
+            var model = new StoreProfileViewModel
+            {
+                StoreName = response.Store.StoreName,
+                Description = response.Store.Description,
+                FaceBookUrl = response.Store.FacebookUrl,
+                InstagramUrl = response.Store.InstagramUrl,
+                ProfilePhotoUrl = response.Store.ProfilePhotoUrl,
+                StoreEmail = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault().Value,
+                StorePhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault().Value,
+                Address = response.Store.Address.AddressLine1
+            };
+            return View(model);
         }
 
         [HttpPost("[area]/[controller]/[action]/")]

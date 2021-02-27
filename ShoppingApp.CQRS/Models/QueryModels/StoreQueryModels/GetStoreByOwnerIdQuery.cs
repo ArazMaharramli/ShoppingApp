@@ -3,13 +3,13 @@ using ShoppingApp.CQRS.Models.ResponseModels.StoreResponseModels.QueryResponseMo
 
 namespace ShoppingApp.CQRS.Models.QueryModels.StoreQueryModels
 {
-    public class GetStoreByIdQuery : IRequest<GetStoreByIdResponseModel>
+    public class GetStoreByOwnerIdQuery : IRequest<GetStoreResponseModel>
     {
-        public GetStoreByIdQuery(string storeId)
+        public GetStoreByOwnerIdQuery(string ownerId)
         {
-            StoreId = storeId;
+            OwnerId = ownerId;
         }
 
-        public string StoreId { get; set; }
+        public string OwnerId { get; set; }
     }
 }

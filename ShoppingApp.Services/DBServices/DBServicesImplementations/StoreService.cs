@@ -70,14 +70,14 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
             return store;
         }
 
-        public Task<Store> FindByIdAsync(string storeId)
+        public Task<Store> FindByIdOrSlugAsync(string storeIdOrSlug)
         {
-            return _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeId);
+            return _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.GlobalId == storeIdOrSlug || x.UniqueSlug == storeIdOrSlug);
         }
 
         public Task<Store> FindByOwnerIdAsync(string ownerId)
         {
-            return _unitOfWork.Stores.GetWithOwnerAsync(x => x.Owner.Id == ownerId);
+            return _unitOfWork.Stores.GetWithAllNavigationsAsync(x => x.Owner.Id == ownerId);
         }
 
         public Task<IPagedList<Store>> GetPagedAsync(string searchString, int pageSize, int pageNumber, string sortColumn, string sortDirection, string status)
