@@ -1,35 +1,4 @@
 ﻿@model ShoppingApp.Web.UI.Areas.Shop.ViewModels.StoreProfileViewModel
-
-@section Scripts{
-    <script>var avatar1 = new KTImageInput('kt_image_1');
-        avatar1.on('change', function (imageInput) {
-            jQuery('.image-input-wrapper').css('background-image', 'url('')');
-
-            @*console.log();*@
-            var form = document.getElementById('ProfilePhotoForm');
-            var data = new FormData(form);
-            @*data.append("ProfilePhoto", imageInput.input.files[0]);*@
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    jQuery('.image-input-wrapper').css('background-image', 'url(' + xhr.responseText + ')');
-                    swal.fire({
-                        title: 'Image successfully changed !',
-                        type: 'success',
-                        buttonsStyling: false,
-                        confirmButtonText: 'Awesome!',
-                        confirmButtonClass: 'btn btn-primary font-weight-bold'
-                    });
-                }
-            };
-            xhr.open('POST', form.getAttribute('action'), true);
-            xhr.send(data);
-
-
-        });</script>
-}
 <!--begin::Card-->
 <div class="card card-custom gutter-b">
     <div class="card-body">
@@ -40,18 +9,6 @@
                 <div class="symbol symbol-50 symbol-lg-120">
                     <div class="image-input image-input-outline" id="kt_image_1">
                         <div class="image-input-wrapper" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
-                        <form method="post" asp-action="UploadProfilePhoto" asp-controller="profile" asp-area="shop" id="ProfilePhotoForm" enctype="multipart/form-data">
-                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                <i class="fa fa-pen icon-sm text-muted"></i>
-
-                                <input type="file" name="ProfilePhoto" id="ProfilePhoto" accept=".png, .jpg, .jpeg" />
-
-                                <input type="hidden" name="profile_avatar_remove" />
-                            </label>
-                        </form>
-                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                            <i class="ki ki-bold-close icon-xs text-muted"></i>
-                        </span>
                     </div>
                 </div>
                 <div class="symbol symbol-50 symbol-lg-120 symbol-primary d-none">
@@ -66,6 +23,9 @@
                     <div class="d-flex mr-3">
                         <label asp-for="StoreName" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3">@Model.StoreName</label>
                         <i class="flaticon2-correct text-success font-size-h5"></i>
+                    </div>
+                    <div class="my-lg-0 my-3">
+                        <a asp-action="Edit" asp-controller="Profile" asp-area="Shop" class="btn btn-sm btn-light-success font-weight-bolder text-uppercase mr-3">Edit</a>
                     </div>
                 </div>
                 <!--end::Title-->

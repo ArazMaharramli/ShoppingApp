@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoppingApp.CQRS.Models.CommandModels.StoreCommands;
+using ShoppingApp.CQRS.Models.QueryModels.CountryQueryModels;
 using ShoppingApp.CQRS.Models.QueryModels.StoreQueryModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Web.UI.Areas.Shop.ViewModels;
@@ -26,7 +30,7 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
         }
 
 
-        public async System.Threading.Tasks.Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var query = new GetStoreByOwnerIdQuery(ownerId: user.Id);
@@ -47,7 +51,7 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
         }
 
         [HttpPost("[area]/[controller]/[action]/")]
-        public async System.Threading.Tasks.Task<IActionResult> UploadProfilePhotoAsync(UpdateProfilePhotoViewModel model)
+        public async Task<IActionResult> UploadProfilePhotoAsync(UpdateProfilePhotoViewModel model)
         {
             if (model.ProfilePhoto is null)
             {
@@ -62,5 +66,49 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
             }
             return BadRequest();
         }
+
+        public async Task<IActionResult> Edit()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var query = new GetStoreByOwnerIdQuery(ownerId: user.Id);
+            var response = await _mediator.Send(query);
+
+            var contacts = response.Store.StoreContacts.Where(x => x.Status == Utils.Enums.Status.Active).ToList();
+            var model = new UpdateStoreProfileViewModel
+            {
+                StoreName = response.Store.StoreName,
+                StoreSlug = response.Store.UniqueSlug,
+                Description = response.Store.Description,
+                FacebookUrl = response.Store.FacebookUrl,
+                InstagramUrl = response.Store.InstagramUrl,
+                ProfilePhotoUrl = response.Store.ProfilePhotoUrl,
+                Email = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault().Value,
+                PhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault().Value,
+                Address = new UpdateAddressViewModel
+                {
+                    AddressLine = response.Store.Address.AddressLine1,
+                    SelectedCityId = response.Store.Address.City.GlobalId,
+                    ZipCode = response.Store.Address.ZipCode,
+                }
+            };
+            return View(await FillModelFields(model));
+        }
+
+        #region MyRegion
+        private async Task<UpdateStoreProfileViewModel> FillModelFields(UpdateStoreProfileViewModel model)
+        {
+            var cityRequest = new GetCountriesWithCitiesQuery();
+            var cities = await _mediator.Send(cityRequest);
+
+            var citySLI = new List<SelectListItem>();
+            foreach (var item in cities.Countries)
+            {
+                citySLI.AddRange(item.Cities.Select(x => new SelectListItem { Text = x.Name, Value = x.GlobalId, Group = new SelectListGroup { Name = item.Name } }).ToList());
+            }
+
+            model.Address.Cities = new SelectList(citySLI, "Value", "Text", null, "Group.Name");
+            return model;
+        }
+        #endregion
     }
 }

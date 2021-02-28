@@ -187,7 +187,7 @@
                             <div class="form-group">
                                 <label asp-for="Address"></label>
                                 <input asp-for="Address" class="form-control form-control-solid form-control-lg" placeholder="Address Line 1" />
-                                <span asp-for="Address" class="form-text text-muted"></span>
+                                <span asp-validation-for="Address" class="form-text text-muted"></span>
                             </div>
                             <!--end::Input-->
 
@@ -197,7 +197,7 @@
                                     <div class="form-group">
                                         <label asp-for="ZipCode"></label>
                                         <input asp-for="ZipCode" class="form-control form-control-solid form-control-lg" placeholder="AZ0000" />
-                                        <span asp-for="ZipCode" class="form-text text-muted"></span>
+                                        <span asp-validation-for="ZipCode" class="form-text text-muted"></span>
                                     </div>
                                     <!--end::Input-->
                                 </div>
@@ -208,7 +208,7 @@
                                         <select asp-for="SelectedCityId" asp-items="Model.Cities" class="form-control form-control-solid form-control-lg">
                                             <option value="">Select City</option>
                                         </select>
-                                        <span asp-for="SelectedCityId" class="form-text text-muted"></span>
+                                        <span asp-validation-for="SelectedCityId" class="form-text text-muted"></span>
                                     </div>
                                     <!--end::Input-->
                                 </div>
