@@ -1,4 +1,4 @@
-# ShoppingApp (in developmet)
+# ShoppingApp (in development)
 
 E-commerce web project which contains both web api and web UI applications. Developed by using C# .Net Core framework, CQRS, Repository pattern, auto mapper auto and validator
 
