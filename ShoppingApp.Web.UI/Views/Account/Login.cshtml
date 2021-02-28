@@ -1,4 +1,8 @@
-﻿@model ShoppingApp.Web.UI.ViewModels.Account.LoginViewModel
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model ShoppingApp.Web.UI.ViewModels.Account.LoginViewModel
+
 @{ ViewData["Title"] = "Login";
     Layout = "/Views/Shared/_AccountLayout.cshtml";
     var url = $"{Context.Request.Path}{Context.Request.QueryString}";
@@ -19,7 +23,7 @@
         var startApp = function () {
             gapi.load('auth2', function () {
                 auth2 = gapi.auth2.init({
-                    client_id: '434059284812-urbt049fp40bl19nmb7k1s9266frb7pv.apps.googleusercontent.com',
+                    client_id: @Configuration["ExternalAuthSettings:Google:ClientId"]',
                     cookiepolicy: 'single_host_origin',
                 });
                 attachSignin(document.getElementById('googleSigninBtn'));
@@ -42,40 +46,6 @@
 
 
         startApp();</script>
-    @*<script>//facebook
-                window.fbAsyncInit = function () {
-            FB.init({
-              appId      : '2625361571075081',
-              cookie     : true,
-              xfbml      : true,
-              version    : 'v6.0'
-            });
-
-            FB.AppEvents.logPageView();
-          };
-
-          (function(d, s, id){
-             var js, fjs = d.getElementsByTagName(s)[0];
-             if (d.getElementById(id)) {return;}
-             js = d.createElement(s); js.id = id;
-             js.src = "https://connect.facebook.net/en_US/sdk.js";
-             fjs.parentNode.insertBefore(js, fjs);
-           }(document, 'script', 'facebook-jssdk'));
-
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-
-        function checkLoginState() {
-          FB.getLoginStatus(function(response) {
-              $("#login_response").html("<code>"+JSON.stringify(response, null, 2)+"</code>");
-            statusChangeCallback(response);
-          });
-                }
-            </script>
-
-    *@
-
 }
 
 <!--begin::Login-->
