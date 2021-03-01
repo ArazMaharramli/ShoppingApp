@@ -7,6 +7,7 @@ using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.UnitOFWork.Repositories;
+using ShoppingApp.Utils.Classes;
 using ShoppingApp.Utils.Enums;
 using ShoppingApp.Utils.InternalModels;
 
@@ -111,6 +112,12 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 sortDirection: sortDirection);
         }
 
+        public async Task<bool> IsSlugAvailable(string slug)
+        {
+            var store = await _unitOfWork.Stores.GetAsync(x => x.UniqueSlug == slug);
+            return store == null;
+        }
+
         public async Task<Store> UpdateProfilePhotoAsync(string userId, string photoUrl)
         {
             var store = await _unitOfWork.Stores.GetWithOwnerAsync(x => x.Owner.Id == userId);
@@ -119,6 +126,14 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
                 throw new Exception("Store Not Found");
             }
             store.ProfilePhotoUrl = photoUrl;
+            _unitOfWork.Stores.Update(store);
+            await _unitOfWork.SaveChangesAsync();
+            return store;
+        }
+
+        public async Task<Store> UpdateStoreAsync(Store store)
+        {
+            store.UpdatedDate = LocalTime.Now();
             _unitOfWork.Stores.Update(store);
             await _unitOfWork.SaveChangesAsync();
             return store;

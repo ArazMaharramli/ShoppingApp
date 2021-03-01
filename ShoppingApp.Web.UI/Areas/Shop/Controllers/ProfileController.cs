@@ -94,6 +94,39 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
             return View(await FillModelFields(model));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditAsync(UpdateStoreProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var command = new UpdateStoreProfileCommand(
+                    ownerId: user.Id,
+                    profilePictureFile: model.ProfilePhoto,
+                    storeSlug: model.StoreSlug,
+                    description: model.Description,
+                    email: model.Email,
+                    phoneNumber: model.PhoneNumber,
+                    facebookUrl: model.FacebookUrl,
+                    instagramUrl: model.InstagramUrl,
+                    zipCode: model.Address.ZipCode,
+                    addressLine: model.Address.AddressLine,
+                    selectedCityId: model.Address.SelectedCityId);
+                var response = await _mediator.Send(command);
+                if (!response.HasError)
+                {
+                    return RedirectToAction("Index", "Profile", new { Area = "Shop" });
+                }
+                if (response.ErrorType == Utils.Enums.ErrorType.Model)
+                {
+                    foreach (var item in response.Errors)
+                    {
+                        ModelState.AddModelError("", item.Message);
+                    }
+                }
+            }
+            return View(await FillModelFields(model));
+        }
         #region MyRegion
         private async Task<UpdateStoreProfileViewModel> FillModelFields(UpdateStoreProfileViewModel model)
         {

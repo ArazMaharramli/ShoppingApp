@@ -15,11 +15,12 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
             StoreStatus storeStatus, StoreType storeType,
             List<StoreContact> storeContacts, Address storeAddress,
             User owner);
-
+        Task<Store> UpdateStoreAsync(Store store);
         Task<Store> ConfirmStoreAsync(string storeId);
         Task<Store> BlockStoreAsync(string storeId);
         Task<Store> FindByIdOrSlugAsync(string storeIdOrSlug);
         Task<Store> FindByOwnerIdAsync(string ownerId);
+        Task<bool> IsSlugAvailable(string slug);
 
         Task<Store> UpdateProfilePhotoAsync(string userId, string photoUrl);
 
