@@ -1,4 +1,7 @@
 ﻿{
+    "SiteSettings": {
+        "Domain": "<YourDomain>"
+    },
     "ConnectionStrings": {
         "DefaultConnection": "<Your_Connection_String>"
     },
