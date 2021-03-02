@@ -3,6 +3,7 @@ using ShoppingApp.Domain.Models.Base;
 using ShoppingApp.Domain.Models.Domain.AddressModels;
 using ShoppingApp.Domain.Models.Domain.MappingModels;
 using ShoppingApp.Domain.Models.Domain.MediaModels;
+using ShoppingApp.Domain.Models.Domain.ProductModels;
 using ShoppingApp.Domain.Models.Domain.UserModels;
 using ShoppingApp.Utils.Enums;
 
@@ -36,7 +37,7 @@ namespace ShoppingApp.Domain.Models.Domain.StoreModels
         public ICollection<StorePaymentOption> StorePaymentOptions { get; set; } = new HashSet<StorePaymentOption>();
         public ICollection<UploadedProductMediaForFutureUse> UploadedProductMediasForFutureUse { get; set; } = new HashSet<UploadedProductMediaForFutureUse>();
         public ICollection<StoreDeliveryOption> StoreDeliveryOptions { get; set; } = new HashSet<StoreDeliveryOption>();
-
+        public ICollection<Product> Products { get; set; }
 
     }
 }

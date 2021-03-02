@@ -19,10 +19,6 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
             builder.Property(x => x.UniqueSlug)
                 .IsRequired();
 
-            builder.HasOne(x => x.BrandCountry)
-               .WithMany(c => c.Brands);
-
-
             builder.HasIndex(x => x.GlobalId);
 
         }

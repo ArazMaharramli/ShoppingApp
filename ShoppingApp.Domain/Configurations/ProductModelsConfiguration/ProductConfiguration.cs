@@ -27,6 +27,8 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
             builder.HasOne(x => x.Material)
                 .WithMany(x => x.Products);
 
+            builder.HasOne(x => x.Store)
+               .WithMany(x => x.Products);
 
             builder.HasIndex(x => x.GlobalId);
 

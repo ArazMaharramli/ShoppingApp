@@ -3,6 +3,7 @@ using ShoppingApp.Domain.Models.Base;
 using ShoppingApp.Domain.Models.Domain.MappingModels;
 using ShoppingApp.Domain.Models.Domain.MediaModels;
 using ShoppingApp.Domain.Models.Domain.ShoppingCartModels;
+using ShoppingApp.Domain.Models.Domain.StoreModels;
 using ShoppingApp.Utils.Enums;
 
 namespace ShoppingApp.Domain.Models.Domain.ProductModels
@@ -12,8 +13,6 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
     {
         public string Title { get; set; }
         public string UniqueSlug { get; set; }
-
-        public int Price { get; set; }
 
         public string ShortDescription { get; set; }
         public string Description { get; set; }
@@ -26,6 +25,9 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
 
         public long MaterialId { get; set; }
         public Material Material { get; set; }
+
+        public long StoreId { get; set; }
+        public Store Store { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; } = new HashSet<ProductDetail>();
         public ICollection<ProductMedia> ProductMedias { get; set; } = new HashSet<ProductMedia>();

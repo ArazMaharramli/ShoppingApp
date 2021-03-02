@@ -9,6 +9,9 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
     {
         public int StockQuantity { get; set; }
 
+        public double Price { get; set; }
+        public double DiscountedPrice { get; set; }
+
         public long ProductId { get; set; }
         public Product Product { get; set; }
 
