@@ -18,8 +18,8 @@
     <!--begin::Page Vendors Styles(used by this page)-->
     @RenderSection("Styles", required: false)
     <!--end::Page Vendors Styles-->
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
     <partial name="_StylesPartial.cshtml" />
+    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
     @RenderSection("metaTags", required: false)
 </head>
 <body id="kt_body" class="header-fixed header-mobile-fixed header-bottom-enabled subheader-enabled page-loading">
@@ -90,7 +90,7 @@
 
 
 
-    <partial name="~/Views/Shared/_ScriptsPartial.cshtml" />
+    <partial name="_ScriptsPartial.cshtml" />
 
     <!--begin::Page Vendors(used by this page)-->
     @RenderSection("VendorScripts", required: false)

@@ -48,6 +48,7 @@
     <Folder Include="wwwroot\assets\css\pages\wizard\" />
     <Folder Include="wwwroot\assets\js\pages\" />
     <Folder Include="Areas\Shop\Views\Profile\" />
+    <Folder Include="Areas\Shop\Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">
