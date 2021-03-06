@@ -18,7 +18,7 @@ namespace ShoppingApp.Services.DBServices.DBServiceInterfaces
         Task<StoreType> FindByGobalIdAsync(string globalId);
 
         Task<StoreType> CreateAsync(string name);
-        Task<StoreType> UpdateAsync(StoreType category);
+        Task<StoreType> UpdateAsync(StoreType storeType);
         Task<List<StoreType>> UpdateStatusRangeAsync(string[] globalIds, Status status);
 
         Task<int> DeleteRangeAsync(string[] globalIds);

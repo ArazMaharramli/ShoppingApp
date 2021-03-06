@@ -2,35 +2,35 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ShoppingApp.CQRS.Models.CommandModels.StoreTypeCommands;
-using ShoppingApp.CQRS.Models.ResponseModels.StoreTypeResponseModels.CommandResponseModels;
+using ShoppingApp.CQRS.Models.CommandModels.SizeCommands;
+using ShoppingApp.CQRS.Models.ResponseModels.SizeResponseModels.CommandResponseModels;
 using ShoppingApp.Services.DBServices.DBServiceInterfaces;
 using ShoppingApp.Utils.InternalModels;
 
-namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
+namespace ShoppingApp.CQRS.Handlers.CommandHandlers.SizeCommandHandlers
 {
-    public class DeleteStoreTypeRangeCommandHandler : IRequestHandler<DeleteStoreTypeRangeCommand, DeleteStoreTypeRangeResponseModel>
+    public class DeleteSizeCommandHandler : IRequestHandler<DeleteSizeCommand, DeleteSizeRangeResponseModel>
     {
-        private readonly IStoreTypeService _storeTypeService;
+        private readonly ISizeService _sizeService;
 
-        public DeleteStoreTypeRangeCommandHandler(IStoreTypeService storeTypeService)
+        public DeleteSizeCommandHandler(ISizeService sizeService)
         {
-            _storeTypeService = storeTypeService;
+            _sizeService = sizeService;
         }
 
-        public async Task<DeleteStoreTypeRangeResponseModel> Handle(DeleteStoreTypeRangeCommand request, CancellationToken cancellationToken)
+        public async Task<DeleteSizeRangeResponseModel> Handle(DeleteSizeCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var deletedCount = await _storeTypeService.DeleteRangeAsync(globalIds: request.GlobalIds);
+                var deletedCount = await _sizeService.DeleteAsync(globalId: request.GlobalId);
                 if (deletedCount > 0)
                 {
-                    return new DeleteStoreTypeRangeResponseModel
+                    return new DeleteSizeRangeResponseModel
                     {
                         DeletedCount = deletedCount
                     };
                 }
-                return new DeleteStoreTypeRangeResponseModel
+                return new DeleteSizeRangeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,
@@ -45,7 +45,7 @@ namespace ShoppingApp.CQRS.Handlers.CommandHandlers.StoreTypeCommandHandlers
             }
             catch (System.Exception ex)
             {
-                return new DeleteStoreTypeRangeResponseModel
+                return new DeleteSizeRangeResponseModel
                 {
                     HasError = true,
                     ErrorType = Utils.Enums.ErrorType.Model,

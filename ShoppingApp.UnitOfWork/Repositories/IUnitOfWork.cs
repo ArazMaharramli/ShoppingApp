@@ -40,7 +40,6 @@ namespace ShoppingApp.UnitOFWork.Repositories
         public IProductDetailRepository ProductDetails { get; }
         public IProductRepository Products { get; }
         public ISizeRepository Sizes { get; }
-        public ISizeTypeRepository SizeTypes { get; }
         public ITagRepository Tags { get; }
 
         public IShoppingCartItemRepository ShoppingCartItems { get; }

@@ -67,7 +67,6 @@ namespace ShoppingApp.UnitOFWork.Persistence
             ProductDetails = new ProductDetailRepository(_context);
             Products = new ProductRepository(_context);
             Sizes = new SizeRepository(_context);
-            SizeTypes = new SizeTypeRepository(_context);
             Tags = new TagRepository(_context);
 
             ShoppingCartItems = new ShoppingCartItemRepository(_context);
@@ -108,7 +107,6 @@ namespace ShoppingApp.UnitOFWork.Persistence
         public IProductDetailRepository ProductDetails { get; }
         public IProductRepository Products { get; }
         public ISizeRepository Sizes { get; }
-        public ISizeTypeRepository SizeTypes { get; }
         public ITagRepository Tags { get; }
 
         public IShoppingCartItemRepository ShoppingCartItems { get; }

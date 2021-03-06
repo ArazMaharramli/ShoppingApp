@@ -49,6 +49,8 @@
     <Folder Include="wwwroot\assets\js\pages\" />
     <Folder Include="Areas\Shop\Views\Profile\" />
     <Folder Include="Areas\Shop\Views\Product\" />
+    <Folder Include="Areas\Admin\ViewModels\SizeViewModels\" />
+    <Folder Include="Areas\Admin\Views\Size\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

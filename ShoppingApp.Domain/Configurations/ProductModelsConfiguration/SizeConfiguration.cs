@@ -11,9 +11,6 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
             builder.Property(x => x.UniqueTitle)
                  .IsRequired();
 
-            builder.HasOne(x => x.SizeType)
-                .WithMany(x => x.Sizes);
-
 
             builder.HasIndex(x => x.GlobalId);
 

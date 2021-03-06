@@ -8,9 +8,6 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
     {
         public string UniqueTitle { get; set; }
 
-        public long SizeTypeId { get; set; }
-        public SizeType SizeType { get; set; }
-
         public ICollection<ProductDetail> ProductDetails { get; set; } = new HashSet<ProductDetail>();
     }
 

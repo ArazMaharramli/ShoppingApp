@@ -51,6 +51,13 @@
     <Folder Include="Models\ResponseModels\StoreResponseModels\CommandResponseModels\" />
     <Folder Include="Models\ResponseModels\StoreResponseModels\QueryResponseModels\" />
     <Folder Include="Handlers\QueryHandlers\StoreQueryHandlers\" />
+    <Folder Include="Models\QueryModels\SizeQueryModels\" />
+    <Folder Include="Models\ResponseModels\SizeResponseModels\" />
+    <Folder Include="Models\ResponseModels\SizeResponseModels\CommandResponseModels\" />
+    <Folder Include="Models\ResponseModels\SizeResponseModels\QueryResponseModels\" />
+    <Folder Include="Models\CommandModels\SizeCommands\" />
+    <Folder Include="Handlers\CommandHandlers\SizeCommandHandlers\" />
+    <Folder Include="Handlers\QueryHandlers\SizeQueryHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
