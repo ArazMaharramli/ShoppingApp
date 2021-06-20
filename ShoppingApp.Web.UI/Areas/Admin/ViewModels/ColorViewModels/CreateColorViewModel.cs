@@ -1,0 +1,11 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace ShoppingApp.Web.UI.Areas.Admin.ViewModels.ColorViewModels
+{
+    public class CreateColorViewModel
+    {
+        [Required]
+        public string Title { get; set; }
+    }
+}

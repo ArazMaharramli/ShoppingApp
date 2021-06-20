@@ -25,8 +25,8 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
         {
             var category = new Category
             {
-                UniqueName = name,
-                UniqueSlug = slug,
+                UniqueName = name.Trim(),
+                UniqueSlug = slug.Trim(),
                 Parent = parentCategory
             };
             _unitOfWork.Categories.Add(category);

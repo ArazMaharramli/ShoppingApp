@@ -2,13 +2,22 @@
 
 
 @section Scripts{
+    <script src="/scripts/sluggenerator.js"></script>
     <script>$('#SelectedParentCategoryId').select2({
             placeholder: "Select parent"
         });
         $('#SelectedChildrenCategoryIds').select2({
             placeholder: "Select subcategories"
-        });</script>
+        });
 
+        $(document).ready(function () {
+            var title = $(".name");
+            var slug = $(".slug");
+            title.keyup(function () {
+                var str = title.val();
+                slug.val(url_slug(str));
+            })
+        });</script>
 }
 <div class="card card-custom">
     <div class="card-header">
@@ -23,13 +32,13 @@
             <div class="form-group row">
                 <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="CategoryName"></label>
                 <div class=" col-lg-4 col-md-9 col-sm-12">
-                    <input class="form-control form-control-solid" asp-for="CategoryName" placeholder="Category Name" />
+                    <input class="form-control form-control-solid name" asp-for="CategoryName" placeholder="Category Name" />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label text-right col-lg-3 col-sm-12" asp-for="CategorySlug"></label>
                 <div class=" col-lg-4 col-md-9 col-sm-12">
-                    <input class="form-control form-control-solid" asp-for="CategorySlug" placeholder="Category Slug" />
+                    <input class="form-control form-control-solid slug" asp-for="CategorySlug" placeholder="Category Slug" />
                 </div>
             </div>
             <div class="form-group row">

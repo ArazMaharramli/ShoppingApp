@@ -8,13 +8,12 @@ namespace ShoppingApp.Domain.Configurations.MediaModelsConfiguration
     {
         public void Configure(EntityTypeBuilder<ProductMedia> builder)
         {
-            builder.Property(x => x.MediaUrl)
-                .HasMaxLength(2100)
+            builder.Property(x => x.Url)
                 .IsRequired();
-    
+
             builder.Property(x => x.MediaType)
                 .IsRequired();
-    
+
             builder.HasOne(x => x.Product)
                 .WithMany(x => x.ProductMedias);
 

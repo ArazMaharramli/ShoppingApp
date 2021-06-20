@@ -17,6 +17,9 @@ namespace ShoppingApp.Services.ServiceInstallers
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<IStoreService, StoreService>();
             services.AddTransient<ISizeService, SizeService>();
+            services.AddTransient<IColorService, ColorService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ITagService, TagService>();
         }
     }
 }

@@ -6,8 +6,8 @@ namespace ShoppingApp.Domain.Models.Domain.MediaModels
 {
     public class ProductMedia : BaseEntitySimple<Status>
     {
-        public string MediaUrl { get; set; }
-        public string MediaAltAttribute { get; set; }
+        public string Url { get; set; }
+        public string AltAttribute { get; set; }
 
         public MediaType MediaType { get; set; }
         public byte OrderIndex { get; set; }

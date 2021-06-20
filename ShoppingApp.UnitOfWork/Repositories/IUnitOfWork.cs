@@ -33,10 +33,10 @@ namespace ShoppingApp.UnitOFWork.Repositories
 
         public IPaymentOptionRepository PaymentOptions { get; }
 
-        public IBrandRepository Brands { get; }
+
         public ICategoryRepository Categories { get; }
         public IColorRepository Colors { get; }
-        public IMaterialRepository Materials { get; }
+
         public IProductDetailRepository ProductDetails { get; }
         public IProductRepository Products { get; }
         public ISizeRepository Sizes { get; }

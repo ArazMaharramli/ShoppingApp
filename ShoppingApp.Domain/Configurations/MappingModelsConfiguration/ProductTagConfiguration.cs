@@ -9,10 +9,12 @@ namespace ShoppingApp.Domain.Configurations.MappingModelsConfiguration
         public void Configure(EntityTypeBuilder<ProductTag> builder)
         {
             builder.HasOne(x => x.Product)
-            .WithMany(x => x.ProductTags);
+            .WithMany(x => x.ProductTags)
+                .HasForeignKey(x => x.ProductId);
 
             builder.HasOne(x => x.Tag)
-                .WithMany(x => x.ProductTags);
+                .WithMany(x => x.ProductTags)
+                .HasForeignKey(x => x.TagId);
 
             builder.HasKey(x => new { x.ProductId, x.TagId });
         }

@@ -9,7 +9,6 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
         public void Configure(EntityTypeBuilder<Color> builder)
         {
             builder.Property(x => x.UniqueTitle)
-                .HasMaxLength(30)
                 .IsRequired();
 
             builder.Property(x => x.HexCode)

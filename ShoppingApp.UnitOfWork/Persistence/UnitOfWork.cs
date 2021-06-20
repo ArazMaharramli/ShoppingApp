@@ -60,10 +60,8 @@ namespace ShoppingApp.UnitOFWork.Persistence
 
             PaymentOptions = new PaymentOptionRepository(_context);
 
-            Brands = new BrandRepository(_context);
             Categories = new CategoryRepository(_context);
             Colors = new ColorRepository(_context);
-            Materials = new MaterialRepository(_context);
             ProductDetails = new ProductDetailRepository(_context);
             Products = new ProductRepository(_context);
             Sizes = new SizeRepository(_context);
@@ -100,10 +98,8 @@ namespace ShoppingApp.UnitOFWork.Persistence
 
         public IPaymentOptionRepository PaymentOptions { get; }
 
-        public IBrandRepository Brands { get; }
         public ICategoryRepository Categories { get; }
         public IColorRepository Colors { get; }
-        public IMaterialRepository Materials { get; }
         public IProductDetailRepository ProductDetails { get; }
         public IProductRepository Products { get; }
         public ISizeRepository Sizes { get; }

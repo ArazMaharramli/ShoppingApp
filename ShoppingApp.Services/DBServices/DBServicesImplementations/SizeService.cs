@@ -67,7 +67,7 @@ namespace ShoppingApp.Services.DBServices.DBServicesImplementations
 
         public Task<Size> FindByTitleAndStatusAsync(string title, Status status = Status.Active)
         {
-            return _unitOfWork.Sizes.GetAsync(x => x.UniqueTitle.ToLower() == title.Trim().ToLower());
+            return _unitOfWork.Sizes.GetAsync(x => x.UniqueTitle.ToLower() == title.Trim().ToLower() && x.Status == status);
         }
 
         public Task<IEnumerable<Size>> FindRangeAsync(string[] globalIds)

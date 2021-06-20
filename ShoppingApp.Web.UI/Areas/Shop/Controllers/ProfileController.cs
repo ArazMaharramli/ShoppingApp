@@ -43,8 +43,8 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
                 FaceBookUrl = response.Store.FacebookUrl,
                 InstagramUrl = response.Store.InstagramUrl,
                 ProfilePhotoUrl = response.Store.ProfilePhotoUrl,
-                StoreEmail = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault().Value,
-                StorePhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault().Value,
+                StoreEmail = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault()?.Value,
+                StorePhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault()?.Value,
                 Address = response.Store.Address.AddressLine1
             };
             return View(model);
@@ -82,8 +82,8 @@ namespace ShoppingApp.Web.UI.Areas.Shop.Controllers
                 FacebookUrl = response.Store.FacebookUrl,
                 InstagramUrl = response.Store.InstagramUrl,
                 ProfilePhotoUrl = response.Store.ProfilePhotoUrl,
-                Email = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault().Value,
-                PhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault().Value,
+                Email = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Email).FirstOrDefault()?.Value,
+                PhoneNumber = contacts.Where(x => x.ContactType == Utils.Enums.ContactType.Phone).FirstOrDefault()?.Value,
                 Address = new UpdateAddressViewModel
                 {
                     AddressLine = response.Store.Address.AddressLine1,

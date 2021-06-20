@@ -1,7 +1,115 @@
-﻿@section Styles{
+﻿@model ShoppingApp.Web.UI.Areas.Shop.ViewModels.CreateProductViewModel
+@section Styles{
     <link href="/shopuifiles/assets/css/pages/wizard/wizard-1.css" rel="stylesheet" type="text/css" />
-}
 
+    <!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
+    <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
+    <!-- the font awesome icon library if using with `fas` theme (or Bootstrap 4.x). Note that default icons used in the plugin are glyphicons that are bundled only with Bootstrap 3.x. -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+        wish to resize images before upload. This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+        This must be loaded before fileinput.min.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <!-- popper.min.js below is needed if you use bootstrap 4.x (for popover and tooltips). You can also use the bootstrap js
+       3.3.x versions without popper.min.js. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+        dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <!-- the main fileinput plugin file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+    <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
+    < script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script -->
+    <!-- optionally if you need translation for your language then include the locale file as mentioned below (replace LANG.js with your language locale) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/az.js"></script>
+}
+@section Scripts{
+    <script src="/scripts/sluggenerator.js"></script>
+    <script src="/shopuifiles/assets/js/pages/custom/wizard/wizard-1.js"></script>
+    <script>var textarea = $('#productdescription');
+        autosize(textarea);
+        autosize.update(textarea);</script>
+
+    <script>$(document).ready(function () {
+            var title = $(".name");
+            var slug = $(".slug");
+            title.keyup(function () {
+                var str = title.val();
+                slug.val(url_slug(str));
+            })
+        });</script>
+
+    <script>$('#kt_repeater_Size').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function () {
+                $('.select_color').select2({
+                    placeholder: "Select a state",
+                    multiple: true
+                });
+                $(this).slideDown();
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+        $('.select_color').select2({
+            placeholder: "Select a category",
+            multiple: true
+        });
+        $('#SelectedCategoryId').select2({
+            placeholder: "Select a state"
+        });</script>
+    <script>var input = document.getElementById('kt_tagify_6');
+        var tagify = new Tagify(input, {
+            pattern: /^.{0,20}$/,
+            delimiters: " ", // add new tags when a comma or a space character is entered,
+            keepInvalidTags: false,
+            transformTag: transformTag,
+            dropdown: {
+                enabled: 3,
+            }
+        });
+
+        function transformTag(tagData) {
+            var states = [
+                'success',
+                'primary',
+                'danger',
+                'success',
+                'warning',
+                'primary',
+                'info'
+            ];
+            tagData.class = 'tagify__tag tagify__tag-light--' + states[KTUtil.getRandomInt(0, 6)];
+        }
+
+        tagify.on('add', function (e) {
+
+        });
+
+        tagify.on('invalid', function (e) {
+
+        });
+        tagify.on('change', function () {
+            $('#Tags').empty();
+            $.each(tagify.value, function (index, val) {
+                $('#Tags').append('<option selected="true" value="' + val.value + '"></option>');
+            });
+
+        });</script>
+}
 <div class="card card-custom">
     <div class="card-body p-0">
         <!--begin::Wizard-->
@@ -12,8 +120,8 @@
                     <!--begin::Wizard Step 1 Nav-->
                     <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
                         <div class="wizard-label">
-                            <i class="wizard-icon flaticon-bus-stop"></i>
-                            <h3 class="wizard-title">1. Setup Location</h3>
+                            <i class="wizard-icon flaticon-open-box"></i>
+                            <h3 class="wizard-title">1. Add Product</h3>
                         </div>
                         <span class="svg-icon svg-icon-xl wizard-arrow">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
@@ -50,60 +158,11 @@
                     <!--begin::Wizard Step 3 Nav-->
                     <div class="wizard-step" data-wizard-type="step">
                         <div class="wizard-label">
-                            <i class="wizard-icon flaticon-responsive"></i>
-                            <h3 class="wizard-title">3. Select Services</h3>
+                            <i class="wizard-icon flaticon2-image-file"></i>
+                            <h3 class="wizard-title">3. Add Image</h3>
                         </div>
-                        <span class="svg-icon svg-icon-xl wizard-arrow">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1" />
-                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
                     </div>
                     <!--end::Wizard Step 3 Nav-->
-                    <!--begin::Wizard Step 4 Nav-->
-                    <div class="wizard-step" data-wizard-type="step">
-                        <div class="wizard-label">
-                            <i class="wizard-icon flaticon-truck"></i>
-                            <h3 class="wizard-title">4. Delivery Address</h3>
-                        </div>
-                        <span class="svg-icon svg-icon-xl wizard-arrow">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1" />
-                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                    </div>
-                    <!--end::Wizard Step 4 Nav-->
-                    <!--begin::Wizard Step 5 Nav-->
-                    <div class="wizard-step" data-wizard-type="step">
-                        <div class="wizard-label">
-                            <i class="wizard-icon flaticon-globe"></i>
-                            <h3 class="wizard-title">5. Review and Submit</h3>
-                        </div>
-                        <span class="svg-icon svg-icon-xl wizard-arrow last">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                    <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000)" x="11" y="5" width="2" height="14" rx="1" />
-                                    <path d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997)" />
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                    </div>
-                    <!--end::Wizard Step 5 Nav-->
                 </div>
             </div>
             <!--end::Wizard Nav-->
@@ -111,751 +170,118 @@
             <div class="row justify-content-center my-10 px-8 my-lg-15 px-lg-10">
                 <div class="col-xl-12 col-xxl-7">
                     <!--begin::Wizard Form-->
-                    <form class="form" id="kt_form">
+                    <form class="form" id="createproductform" method="post" enctype="multipart/form-data">
                         <!--begin::Wizard Step 1-->
                         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
-                            <h3 class="mb-10 font-weight-bold text-dark">Setup Your Current Location</h3>
+                            <div asp-validation-summary="ModelOnly"></div>
                             <!--begin::Input-->
                             <div class="form-group">
-                                <label>Address Line 1</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="address1" placeholder="Address Line 1" value="Address Line 1" />
-                                <span class="form-text text-muted">Please enter your Address.</span>
+                                <label asp-for="ProductTitle"></label>
+                                <input asp-for="ProductTitle" type="text" class="form-control form-control-solid form-control-lg name" />
+                                <span asp-validation-for="ProductTitle" class="form-text text-muted"></span>
                             </div>
                             <!--end::Input-->
                             <!--begin::Input-->
                             <div class="form-group">
-                                <label>Address Line 2</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="address2" placeholder="Address Line 2" value="Address Line 2" />
-                                <span class="form-text text-muted">Please enter your Address.</span>
+                                <label asp-for="ProductSlug"></label>
+                                <input asp-for="ProductSlug" type="text" class="form-control form-control-solid form-control-lg slug" />
+                                <span asp-validation-for="ProductTitle" class="form-text text-muted"></span>
                             </div>
                             <!--end::Input-->
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Postcode</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="postcode" placeholder="Postcode" value="3000" />
-                                        <span class="form-text text-muted">Please enter your Postcode.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="city" placeholder="City" value="Melbourne" />
-                                        <span class="form-text text-muted">Please enter your City.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
+                            <!--begin::Input-->
+                            <div class="form-group">
+                                <label asp-for="ProductDescription"></label>
+                                <textarea id="productdescription" asp-for="ProductDescription" type="text" class="form-control form-control-solid form-control-lg"></textarea>
+                                <span class="form-text text-muted" asp-validation-for="ProductDescription"></span>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="state" placeholder="State" value="VIC" />
-                                        <span class="form-text text-muted">Please enter your State.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-6">
-                                    <!--begin::Select-->
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select name="country" class="form-control form-control-solid form-control-lg">
-                                            <option value="">Select</option>
-                                            <option value="AF">Afghanistan</option>
-                                            <option value="AX">Åland Islands</option>
-                                            <option value="AL">Albania</option>
-                                            <option value="DZ">Algeria</option>
-                                            <option value="AS">American Samoa</option>
-                                            <option value="AD">Andorra</option>
-                                            <option value="AO">Angola</option>
-                                            <option value="AI">Anguilla</option>
-                                            <option value="AQ">Antarctica</option>
-                                            <option value="AG">Antigua and Barbuda</option>
-                                            <option value="AR">Argentina</option>
-                                            <option value="AM">Armenia</option>
-                                            <option value="AW">Aruba</option>
-                                            <option value="AU" selected="selected">Australia</option>
-                                            <option value="AT">Austria</option>
-                                            <option value="AZ">Azerbaijan</option>
-                                            <option value="BS">Bahamas</option>
-                                            <option value="BH">Bahrain</option>
-                                            <option value="BD">Bangladesh</option>
-                                            <option value="BB">Barbados</option>
-                                            <option value="BY">Belarus</option>
-                                            <option value="BE">Belgium</option>
-                                            <option value="BZ">Belize</option>
-                                            <option value="BJ">Benin</option>
-                                            <option value="BM">Bermuda</option>
-                                            <option value="BT">Bhutan</option>
-                                            <option value="BO">Bolivia, Plurinational State of</option>
-                                            <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-                                            <option value="BA">Bosnia and Herzegovina</option>
-                                            <option value="BW">Botswana</option>
-                                            <option value="BV">Bouvet Island</option>
-                                            <option value="BR">Brazil</option>
-                                            <option value="IO">British Indian Ocean Territory</option>
-                                            <option value="BN">Brunei Darussalam</option>
-                                            <option value="BG">Bulgaria</option>
-                                            <option value="BF">Burkina Faso</option>
-                                            <option value="BI">Burundi</option>
-                                            <option value="KH">Cambodia</option>
-                                            <option value="CM">Cameroon</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="CV">Cape Verde</option>
-                                            <option value="KY">Cayman Islands</option>
-                                            <option value="CF">Central African Republic</option>
-                                            <option value="TD">Chad</option>
-                                            <option value="CL">Chile</option>
-                                            <option value="CN">China</option>
-                                            <option value="CX">Christmas Island</option>
-                                            <option value="CC">Cocos (Keeling) Islands</option>
-                                            <option value="CO">Colombia</option>
-                                            <option value="KM">Comoros</option>
-                                            <option value="CG">Congo</option>
-                                            <option value="CD">Congo, the Democratic Republic of the</option>
-                                            <option value="CK">Cook Islands</option>
-                                            <option value="CR">Costa Rica</option>
-                                            <option value="CI">Côte d'Ivoire</option>
-                                            <option value="HR">Croatia</option>
-                                            <option value="CU">Cuba</option>
-                                            <option value="CW">Curaçao</option>
-                                            <option value="CY">Cyprus</option>
-                                            <option value="CZ">Czech Republic</option>
-                                            <option value="DK">Denmark</option>
-                                            <option value="DJ">Djibouti</option>
-                                            <option value="DM">Dominica</option>
-                                            <option value="DO">Dominican Republic</option>
-                                            <option value="EC">Ecuador</option>
-                                            <option value="EG">Egypt</option>
-                                            <option value="SV">El Salvador</option>
-                                            <option value="GQ">Equatorial Guinea</option>
-                                            <option value="ER">Eritrea</option>
-                                            <option value="EE">Estonia</option>
-                                            <option value="ET">Ethiopia</option>
-                                            <option value="FK">Falkland Islands (Malvinas)</option>
-                                            <option value="FO">Faroe Islands</option>
-                                            <option value="FJ">Fiji</option>
-                                            <option value="FI">Finland</option>
-                                            <option value="FR">France</option>
-                                            <option value="GF">French Guiana</option>
-                                            <option value="PF">French Polynesia</option>
-                                            <option value="TF">French Southern Territories</option>
-                                            <option value="GA">Gabon</option>
-                                            <option value="GM">Gambia</option>
-                                            <option value="GE">Georgia</option>
-                                            <option value="DE">Germany</option>
-                                            <option value="GH">Ghana</option>
-                                            <option value="GI">Gibraltar</option>
-                                            <option value="GR">Greece</option>
-                                            <option value="GL">Greenland</option>
-                                            <option value="GD">Grenada</option>
-                                            <option value="GP">Guadeloupe</option>
-                                            <option value="GU">Guam</option>
-                                            <option value="GT">Guatemala</option>
-                                            <option value="GG">Guernsey</option>
-                                            <option value="GN">Guinea</option>
-                                            <option value="GW">Guinea-Bissau</option>
-                                            <option value="GY">Guyana</option>
-                                            <option value="HT">Haiti</option>
-                                            <option value="HM">Heard Island and McDonald Islands</option>
-                                            <option value="VA">Holy See (Vatican City State)</option>
-                                            <option value="HN">Honduras</option>
-                                            <option value="HK">Hong Kong</option>
-                                            <option value="HU">Hungary</option>
-                                            <option value="IS">Iceland</option>
-                                            <option value="IN">India</option>
-                                            <option value="ID">Indonesia</option>
-                                            <option value="IR">Iran, Islamic Republic of</option>
-                                            <option value="IQ">Iraq</option>
-                                            <option value="IE">Ireland</option>
-                                            <option value="IM">Isle of Man</option>
-                                            <option value="IL">Israel</option>
-                                            <option value="IT">Italy</option>
-                                            <option value="JM">Jamaica</option>
-                                            <option value="JP">Japan</option>
-                                            <option value="JE">Jersey</option>
-                                            <option value="JO">Jordan</option>
-                                            <option value="KZ">Kazakhstan</option>
-                                            <option value="KE">Kenya</option>
-                                            <option value="KI">Kiribati</option>
-                                            <option value="KP">Korea, Democratic People's Republic of</option>
-                                            <option value="KR">Korea, Republic of</option>
-                                            <option value="KW">Kuwait</option>
-                                            <option value="KG">Kyrgyzstan</option>
-                                            <option value="LA">Lao People's Democratic Republic</option>
-                                            <option value="LV">Latvia</option>
-                                            <option value="LB">Lebanon</option>
-                                            <option value="LS">Lesotho</option>
-                                            <option value="LR">Liberia</option>
-                                            <option value="LY">Libya</option>
-                                            <option value="LI">Liechtenstein</option>
-                                            <option value="LT">Lithuania</option>
-                                            <option value="LU">Luxembourg</option>
-                                            <option value="MO">Macao</option>
-                                            <option value="MK">Macedonia, the former Yugoslav Republic of</option>
-                                            <option value="MG">Madagascar</option>
-                                            <option value="MW">Malawi</option>
-                                            <option value="MY">Malaysia</option>
-                                            <option value="MV">Maldives</option>
-                                            <option value="ML">Mali</option>
-                                            <option value="MT">Malta</option>
-                                            <option value="MH">Marshall Islands</option>
-                                            <option value="MQ">Martinique</option>
-                                            <option value="MR">Mauritania</option>
-                                            <option value="MU">Mauritius</option>
-                                            <option value="YT">Mayotte</option>
-                                            <option value="MX">Mexico</option>
-                                            <option value="FM">Micronesia, Federated States of</option>
-                                            <option value="MD">Moldova, Republic of</option>
-                                            <option value="MC">Monaco</option>
-                                            <option value="MN">Mongolia</option>
-                                            <option value="ME">Montenegro</option>
-                                            <option value="MS">Montserrat</option>
-                                            <option value="MA">Morocco</option>
-                                            <option value="MZ">Mozambique</option>
-                                            <option value="MM">Myanmar</option>
-                                            <option value="NA">Namibia</option>
-                                            <option value="NR">Nauru</option>
-                                            <option value="NP">Nepal</option>
-                                            <option value="NL">Netherlands</option>
-                                            <option value="NC">New Caledonia</option>
-                                            <option value="NZ">New Zealand</option>
-                                            <option value="NI">Nicaragua</option>
-                                            <option value="NE">Niger</option>
-                                            <option value="NG">Nigeria</option>
-                                            <option value="NU">Niue</option>
-                                            <option value="NF">Norfolk Island</option>
-                                            <option value="MP">Northern Mariana Islands</option>
-                                            <option value="NO">Norway</option>
-                                            <option value="OM">Oman</option>
-                                            <option value="PK">Pakistan</option>
-                                            <option value="PW">Palau</option>
-                                            <option value="PS">Palestinian Territory, Occupied</option>
-                                            <option value="PA">Panama</option>
-                                            <option value="PG">Papua New Guinea</option>
-                                            <option value="PY">Paraguay</option>
-                                            <option value="PE">Peru</option>
-                                            <option value="PH">Philippines</option>
-                                            <option value="PN">Pitcairn</option>
-                                            <option value="PL">Poland</option>
-                                            <option value="PT">Portugal</option>
-                                            <option value="PR">Puerto Rico</option>
-                                            <option value="QA">Qatar</option>
-                                            <option value="RE">Réunion</option>
-                                            <option value="RO">Romania</option>
-                                            <option value="RU">Russian Federation</option>
-                                            <option value="RW">Rwanda</option>
-                                            <option value="BL">Saint Barthélemy</option>
-                                            <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
-                                            <option value="KN">Saint Kitts and Nevis</option>
-                                            <option value="LC">Saint Lucia</option>
-                                            <option value="MF">Saint Martin (French part)</option>
-                                            <option value="PM">Saint Pierre and Miquelon</option>
-                                            <option value="VC">Saint Vincent and the Grenadines</option>
-                                            <option value="WS">Samoa</option>
-                                            <option value="SM">San Marino</option>
-                                            <option value="ST">Sao Tome and Principe</option>
-                                            <option value="SA">Saudi Arabia</option>
-                                            <option value="SN">Senegal</option>
-                                            <option value="RS">Serbia</option>
-                                            <option value="SC">Seychelles</option>
-                                            <option value="SL">Sierra Leone</option>
-                                            <option value="SG">Singapore</option>
-                                            <option value="SX">Sint Maarten (Dutch part)</option>
-                                            <option value="SK">Slovakia</option>
-                                            <option value="SI">Slovenia</option>
-                                            <option value="SB">Solomon Islands</option>
-                                            <option value="SO">Somalia</option>
-                                            <option value="ZA">South Africa</option>
-                                            <option value="GS">South Georgia and the South Sandwich Islands</option>
-                                            <option value="SS">South Sudan</option>
-                                            <option value="ES">Spain</option>
-                                            <option value="LK">Sri Lanka</option>
-                                            <option value="SD">Sudan</option>
-                                            <option value="SR">Suriname</option>
-                                            <option value="SJ">Svalbard and Jan Mayen</option>
-                                            <option value="SZ">Swaziland</option>
-                                            <option value="SE">Sweden</option>
-                                            <option value="CH">Switzerland</option>
-                                            <option value="SY">Syrian Arab Republic</option>
-                                            <option value="TW">Taiwan, Province of China</option>
-                                            <option value="TJ">Tajikistan</option>
-                                            <option value="TZ">Tanzania, United Republic of</option>
-                                            <option value="TH">Thailand</option>
-                                            <option value="TL">Timor-Leste</option>
-                                            <option value="TG">Togo</option>
-                                            <option value="TK">Tokelau</option>
-                                            <option value="TO">Tonga</option>
-                                            <option value="TT">Trinidad and Tobago</option>
-                                            <option value="TN">Tunisia</option>
-                                            <option value="TR">Turkey</option>
-                                            <option value="TM">Turkmenistan</option>
-                                            <option value="TC">Turks and Caicos Islands</option>
-                                            <option value="TV">Tuvalu</option>
-                                            <option value="UG">Uganda</option>
-                                            <option value="UA">Ukraine</option>
-                                            <option value="AE">United Arab Emirates</option>
-                                            <option value="GB">United Kingdom</option>
-                                            <option value="US">United States</option>
-                                            <option value="UM">United States Minor Outlying Islands</option>
-                                            <option value="UY">Uruguay</option>
-                                            <option value="UZ">Uzbekistan</option>
-                                            <option value="VU">Vanuatu</option>
-                                            <option value="VE">Venezuela, Bolivarian Republic of</option>
-                                            <option value="VN">Viet Nam</option>
-                                            <option value="VG">Virgin Islands, British</option>
-                                            <option value="VI">Virgin Islands, U.S.</option>
-                                            <option value="WF">Wallis and Futuna</option>
-                                            <option value="EH">Western Sahara</option>
-                                            <option value="YE">Yemen</option>
-                                            <option value="ZM">Zambia</option>
-                                            <option value="ZW">Zimbabwe</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Select-->
-                                </div>
+                            <!--end::Input-->
+                            <!--begin::Input-->
+                            <div class="form-group">
+                                <label asp-for="Tags"></label>
+                                <input id="kt_tagify_6" class="form-control" placeholder='Tags' />
+                                <select asp-for="Tags" hidden></select>
+                                <span class="form-text text-muted" asp-validation-for="Tags"></span>
                             </div>
+                            <!--end::Input-->
                         </div>
                         <!--end::Wizard Step 1-->
                         <!--begin::Wizard Step 2-->
                         <div class="pb-5" data-wizard-type="step-content">
-                            <h4 class="mb-10 font-weight-bold text-dark">Enter the Details of your Delivery</h4>
+                            <div asp-validation-summary="ModelOnly"></div>
                             <!--begin::Input-->
                             <div class="form-group">
-                                <label>Package Details</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="package" placeholder="Package Details" value="Complete Workstation (Monitor, Computer, Keyboard &amp; Mouse)" />
-                                <span class="form-text text-muted">Please enter your Pakcage Details.</span>
+                                <label asp-for="SelectedCategoryId"></label>
+                                <select class="form-control select2" asp-for="SelectedCategoryId" asp-items="Model.Categories"></select>
+                                <span class="form-text text-muted" asp-validation-for="SelectedCategoryId"></span>
                             </div>
                             <!--end::Input-->
-                            <!--begin::Input-->
-                            <div class="form-group">
-                                <label>Package Weight in KG</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="weight" placeholder="Package Weight" value="25" />
-                                <span class="form-text text-muted">Please enter your Package Weight in KG.</span>
-                            </div>
-                            <!--end::Input-->
-                            <div class="row">
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Package Width in CM</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="width" placeholder="Package Width" value="110" />
-                                        <span class="form-text text-muted">Please enter your Package Width in CM.</span>
+                            <div id="kt_repeater_Size">
+                                <div class="column">
+                                    <div data-repeater-list="Sizes">
+                                        <div data-repeater-item="Size" class="row justify-content-between">
+                                            <div class="form-group col-lg-2">
+                                                <label>Size</label>
+                                                <input name="Size" type="text" class="form-control" placeholder="Size" />
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                            <div class="form-group col-lg-2">
+                                                <label>Price</label>
+                                                <input name="Price" type="number" class="form-control" placeholder="Price" />
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                            <div class="form-group col-lg-2">
+                                                <label>Sale Price</label>
+                                                <input name="DiscountedPrice" type="number" class="form-control" placeholder="Sale Price" />
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                            <div class="form-group col-lg-2">
+                                                <label>Stock Quantity</label>
+                                                <input name="StockQuantity" type="number" class="form-control" placeholder="Sale Price" />
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                            <div class="form-group col-lg-3">
+                                                <label>Color</label>
+                                                <div style="width:100%;">
+                                                    <select style="width:100%;" multiple name="SelectedColorIds" asp-items="Model.Colors" class="form-control select2 select_color"></select>
+                                                </div>
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                            <div class="form-group col-lg-1">
+                                                <label style="color:transparent">sa </label>
+                                                <a href="javascript:;" data-repeater-delete="Size" class="btn font-weight-bold btn-danger btn-icon">
+                                                    <i class="la la-trash-o"></i>
+                                                </a>
+                                                <div class="d-md-none mb-2"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!--end::Input-->
                                 </div>
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Package Height in CM</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="height" placeholder="Package Height" value="90" />
-                                        <span class="form-text text-muted">Please enter your Package Height in CM.</span>
+                                <div class="form-group column">
+                                    <label class="col-lg-2 col-form-label text-right"></label>
+                                    <div class="col-lg-4">
+                                        <a href="javascript:;" data-repeater-create="Size" class="btn btn-sm font-weight-bolder btn-light-primary">
+                                            <i class="la la-plus"></i>Add
+                                        </a>
                                     </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Package Length in CM</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="packagelength" placeholder="Package Length" value="150" />
-                                        <span class="form-text text-muted">Please enter your Package Length in CM.</span>
-                                    </div>
-                                    <!--end::Input-->
                                 </div>
                             </div>
                         </div>
                         <!--end::Wizard Step 2-->
                         <!--begin::Wizard Step 3-->
                         <div class="pb-5" data-wizard-type="step-content">
-                            <h4 class="mb-10 font-weight-bold text-dark">Select your Services</h4>
-                            <!--begin::Select-->
-                            <div class="form-group">
-                                <label>Delivery Type</label>
-                                <select name="delivery" class="form-control form-control-solid form-control-lg">
-                                    <option value="">Select a Service Type Option</option>
-                                    <option value="overnight" selected="selected">Overnight Delivery (within 48 hours)</option>
-                                    <option value="express">Express Delivery (within 5 working days)</option>
-                                    <option value="basic">Basic Delivery (within 5 - 10 working days)</option>
-                                </select>
-                            </div>
-                            <!--end::Select-->
-                            <!--begin::Select-->
-                            <div class="form-group">
-                                <label>Packaging Type</label>
-                                <select name="packaging" class="form-control form-control-solid form-control-lg">
-                                    <option value="">Select a Packaging Type Option</option>
-                                    <option value="regular" selected="selected">Regular Packaging</option>
-                                    <option value="oversized">Oversized Packaging</option>
-                                    <option value="fragile">Fragile Packaging</option>
-                                    <option value="frozen">Frozen Packaging</option>
-                                </select>
-                            </div>
-                            <!--end::Select-->
-                            <!--begin::Select-->
-                            <div class="form-group">
-                                <label>Preferred Delivery Window</label>
-                                <select name="preferreddelivery" class="form-control form-control-solid form-control-lg">
-                                    <option value="">Select a Preferred Delivery Option</option>
-                                    <option value="morning" selected="selected">Morning Delivery (8:00AM - 11:00AM)</option>
-                                    <option value="afternoon">Afternoon Delivery (11:00AM - 3:00PM)</option>
-                                    <option value="evening">Evening Delivery (3:00PM - 7:00PM)</option>
-                                </select>
-                            </div>
-                            <!--end::Select-->
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <input id="input-b3" asp-for="Images" type="file" class="file" multiple
+                                   data-show-upload="false" data-browse-on-zone-click="true" data-show-caption="true"
+                                   accept="image/*" data-show-zoom="false" />
+                            @*<div class="form-group row">
+                                    <label class="col-lg-2 col-form-label text-right"></label>
+                                    <div class="custom-file">
+                                        <input asp-for="Images" multiple type="file" class="custom-file-input" id="customFile" />
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                </div>*@
                         </div>
                         <!--end::Wizard Step 3-->
-                        <!--begin::Wizard Step 4-->
-                        <div class="pb-5" data-wizard-type="step-content">
-                            <h4 class="mb-10 font-weight-bold text-dark">Setup Your Delivery Location</h4>
-                            <!--begin::Input-->
-                            <div class="form-group">
-                                <label>Address Line 1</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="locaddress1" placeholder="Address Line 1" value="Address Line 1" />
-                                <span class="form-text text-muted">Please enter your Address.</span>
-                            </div>
-                            <!--end::Input-->
-                            <!--begin::Input-->
-                            <div class="form-group">
-                                <label>Address Line 2</label>
-                                <input type="text" class="form-control form-control-solid form-control-lg" name="locaddress2" placeholder="Address Line 2" value="Address Line 2" />
-                                <span class="form-text text-muted">Please enter your Address.</span>
-                            </div>
-                            <!--end::Input-->
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Postcode</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="locpostcode" placeholder="Postcode" value="3072" />
-                                        <span class="form-text text-muted">Please enter your Postcode.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="loccity" placeholder="City" value="Preston" />
-                                        <span class="form-text text-muted">Please enter your City.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" name="locstate" placeholder="State" value="VIC" />
-                                        <span class="form-text text-muted">Please enter your State.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-6">
-                                    <!--begin::Select-->
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select name="loccountry" class="form-control form-control-solid form-control-lg">
-                                            <option value="">Select</option>
-                                            <option value="AF">Afghanistan</option>
-                                            <option value="AX">Åland Islands</option>
-                                            <option value="AL">Albania</option>
-                                            <option value="DZ">Algeria</option>
-                                            <option value="AS">American Samoa</option>
-                                            <option value="AD">Andorra</option>
-                                            <option value="AO">Angola</option>
-                                            <option value="AI">Anguilla</option>
-                                            <option value="AQ">Antarctica</option>
-                                            <option value="AG">Antigua and Barbuda</option>
-                                            <option value="AR">Argentina</option>
-                                            <option value="AM">Armenia</option>
-                                            <option value="AW">Aruba</option>
-                                            <option value="AU" selected="selected">Australia</option>
-                                            <option value="AT">Austria</option>
-                                            <option value="AZ">Azerbaijan</option>
-                                            <option value="BS">Bahamas</option>
-                                            <option value="BH">Bahrain</option>
-                                            <option value="BD">Bangladesh</option>
-                                            <option value="BB">Barbados</option>
-                                            <option value="BY">Belarus</option>
-                                            <option value="BE">Belgium</option>
-                                            <option value="BZ">Belize</option>
-                                            <option value="BJ">Benin</option>
-                                            <option value="BM">Bermuda</option>
-                                            <option value="BT">Bhutan</option>
-                                            <option value="BO">Bolivia, Plurinational State of</option>
-                                            <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
-                                            <option value="BA">Bosnia and Herzegovina</option>
-                                            <option value="BW">Botswana</option>
-                                            <option value="BV">Bouvet Island</option>
-                                            <option value="BR">Brazil</option>
-                                            <option value="IO">British Indian Ocean Territory</option>
-                                            <option value="BN">Brunei Darussalam</option>
-                                            <option value="BG">Bulgaria</option>
-                                            <option value="BF">Burkina Faso</option>
-                                            <option value="BI">Burundi</option>
-                                            <option value="KH">Cambodia</option>
-                                            <option value="CM">Cameroon</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="CV">Cape Verde</option>
-                                            <option value="KY">Cayman Islands</option>
-                                            <option value="CF">Central African Republic</option>
-                                            <option value="TD">Chad</option>
-                                            <option value="CL">Chile</option>
-                                            <option value="CN">China</option>
-                                            <option value="CX">Christmas Island</option>
-                                            <option value="CC">Cocos (Keeling) Islands</option>
-                                            <option value="CO">Colombia</option>
-                                            <option value="KM">Comoros</option>
-                                            <option value="CG">Congo</option>
-                                            <option value="CD">Congo, the Democratic Republic of the</option>
-                                            <option value="CK">Cook Islands</option>
-                                            <option value="CR">Costa Rica</option>
-                                            <option value="CI">Côte d'Ivoire</option>
-                                            <option value="HR">Croatia</option>
-                                            <option value="CU">Cuba</option>
-                                            <option value="CW">Curaçao</option>
-                                            <option value="CY">Cyprus</option>
-                                            <option value="CZ">Czech Republic</option>
-                                            <option value="DK">Denmark</option>
-                                            <option value="DJ">Djibouti</option>
-                                            <option value="DM">Dominica</option>
-                                            <option value="DO">Dominican Republic</option>
-                                            <option value="EC">Ecuador</option>
-                                            <option value="EG">Egypt</option>
-                                            <option value="SV">El Salvador</option>
-                                            <option value="GQ">Equatorial Guinea</option>
-                                            <option value="ER">Eritrea</option>
-                                            <option value="EE">Estonia</option>
-                                            <option value="ET">Ethiopia</option>
-                                            <option value="FK">Falkland Islands (Malvinas)</option>
-                                            <option value="FO">Faroe Islands</option>
-                                            <option value="FJ">Fiji</option>
-                                            <option value="FI">Finland</option>
-                                            <option value="FR">France</option>
-                                            <option value="GF">French Guiana</option>
-                                            <option value="PF">French Polynesia</option>
-                                            <option value="TF">French Southern Territories</option>
-                                            <option value="GA">Gabon</option>
-                                            <option value="GM">Gambia</option>
-                                            <option value="GE">Georgia</option>
-                                            <option value="DE">Germany</option>
-                                            <option value="GH">Ghana</option>
-                                            <option value="GI">Gibraltar</option>
-                                            <option value="GR">Greece</option>
-                                            <option value="GL">Greenland</option>
-                                            <option value="GD">Grenada</option>
-                                            <option value="GP">Guadeloupe</option>
-                                            <option value="GU">Guam</option>
-                                            <option value="GT">Guatemala</option>
-                                            <option value="GG">Guernsey</option>
-                                            <option value="GN">Guinea</option>
-                                            <option value="GW">Guinea-Bissau</option>
-                                            <option value="GY">Guyana</option>
-                                            <option value="HT">Haiti</option>
-                                            <option value="HM">Heard Island and McDonald Islands</option>
-                                            <option value="VA">Holy See (Vatican City State)</option>
-                                            <option value="HN">Honduras</option>
-                                            <option value="HK">Hong Kong</option>
-                                            <option value="HU">Hungary</option>
-                                            <option value="IS">Iceland</option>
-                                            <option value="IN">India</option>
-                                            <option value="ID">Indonesia</option>
-                                            <option value="IR">Iran, Islamic Republic of</option>
-                                            <option value="IQ">Iraq</option>
-                                            <option value="IE">Ireland</option>
-                                            <option value="IM">Isle of Man</option>
-                                            <option value="IL">Israel</option>
-                                            <option value="IT">Italy</option>
-                                            <option value="JM">Jamaica</option>
-                                            <option value="JP">Japan</option>
-                                            <option value="JE">Jersey</option>
-                                            <option value="JO">Jordan</option>
-                                            <option value="KZ">Kazakhstan</option>
-                                            <option value="KE">Kenya</option>
-                                            <option value="KI">Kiribati</option>
-                                            <option value="KP">Korea, Democratic People's Republic of</option>
-                                            <option value="KR">Korea, Republic of</option>
-                                            <option value="KW">Kuwait</option>
-                                            <option value="KG">Kyrgyzstan</option>
-                                            <option value="LA">Lao People's Democratic Republic</option>
-                                            <option value="LV">Latvia</option>
-                                            <option value="LB">Lebanon</option>
-                                            <option value="LS">Lesotho</option>
-                                            <option value="LR">Liberia</option>
-                                            <option value="LY">Libya</option>
-                                            <option value="LI">Liechtenstein</option>
-                                            <option value="LT">Lithuania</option>
-                                            <option value="LU">Luxembourg</option>
-                                            <option value="MO">Macao</option>
-                                            <option value="MK">Macedonia, the former Yugoslav Republic of</option>
-                                            <option value="MG">Madagascar</option>
-                                            <option value="MW">Malawi</option>
-                                            <option value="MY">Malaysia</option>
-                                            <option value="MV">Maldives</option>
-                                            <option value="ML">Mali</option>
-                                            <option value="MT">Malta</option>
-                                            <option value="MH">Marshall Islands</option>
-                                            <option value="MQ">Martinique</option>
-                                            <option value="MR">Mauritania</option>
-                                            <option value="MU">Mauritius</option>
-                                            <option value="YT">Mayotte</option>
-                                            <option value="MX">Mexico</option>
-                                            <option value="FM">Micronesia, Federated States of</option>
-                                            <option value="MD">Moldova, Republic of</option>
-                                            <option value="MC">Monaco</option>
-                                            <option value="MN">Mongolia</option>
-                                            <option value="ME">Montenegro</option>
-                                            <option value="MS">Montserrat</option>
-                                            <option value="MA">Morocco</option>
-                                            <option value="MZ">Mozambique</option>
-                                            <option value="MM">Myanmar</option>
-                                            <option value="NA">Namibia</option>
-                                            <option value="NR">Nauru</option>
-                                            <option value="NP">Nepal</option>
-                                            <option value="NL">Netherlands</option>
-                                            <option value="NC">New Caledonia</option>
-                                            <option value="NZ">New Zealand</option>
-                                            <option value="NI">Nicaragua</option>
-                                            <option value="NE">Niger</option>
-                                            <option value="NG">Nigeria</option>
-                                            <option value="NU">Niue</option>
-                                            <option value="NF">Norfolk Island</option>
-                                            <option value="MP">Northern Mariana Islands</option>
-                                            <option value="NO">Norway</option>
-                                            <option value="OM">Oman</option>
-                                            <option value="PK">Pakistan</option>
-                                            <option value="PW">Palau</option>
-                                            <option value="PS">Palestinian Territory, Occupied</option>
-                                            <option value="PA">Panama</option>
-                                            <option value="PG">Papua New Guinea</option>
-                                            <option value="PY">Paraguay</option>
-                                            <option value="PE">Peru</option>
-                                            <option value="PH">Philippines</option>
-                                            <option value="PN">Pitcairn</option>
-                                            <option value="PL">Poland</option>
-                                            <option value="PT">Portugal</option>
-                                            <option value="PR">Puerto Rico</option>
-                                            <option value="QA">Qatar</option>
-                                            <option value="RE">Réunion</option>
-                                            <option value="RO">Romania</option>
-                                            <option value="RU">Russian Federation</option>
-                                            <option value="RW">Rwanda</option>
-                                            <option value="BL">Saint Barthélemy</option>
-                                            <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
-                                            <option value="KN">Saint Kitts and Nevis</option>
-                                            <option value="LC">Saint Lucia</option>
-                                            <option value="MF">Saint Martin (French part)</option>
-                                            <option value="PM">Saint Pierre and Miquelon</option>
-                                            <option value="VC">Saint Vincent and the Grenadines</option>
-                                            <option value="WS">Samoa</option>
-                                            <option value="SM">San Marino</option>
-                                            <option value="ST">Sao Tome and Principe</option>
-                                            <option value="SA">Saudi Arabia</option>
-                                            <option value="SN">Senegal</option>
-                                            <option value="RS">Serbia</option>
-                                            <option value="SC">Seychelles</option>
-                                            <option value="SL">Sierra Leone</option>
-                                            <option value="SG">Singapore</option>
-                                            <option value="SX">Sint Maarten (Dutch part)</option>
-                                            <option value="SK">Slovakia</option>
-                                            <option value="SI">Slovenia</option>
-                                            <option value="SB">Solomon Islands</option>
-                                            <option value="SO">Somalia</option>
-                                            <option value="ZA">South Africa</option>
-                                            <option value="GS">South Georgia and the South Sandwich Islands</option>
-                                            <option value="SS">South Sudan</option>
-                                            <option value="ES">Spain</option>
-                                            <option value="LK">Sri Lanka</option>
-                                            <option value="SD">Sudan</option>
-                                            <option value="SR">Suriname</option>
-                                            <option value="SJ">Svalbard and Jan Mayen</option>
-                                            <option value="SZ">Swaziland</option>
-                                            <option value="SE">Sweden</option>
-                                            <option value="CH">Switzerland</option>
-                                            <option value="SY">Syrian Arab Republic</option>
-                                            <option value="TW">Taiwan, Province of China</option>
-                                            <option value="TJ">Tajikistan</option>
-                                            <option value="TZ">Tanzania, United Republic of</option>
-                                            <option value="TH">Thailand</option>
-                                            <option value="TL">Timor-Leste</option>
-                                            <option value="TG">Togo</option>
-                                            <option value="TK">Tokelau</option>
-                                            <option value="TO">Tonga</option>
-                                            <option value="TT">Trinidad and Tobago</option>
-                                            <option value="TN">Tunisia</option>
-                                            <option value="TR">Turkey</option>
-                                            <option value="TM">Turkmenistan</option>
-                                            <option value="TC">Turks and Caicos Islands</option>
-                                            <option value="TV">Tuvalu</option>
-                                            <option value="UG">Uganda</option>
-                                            <option value="UA">Ukraine</option>
-                                            <option value="AE">United Arab Emirates</option>
-                                            <option value="GB">United Kingdom</option>
-                                            <option value="US">United States</option>
-                                            <option value="UM">United States Minor Outlying Islands</option>
-                                            <option value="UY">Uruguay</option>
-                                            <option value="UZ">Uzbekistan</option>
-                                            <option value="VU">Vanuatu</option>
-                                            <option value="VE">Venezuela, Bolivarian Republic of</option>
-                                            <option value="VN">Viet Nam</option>
-                                            <option value="VG">Virgin Islands, British</option>
-                                            <option value="VI">Virgin Islands, U.S.</option>
-                                            <option value="WF">Wallis and Futuna</option>
-                                            <option value="EH">Western Sahara</option>
-                                            <option value="YE">Yemen</option>
-                                            <option value="ZM">Zambia</option>
-                                            <option value="ZW">Zimbabwe</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Select-->
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Wizard Step 4-->
-                        <!--begin::Wizard Step 5-->
-                        <div class="pb-5" data-wizard-type="step-content">
-                            <!--begin::Section-->
-                            <h4 class="mb-10 font-weight-bold text-dark">Review your Details and Submit</h4>
-                            <h6 class="font-weight-bolder mb-3">Current Address:</h6>
-                            <div class="text-dark-50 line-height-lg">
-                                <div>Address Line 1</div>
-                                <div>Address Line 2</div>
-                                <div>Melbourne 3000, VIC, Australia</div>
-                            </div>
-                            <div class="separator separator-dashed my-5"></div>
-                            <!--end::Section-->
-                            <!--begin::Section-->
-                            <h6 class="font-weight-bolder mb-3">Delivery Details:</h6>
-                            <div class="text-dark-50 line-height-lg">
-                                <div>Package: Complete Workstation (Monitor, Computer, Keyboard &amp; Mouse)</div>
-                                <div>Weight: 25kg</div>
-                                <div>Dimensions: 110cm (w) x 90cm (h) x 150cm (L)</div>
-                            </div>
-                            <div class="separator separator-dashed my-5"></div>
-                            <!--end::Section-->
-                            <!--begin::Section-->
-                            <h6 class="font-weight-bolder mb-3">Delivery Service Type:</h6>
-                            <div class="text-dark-50 line-height-lg">
-                                <div>Overnight Delivery with Regular Packaging</div>
-                                <div>Preferred Morning (8:00AM - 11:00AM) Delivery</div>
-                            </div>
-                            <div class="separator separator-dashed my-5"></div>
-                            <!--end::Section-->
-                            <!--begin::Section-->
-                            <h6 class="font-weight-bolder mb-3">Delivery Address:</h6>
-                            <div class="text-dark-50 line-height-lg">
-                                <div>Address Line 1</div>
-                                <div>Address Line 2</div>
-                                <div>Preston 3072, VIC, Australia</div>
-                            </div>
-                            <!--end::Section-->
-                        </div>
-                        <!--end::Wizard Step 5-->
                         <!--begin::Wizard Actions-->
                         <div class="d-flex justify-content-between border-top mt-5 pt-10">
                             <div class="mr-2">

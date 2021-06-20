@@ -58,6 +58,16 @@
     <Folder Include="Models\CommandModels\SizeCommands\" />
     <Folder Include="Handlers\CommandHandlers\SizeCommandHandlers\" />
     <Folder Include="Handlers\QueryHandlers\SizeQueryHandlers\" />
+    <Folder Include="Models\CommandModels\ColorCommands\" />
+    <Folder Include="Models\ResponseModels\ColorResponseModels\" />
+    <Folder Include="Models\ResponseModels\ColorResponseModels\CommandResponseModels\" />
+    <Folder Include="Models\ResponseModels\ColorResponseModels\QueryResponseModels\" />
+    <Folder Include="Models\QueryModels\ColorQueryModels\" />
+    <Folder Include="Handlers\CommandHandlers\ColorCommandHandlers\" />
+    <Folder Include="Handlers\QueryHandlers\ColorQueryHandlers\" />
+    <Folder Include="Models\CommandModels\ProductCommands\" />
+    <Folder Include="Models\ResponseModels\ProductResponseModels\" />
+    <Folder Include="Handlers\CommandHandlers\ProductCommandHandlers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />

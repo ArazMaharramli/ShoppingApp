@@ -51,6 +51,8 @@
     <Folder Include="Areas\Shop\Views\Product\" />
     <Folder Include="Areas\Admin\ViewModels\SizeViewModels\" />
     <Folder Include="Areas\Admin\Views\Size\" />
+    <Folder Include="Areas\Admin\ViewModels\ColorViewModels\" />
+    <Folder Include="Areas\Admin\Views\Color\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShoppingApp.Domain\ShoppingApp.Domain.csproj">

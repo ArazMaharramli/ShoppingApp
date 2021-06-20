@@ -20,12 +20,6 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
         public string MetaTitle { get; set; }
         public string MetaKeywords { get; set; }
 
-        public long BrandId { get; set; }
-        public Brand Brand { get; set; }
-
-        public long MaterialId { get; set; }
-        public Material Material { get; set; }
-
         public long StoreId { get; set; }
         public Store Store { get; set; }
 

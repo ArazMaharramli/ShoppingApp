@@ -30,7 +30,6 @@
         Hidden = 2,
 
         // 16 -> 25
-        Addvertized = 16, //????? <- niye ?
         Delivered = 18,
         Completed = 20,
         Refunded = 22,
@@ -47,7 +46,6 @@
 
         //26 -> 36
         StocFinished = 26,
-        HasToBeEdited = 29,
     }
     public enum ShipmentStatus : byte
     {

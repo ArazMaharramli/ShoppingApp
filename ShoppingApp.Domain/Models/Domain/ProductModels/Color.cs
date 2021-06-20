@@ -8,7 +8,6 @@ namespace ShoppingApp.Domain.Models.Domain.ProductModels
     {
         public string UniqueTitle { get; set; }
         public string HexCode { get; set; }
-        public string ImageUrl { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; } = new HashSet<ProductDetail>();
     }

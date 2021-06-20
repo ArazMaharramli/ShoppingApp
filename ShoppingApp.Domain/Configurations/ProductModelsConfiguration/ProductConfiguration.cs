@@ -21,12 +21,6 @@ namespace ShoppingApp.Domain.Configurations.ProductModelsConfiguration
             builder.Property(x => x.Description)
                 .IsRequired();
 
-            builder.HasOne(x => x.Brand)
-                .WithMany(X => X.Products);
-
-            builder.HasOne(x => x.Material)
-                .WithMany(x => x.Products);
-
             builder.HasOne(x => x.Store)
                .WithMany(x => x.Products);
 

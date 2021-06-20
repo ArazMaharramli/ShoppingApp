@@ -32,7 +32,7 @@ namespace ShoppingApp.Services.FileServices
                     Directory.CreateDirectory(uploadsFolder);
                 }
                 var extension = file.FileName.Substring(file.FileName.LastIndexOf(".", StringComparison.Ordinal)).ToLower();
-                var uniqueFileName = Guid.NewGuid().ToString("N") + "_" + fileName + extension;
+                var uniqueFileName = fileName + $"_{Guid.NewGuid().ToString("N")} " + extension;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
